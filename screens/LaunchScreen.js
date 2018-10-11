@@ -24,6 +24,7 @@ class LaunchScreen extends Component {
         );
     }
 }
+
 export default LaunchScreen;
 
 

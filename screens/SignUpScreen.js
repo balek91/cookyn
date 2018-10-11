@@ -7,7 +7,7 @@ export default class SignUp extends Component {
 		return(
             <View style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false} >
-                <KeyboardAvoidingView style={styles.container} behavior="padding">
+                <KeyboardAvoidingView style={styles.container} >
                     <Image source={require('../assets/images/logo.png')} />
                     <Text>{"\n"}{"\n"}</Text>
                     
@@ -16,13 +16,14 @@ export default class SignUp extends Component {
                         placeholder="Nom"
                         placeholderTextColor = "#000000"
                         selectionColor="#fff"
-                        onSubmitEditing={()=> this.password.focus()}
+                        onSubmitEditing={()=> this.prenom.focus()}
                         />
                     <TextInput style={styles.inputBox} 
                         underlineColorAndroid='rgba(0,0,0,0)' 
                         placeholder="Prenom"
                         placeholderTextColor = "#000000"
-                        ref={(input) => this.password = input}
+                        ref={(input) => this.prenom = input}
+                        onSubmitEditing={()=> this.mail.focus()}
                         />  
 
                         <TextInput style={styles.inputBox} 
@@ -30,7 +31,8 @@ export default class SignUp extends Component {
                         placeholder="Mail"
                         placeholderTextColor = "#000000"
                         keyboardType="email-address"
-                        ref={(input) => this.password = input}
+                        ref={(input) => this.mail = input}
+                        onSubmitEditing={()=> this.password.focus()}
                         />  
                         <TextInput style={styles.inputBox} 
                         underlineColorAndroid='rgba(0,0,0,0)' 
@@ -38,6 +40,7 @@ export default class SignUp extends Component {
                         secureTextEntry={true}
                         placeholderTextColor = "#000000"
                         ref={(input) => this.password = input}
+                        onSubmitEditing={()=> this.confirm.focus()}
                         />  
 
                         <TextInput style={styles.inputBox} 
@@ -45,17 +48,18 @@ export default class SignUp extends Component {
                         placeholder="Confirmer le mot de passe"
                         secureTextEntry={true}
                         placeholderTextColor = "#000000"
-                        ref={(input) => this.password = input}
+                        ref={(input) => this.confirm = input}
+                        onSubmitEditing={()=> this.identifiant.focus()}
                         /> 
 
                         <TextInput style={styles.inputBox} 
                         underlineColorAndroid='rgba(0,0,0,0)' 
                         placeholder="Identifiant"
                         placeholderTextColor = "#000000"
-                        ref={(input) => this.password = input}
+                        ref={(input) => this.identifiant = input}
                         />  
                     <TouchableOpacity style={styles.button}  onPress={() => this.login()}>
-                        <Text style={styles.buttonText}>Connexion</Text>
+                        <Text style={styles.buttonText}>S'inscrire</Text>
                     </TouchableOpacity>     
                     </KeyboardAvoidingView>
             </ScrollView>
