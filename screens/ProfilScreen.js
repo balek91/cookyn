@@ -7,9 +7,11 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Button,
+  Alert
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
+import {ModifyUserScreen} from '../screens/ModifyUserScreen';
 import { MonoText } from '../components/StyledText';
 
 export default class ProfilScreen extends React.Component {
@@ -17,72 +19,72 @@ export default class ProfilScreen extends React.Component {
     header: null,
   };
 
+  constructor() {
+    super()
+    this.state = {
+       following: 'Suivre',
+       nom : 'Faller',
+       prenom : 'Antoine',
+       mail : 'antoine.faller@ynov.com',
+       ville : 'marcoussis'
+    }
+ }
+
   render() {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.pseudoTitle}>
             <Text style={styles.titleText}>Pseudo</Text>
-          </View>
 
+                  <TouchableOpacity>
+                    <Text style = {styles.button} onPress={this._redirectModify}>
+                    Modifier Informations
+                    </Text>
+                </TouchableOpacity>
+          </View>
           <View style={styles.contentView}>
-            <Text style={styles.title2Text}>Informations Personnelles :</Text>
-            <MonoText style={styles.contentText}>Nom :</MonoText>
-            <MonoText style={styles.contentText}>Prenom :</MonoText>
-            <MonoText style={styles.contentText}>Mail :</MonoText>
-            <MonoText style={styles.contentText}>Ville :</MonoText>
+            <Text style={styles.title2Text}>Informations Personnelles : </Text>           
+            
+            <MonoText style={styles.contentText}>Nom : {this.state.nom}</MonoText>
+            <MonoText style={styles.contentText}>Prenom : {this.state.prenom}</MonoText>
+            <MonoText style={styles.contentText}>Mail : {this.state.mail}</MonoText>
+            <MonoText style={styles.contentText}>Ville : {this.state.ville}</MonoText>
           </View>
-
           <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Text style = {styles.button} onPress={this._onPressButtonFollow}>
+                    {this.state.following}
+                    </Text>
+                </TouchableOpacity>
           </View>
         </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
       </View>
     );
   }
 
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
+  _redirectModify = () => {
+    /* 1. Navigate to the Details route with params */
+    alert('ok')
+    this.props.navigation.navigate('ModifyUser', {
+      nom : this.state.nom,
+      prenom : this.state.prenom,
+      mail : this.state.mail,
+      ville : this.state.ville
+    });
   }
 
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
+  _onPressButtonFollow = () => {
+    if(this.state.following == 'Suivre'){
+      this.setState({following: 'Ne plus suivre'})
+    }
+    else{
+      this.setState({following: 'Suivre'})
+    }
+ }
+ _onPressButtonModify = () => {
+  alert('modify');
+}
 }
 
 const styles = StyleSheet.create({
@@ -180,5 +182,13 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7',
+  },
+  button: {
+    width:300,
+    backgroundColor:'#78C9DC',
+     borderRadius: 25,
+      marginVertical: 10,
+      paddingVertical: 13,
+      textAlign: 'center',
   },
 });

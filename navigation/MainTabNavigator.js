@@ -8,6 +8,7 @@ import HomeScreen from '../screens/HomeScreen';
 import AddScreen from '../screens/AddScreen';
 import ProfilScreen from '../screens/ProfilScreen';
 import CalendarScreen from '../screens/CalendarScreen';
+import ModifyUserScreen from '../screens/ModifyUserScreen';
 
 import {learnColour} from '../assets/images';
 
@@ -16,16 +17,18 @@ const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
 
+
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: (
     <Image style={{height:26, width:26}}
            source={require('../assets/icons/home.png')}
-           />),
+    />),
 };
 
 const AddStack = createStackNavigator({
   Add: AddScreen,
+  
 });
 
 AddStack.navigationOptions = {
@@ -38,6 +41,7 @@ AddStack.navigationOptions = {
 
 const ProfilStack = createStackNavigator({
   Profil: ProfilScreen,
+  ModifyUser : ModifyUserScreen
 });
 
 ProfilStack.navigationOptions = {
