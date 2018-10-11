@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet,Text,View, TextInput, TouchableOpacity, Image } from 'react-native';
-
-export default class Logo extends Component<{}> {
+export default class Logo extends Component {
 
 	render(){
 		return(
@@ -23,13 +22,18 @@ export default class Logo extends Component<{}> {
               placeholderTextColor = "#000000"
               ref={(input) => this.password = input}
               />  
-           <TouchableOpacity style={styles.button}>
+           <TouchableOpacity style={styles.button}  onPress={() => this.login()}>
              <Text style={styles.buttonText}>Connexion</Text>
            </TouchableOpacity>     
   		</View>
 			)
-	}
+  }
+  
+  login(){
+    this.props.navigation.replace("Home");
+  }
 }
+
 
 const styles = StyleSheet.create({
   container : {

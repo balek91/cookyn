@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation';
 import AppNavigator from './navigation/AppNavigator';
 import LaunchScreen from './screens/LaunchScreen.js';
 import LoginScreen from './screens/LoginScreen.js';
+import SignUpScreen from './screens/SignUpScreen.js';
 
 export default class App extends React.Component {
   state = {
@@ -62,6 +63,7 @@ export default class App extends React.Component {
    Lannch: LaunchScreen,
    Home: AppNavigator,
    Login: LoginScreen,
+   SignUp : SignUpScreen,
  });
 const styles = StyleSheet.create({
   container: {
