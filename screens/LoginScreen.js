@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text,View, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet,Text,View, TextInput,ScrollView,StatusBar, KeyboardAvoidingView,TouchableOpacity, Image, Alert } from 'react-native';
+import Axios from 'axios';
+
 export default class Logo extends Component {
 
+  state = {
+    login : false
+  } 
+  Login(){
+    this.setState({login : true})
+    Axios.get("https://jsonplaceholder.typicode.com/todos/1").then(function (response){
+      
+    })
+    if (this.state.login == true){
+      this.props.navigation.replace("Home");
+    }
+  }
 	render(){
 		return(
 			<View style={styles.container}>
+      
+       <ScrollView showsVerticalScrollIndicator={false} >
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
             <Image source={require('../assets/images/logo.png')} />
             <Text>{"\n"}{"\n"}</Text>
           <TextInput style={styles.inputBox} 
@@ -22,15 +39,13 @@ export default class Logo extends Component {
               placeholderTextColor = "#000000"
               ref={(input) => this.password = input}
               />  
-           <TouchableOpacity style={styles.button}  onPress={() => this.login()}>
+           <TouchableOpacity style={styles.button}  onPress={() => this.Login()}>
              <Text style={styles.buttonText}>Connexion</Text>
            </TouchableOpacity>     
+           </KeyboardAvoidingView>
+           </ScrollView>
   		</View>
 			)
-  }
-  
-  login(){
-    this.props.navigation.replace("Home");
   }
 }
 

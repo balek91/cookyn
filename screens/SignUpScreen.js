@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text,View, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet,Text,View, ScrollView, KeyboardAvoidingView,TextInput, TouchableOpacity, Image } from 'react-native';
 
 export default class SignUp extends Component {
 
@@ -7,55 +7,57 @@ export default class SignUp extends Component {
 		return(
             <View style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false} >
-                <Image source={require('../assets/images/logo.png')} />
-                <Text>{"\n"}{"\n"}</Text>
-                
+                <KeyboardAvoidingView style={styles.container} behavior="padding">
+                    <Image source={require('../assets/images/logo.png')} />
+                    <Text>{"\n"}{"\n"}</Text>
+                    
+                        <TextInput style={styles.inputBox} 
+                        underlineColorAndroid='rgba(0,0,0,0)' 
+                        placeholder="Nom"
+                        placeholderTextColor = "#000000"
+                        selectionColor="#fff"
+                        onSubmitEditing={()=> this.password.focus()}
+                        />
                     <TextInput style={styles.inputBox} 
-                    underlineColorAndroid='rgba(0,0,0,0)' 
-                    placeholder="Nom"
-                    placeholderTextColor = "#000000"
-                    selectionColor="#fff"
-                    onSubmitEditing={()=> this.password.focus()}
-                    />
-                <TextInput style={styles.inputBox} 
-                    underlineColorAndroid='rgba(0,0,0,0)' 
-                    placeholder="Prenom"
-                    placeholderTextColor = "#000000"
-                    ref={(input) => this.password = input}
-                    />  
+                        underlineColorAndroid='rgba(0,0,0,0)' 
+                        placeholder="Prenom"
+                        placeholderTextColor = "#000000"
+                        ref={(input) => this.password = input}
+                        />  
 
-                    <TextInput style={styles.inputBox} 
-                    underlineColorAndroid='rgba(0,0,0,0)' 
-                    placeholder="Mail"
-                    placeholderTextColor = "#000000"
-                    keyboardType="email-address"
-                    ref={(input) => this.password = input}
-                    />  
-                    <TextInput style={styles.inputBox} 
-                    underlineColorAndroid='rgba(0,0,0,0)' 
-                    placeholder="Mot de passe"
-                    secureTextEntry={true}
-                    placeholderTextColor = "#000000"
-                    ref={(input) => this.password = input}
-                    />  
+                        <TextInput style={styles.inputBox} 
+                        underlineColorAndroid='rgba(0,0,0,0)' 
+                        placeholder="Mail"
+                        placeholderTextColor = "#000000"
+                        keyboardType="email-address"
+                        ref={(input) => this.password = input}
+                        />  
+                        <TextInput style={styles.inputBox} 
+                        underlineColorAndroid='rgba(0,0,0,0)' 
+                        placeholder="Mot de passe"
+                        secureTextEntry={true}
+                        placeholderTextColor = "#000000"
+                        ref={(input) => this.password = input}
+                        />  
 
-                    <TextInput style={styles.inputBox} 
-                    underlineColorAndroid='rgba(0,0,0,0)' 
-                    placeholder="Confirmer le mot de passe"
-                    secureTextEntry={true}
-                    placeholderTextColor = "#000000"
-                    ref={(input) => this.password = input}
-                    /> 
+                        <TextInput style={styles.inputBox} 
+                        underlineColorAndroid='rgba(0,0,0,0)' 
+                        placeholder="Confirmer le mot de passe"
+                        secureTextEntry={true}
+                        placeholderTextColor = "#000000"
+                        ref={(input) => this.password = input}
+                        /> 
 
-                    <TextInput style={styles.inputBox} 
-                    underlineColorAndroid='rgba(0,0,0,0)' 
-                    placeholder="Identifiant"
-                    placeholderTextColor = "#000000"
-                    ref={(input) => this.password = input}
-                    />  
-                <TouchableOpacity style={styles.button}  onPress={() => this.login()}>
-                    <Text style={styles.buttonText}>Connexion</Text>
-                </TouchableOpacity>     
+                        <TextInput style={styles.inputBox} 
+                        underlineColorAndroid='rgba(0,0,0,0)' 
+                        placeholder="Identifiant"
+                        placeholderTextColor = "#000000"
+                        ref={(input) => this.password = input}
+                        />  
+                    <TouchableOpacity style={styles.button}  onPress={() => this.login()}>
+                        <Text style={styles.buttonText}>Connexion</Text>
+                    </TouchableOpacity>     
+                    </KeyboardAvoidingView>
             </ScrollView>
           </View>
 			)

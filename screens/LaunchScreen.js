@@ -15,13 +15,12 @@ class LaunchScreen extends Component {
         <Image source={require('../assets/images/logo.png')} />
         <Text>{"\n"}{"\n"}</Text>
            <TouchableOpacity style={styles.button}>
-               <Text style={styles.buttonText} onPress={() => this.props.navigation.replace('Login')}>Se Connecter</Text>
+               <Text style={styles.buttonText} onPress={() => this.props.navigation.push('Login')}>Se Connecter</Text>
              </TouchableOpacity>  
              <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.push('SignUp')}>
                <Text style={styles.buttonText}>S'inscrire</Text>
              </TouchableOpacity>     
             </View>
-              
         );
     }
 }
