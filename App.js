@@ -2,6 +2,9 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import LaunchScreen from './screens/LaunchScreen.js';
+import LoginScreen from './screens/LoginScreen.js';
+import SignUpScreen from './screens/SignUpScreen.js';
 
 export default class App extends React.Component {
   state = {
@@ -21,7 +24,7 @@ export default class App extends React.Component {
       return (
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
+          <AppStackNavigator />
         </View>
       );
     }
@@ -53,6 +56,12 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 }
+const AppStackNavigator = createStackNavigator({
+  Lannch: LaunchScreen,
+  Home: AppNavigator,
+  Login: LoginScreen,
+  SignUp : SignUpScreen,
+});
 
 const styles = StyleSheet.create({
   container: {
