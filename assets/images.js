@@ -1,0 +1,1 @@
+export const learnColour = require('./icons/home.png');
