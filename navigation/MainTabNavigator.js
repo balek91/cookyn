@@ -1,60 +1,73 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import {Image} from 'react-native';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import AddScreen from '../screens/AddScreen';
+import ProfilScreen from '../screens/ProfilScreen';
+import CalendarScreen from '../screens/CalendarScreen';
+import ModifyUserScreen from '../screens/ModifyUserScreen';
+
+import {learnColour} from '../assets/images';
+
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
 
+
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
-  ),
+  tabBarIcon: (
+    <Image style={{height:26, width:26}}
+           source={require('../assets/icons/home.png')}
+    />),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const AddStack = createStackNavigator({
+  Add: AddScreen,
+  
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
-    />
-  ),
+AddStack.navigationOptions = {
+  tabBarLabel: 'Add',
+  tabBarIcon: (
+    <Image style={{height:26, width:26}}
+           source={require('../assets/icons/addblue.png')}
+           />),
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+const ProfilStack = createStackNavigator({
+  Profil: ProfilScreen,
+  ModifyUser : ModifyUserScreen
 });
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
-    />
-  ),
+ProfilStack.navigationOptions = {
+  tabBarLabel: 'Profil',
+  tabBarIcon: (
+    <Image style={{height:26, width:26}}
+           source={require('../assets/icons/profil.png')}
+           />),
+};
+
+const CalendarStack = createStackNavigator({
+  Calendar: CalendarScreen,
+});
+
+CalendarStack.navigationOptions = {
+  tabBarLabel: 'Calendar',
+  tabBarIcon: (
+    <Image style={{height:26, width:26}}
+           source={require('../assets/icons/calendrier.png')}
+           />),
 };
 
 export default createBottomTabNavigator({
+  AddStack,
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  ProfilStack, 
+  CalendarStack,
+
 });
