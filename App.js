@@ -3,9 +3,9 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 import AppNavigator from './navigation/AppNavigator';
-import LaunchScreen from './screens/LaunchScreen.js';
 import LoginScreen from './screens/LoginScreen.js';
 import SignUpScreen from './screens/SignUpScreen.js';
+import SignUpOkScreen from './screens/SignUpOk.js';
 
 export default class App extends React.Component {
   state = {
@@ -60,10 +60,10 @@ export default class App extends React.Component {
   };
 }
  const AppStackNavigator = createStackNavigator({
-   Lannch: LaunchScreen,
-   Home: AppNavigator,
    Login: LoginScreen,
+   Home: AppNavigator,
    SignUp : SignUpScreen,
+   SignUpOk : SignUpOkScreen,
  });
 
  

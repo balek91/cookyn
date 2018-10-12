@@ -58,7 +58,7 @@ export default class SignUp extends Component {
                         placeholderTextColor = "#000000"
                         ref={(input) => this.identifiant = input}
                         />  
-                    <TouchableOpacity style={styles.button}  onPress={() => this.login()}>
+                    <TouchableOpacity style={styles.button}  onPress={() =>  this.props.navigation.replace("SignUpOk")}>
                         <Text style={styles.buttonText}>S'inscrire</Text>
                     </TouchableOpacity>     
                     </KeyboardAvoidingView>
@@ -68,7 +68,7 @@ export default class SignUp extends Component {
   }
   
   login(){
-    this.props.navigation.replace("Home");
+    this.props.navigation.replace("SignUpOk");
   }
 }
 

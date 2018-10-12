@@ -4,11 +4,6 @@ import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 
 
 class LaunchScreen extends Component {
-
-    static navigationOptions = {
-        header: null
-    }
-
     render() {
         return (
             <View style={styles.container}>

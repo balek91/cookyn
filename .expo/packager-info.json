@@ -1,8 +1,9 @@
 {
   "expoServerPort": 19000,
-  "packagerPort": 19003,
-  "packagerPid": 20366,
-  "expoServerNgrokUrl": "https://fu-b5t.balek91.cookyn.exp.direct",
-  "packagerNgrokUrl": "https://packager.fu-b5t.balek91.cookyn.exp.direct",
-  "ngrokPid": 20378
+  "packagerPort": 19001,
+  "packagerPid": 38826,
+  "expoServerNgrokUrl": "https://px-7jv.espadasteve.cookyn.exp.direct",
+  "packagerNgrokUrl": "https://packager.px-7jv.espadasteve.cookyn.exp.direct",
+  "ngrokPid": 38843,
+  "devToolsPort": 19002
 }

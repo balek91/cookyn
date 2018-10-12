@@ -2,17 +2,21 @@ import React, { Component } from 'react';
 import { StyleSheet,Text,View, TextInput,ScrollView,StatusBar, KeyboardAvoidingView,TouchableOpacity, Image, Alert } from 'react-native';
 import Axios from 'axios';
 
-export default class Logo extends Component {
+export default class Login extends Component {
 
   state = {
     login : false
   } 
+  SignUp(){
+  this.props.navigation.push("SignUp");
+}
   Login(){
     this.setState({login : true})
     Axios.get("https://jsonplaceholder.typicode.com/todos/1").then(function (response){
       
     })
     if (this.state.login == true){
+      
       this.props.navigation.replace("Home");
     }
   }
@@ -41,7 +45,15 @@ export default class Logo extends Component {
               />  
            <TouchableOpacity style={styles.button}  onPress={() => this.Login()}>
              <Text style={styles.buttonText}>Connexion</Text>
-           </TouchableOpacity>     
+           </TouchableOpacity>  
+           <TouchableOpacity style={styles.button}  onPress={() =>  this.props.navigation.replace('Home', {id :1})}>
+             <Text style={styles.buttonText}>Skip for dev</Text>
+           </TouchableOpacity>  
+           <Text>{"\n"}{"\n"}</Text>
+           <View style={styles.viewSignUp}>
+           <Text>Vous n'avez pas de compte ? </Text>
+           <Text style={styles.signupBtn} onPress={() => this.props.navigation.push('SignUp')} >Inscrivez vous</Text>
+           </View>
            </KeyboardAvoidingView>
            </ScrollView>
   		</View>
@@ -82,6 +94,17 @@ const styles = StyleSheet.create({
     fontWeight:'500',
     color:'#ffffff',
     textAlign:'center'
+  },
+  signupBtn: {
+      fontWeight: '500',
+      fontSize: 17,
+  },
+  viewSignUp: {
+    alignItems: "flex-end",
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingVertical: 16,
+    flexDirection: 'row',
   }
   
 });
