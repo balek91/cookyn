@@ -27,7 +27,6 @@ export default class App extends React.Component {
                   <AppStackNavigator />
 
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-
         </View>
       );
     }
@@ -59,12 +58,14 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 }
+
  const AppStackNavigator = createStackNavigator({
    Login: LoginScreen,
    Home: AppNavigator,
    SignUp : SignUpScreen,
    SignUpOk : SignUpOkScreen,
  });
+
 
  
 const styles = StyleSheet.create({
