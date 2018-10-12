@@ -1,1 +1,8 @@
-{}
+{
+  "expoServerPort": 19000,
+  "packagerPort": 19002,
+  "packagerPid": 32178,
+  "expoServerNgrokUrl": "https://yz-3ac.balek91.cookyn.exp.direct",
+  "packagerNgrokUrl": "https://packager.yz-3ac.balek91.cookyn.exp.direct",
+  "ngrokPid": 32190
+}

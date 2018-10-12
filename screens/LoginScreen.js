@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text,View, TextInput,ScrollView,StatusBar, KeyboardAvoidingView,TouchableOpacity, Image, Alert } from 'react-native';
+import { StyleSheet,Text,View, TextInput,ScrollView,StatusBar, KeyboardAvoidingView,TouchableOpacity, Image, Alert, AsyncStorage } from 'react-native';
 import Axios from 'axios';
 
 export default class Login extends Component {
@@ -20,6 +20,19 @@ export default class Login extends Component {
       this.props.navigation.replace("Home");
     }
   }
+
+  _storeData = async () => {
+    try {
+      await AsyncStorage.setItem('idUser', '1');
+    } catch (error) {
+      // Error saving data
+    }
+  }
+
+  componentDidMount(){
+    this._storeData();
+  }
+
 	render(){
 		return(
 			<View style={styles.container}>
@@ -60,8 +73,6 @@ export default class Login extends Component {
 			)
   }
 }
-
-
 const styles = StyleSheet.create({
   container : {
     flexGrow: 1,
