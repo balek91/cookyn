@@ -70,13 +70,13 @@ export default class ProfilScreen extends React.Component {
 
   _redirectModify = () => {
     /* 1. Navigate to the Details route with params */
-    alert('ok')
-    alert(this.state.id)
     this.props.navigation.navigate('ModifyUser', {
+      id : this.state.id,
       nom : this.state.nom,
       prenom : this.state.prenom,
       mail : this.state.mail,
-      ville : this.state.ville
+      ville : this.state.ville,
+      onNavigateBack: this._retrieveData.bind(this)
     });
   }
 
@@ -86,6 +86,7 @@ export default class ProfilScreen extends React.Component {
       if (value !== null) {
         this.setState({id: value})
         Axios.get("http://51.75.22.154:8080/Cookyn/user/getUserById/"+value).then(response => this.setState({
+          id : response.data.idUser,
           nom : response.data.nomUser,
           prenom : response.data.prenomUser,
           mail : response.data.mailUser,
@@ -108,7 +109,9 @@ export default class ProfilScreen extends React.Component {
  _onPressButtonModify = () => {
   alert('modify');
 }
-
+/* handleOnNavigateBack(){
+  this._retrieveData()
+} */
 componentDidMount() {
   this._retrieveData()
 }
