@@ -6,6 +6,7 @@ import AppNavigator from './navigation/AppNavigator';
 import LoginScreen from './screens/LoginScreen.js';
 import SignUpScreen from './screens/SignUpScreen.js';
 import SignUpOkScreen from './screens/SignUpOk.js';
+import CameraScreen from './components/Camera.js';
 
 export default class App extends React.Component {
   state = {
@@ -64,6 +65,7 @@ export default class App extends React.Component {
    Home: AppNavigator,
    SignUp : SignUpScreen,
    SignUpOk : SignUpOkScreen,
+   Camera: CameraScreen,
  });
 
 

@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor:'#fff',
     },
-  
+    
     inputBox: {
       width:300,
       height:40,

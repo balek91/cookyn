@@ -1,1 +1,9 @@
-{}
+{
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://9w-wid.espadasteve.cookyn.exp.direct",
+  "packagerNgrokUrl": "https://packager.9w-wid.espadasteve.cookyn.exp.direct",
+  "ngrokPid": 64986,
+  "devToolsPort": 19002,
+  "packagerPort": 19003,
+  "packagerPid": 64971
+}

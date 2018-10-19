@@ -9,6 +9,7 @@ import AddScreen from '../screens/AddScreen';
 import ProfilScreen from '../screens/ProfilScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import ModifyUserScreen from '../screens/ModifyUserScreen';
+import CameraModule from '../components/Camera.js';
 
 import {learnColour} from '../assets/images';
 
@@ -28,6 +29,7 @@ HomeStack.navigationOptions = {
 
 const AddStack = createStackNavigator({
   Add: AddScreen,
+ // Camera : CameraModule,
   
 });
 

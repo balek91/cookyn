@@ -5,15 +5,16 @@ import Axios from 'axios';
 export default class Login extends Component {
 
   state = {
-    login : false
+    login : false,
+    prenom: null,
   } 
   SignUp(){
   this.props.navigation.push("SignUp");
 }
   Login(){
     this.setState({login : true})
-    Axios.get("https://jsonplaceholder.typicode.com/todos/1").then(function (response){
-      
+    Axios.get("http://51.75.22.154:8080/Cookyn/user/getUserById/1").then(response => {
+     
     })
     if (this.state.login == true){
       
@@ -31,7 +32,7 @@ export default class Login extends Component {
           <TextInput style={styles.inputBox} 
               underlineColorAndroid='rgba(0,0,0,0)' 
               placeholder="Email"
-              placeholderTextColor = "#000000"
+              placeholderTextColor = "#707070"
               selectionColor="#fff"
               keyboardType="email-address"
               onSubmitEditing={()=> this.password.focus()}
@@ -40,7 +41,7 @@ export default class Login extends Component {
               underlineColorAndroid='rgba(0,0,0,0)' 
               placeholder="Password"
               secureTextEntry={true}
-              placeholderTextColor = "#000000"
+              placeholderTextColor = "#707070"
               ref={(input) => this.password = input}
               />  
            <TouchableOpacity style={styles.button}  onPress={() => this.Login()}>
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
       fontWeight: '500',
       fontSize: 17,
   },
-  viewSignUp: {
+  xc: {
     alignItems: "flex-end",
     flexGrow: 1,
     justifyContent: 'center',
