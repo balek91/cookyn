@@ -9,10 +9,11 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Alert,
+  Button,
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
+import Axios from 'axios';
 import { MonoText } from '../components/StyledText';
 
 export default class ModifyUserScreen extends React.Component {
@@ -21,7 +22,9 @@ export default class ModifyUserScreen extends React.Component {
   };
   constructor() {
     super()
+    this.updateUser = this.updateUser.bind(this);
     this.state = {
+      id: '',
       nom : '',
       prenom : '',
       mail : '',
@@ -63,27 +66,41 @@ export default class ModifyUserScreen extends React.Component {
         onChangeText={(ville) => this.setState({ville})}
         value={this.state.ville}
         />
+        <Button
+          title="Mettre à jour les informations"
+          onPress={this.updateUser}
+        />
         </KeyboardAvoidingView>
         </ScrollView>
       </View>
     );
   }
 
+  updateUser(){
+    let body = {
+      idUser: this.state.id,
+      nomUser: this.state.nom,
+      prenomUser: this.state.prenom,
+      mailUser: this.state.mail,
+      villeUser: this.state.ville
+      }
+    Axios.post('http://51.75.22.154:8080/Cookyn/user/CreateOrUpdateUser',body).then(response =>{
+        /* this.props.navigation.goBack() */
+        this.props.navigation.state.params.onNavigateBack()
+        this.props.navigation.navigate('Profil')
+    }
+    ) 
+  }
+
   componentDidMount() {
     const { navigation } = this.props;
-    const nom = navigation.getParam('nom', 'NO-NAME');
-    const prenom = navigation.getParam('prenom', 'NO-PRENOM');
-    const mail = navigation.getParam('mail', 'NO-MAIL');
-    const ville = navigation.getParam('ville', 'NO-VILLE');
-
     this.setState({
+      id : navigation.getParam('id', 0),
       nom : navigation.getParam('nom', 'NO-NAME'),
       prenom : navigation.getParam('prenom', 'NO-PRENOM'),
       mail : navigation.getParam('mail', 'NO-MAIL'),
       ville : navigation.getParam('ville', 'NO-VILLE')
     });
-    console.log(this.state.text);
-
 }
 }
 

@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   View,
   Button,
-  Alert
+  Alert,
+  AsyncStorage
 } from 'react-native';
+import Axios from 'axios';
 import { WebBrowser } from 'expo';
 import {ModifyUserScreen} from '../screens/ModifyUserScreen';
 import { MonoText } from '../components/StyledText';
@@ -21,13 +23,16 @@ export default class ProfilScreen extends React.Component {
 
   constructor() {
     super()
+    this._retrieveData = this._retrieveData.bind(this)
     this.state = {
+      id : '',
        following: 'Suivre',
-       nom : 'Faller',
-       prenom : 'Antoine',
-       mail : 'antoine.faller@ynov.com',
-       ville : 'marcoussis'
+       nom : '',
+       prenom : '',
+       mail : '',
+       ville : ''
     }
+
  }
 
   render() {
@@ -65,13 +70,32 @@ export default class ProfilScreen extends React.Component {
 
   _redirectModify = () => {
     /* 1. Navigate to the Details route with params */
-    alert('ok')
     this.props.navigation.navigate('ModifyUser', {
+      id : this.state.id,
       nom : this.state.nom,
       prenom : this.state.prenom,
       mail : this.state.mail,
-      ville : this.state.ville
+      ville : this.state.ville,
+      onNavigateBack: this._retrieveData.bind(this)
     });
+  }
+
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('idUser');
+      if (value !== null) {
+        this.setState({id: value})
+        Axios.get("http://51.75.22.154:8080/Cookyn/user/getUserById/"+value).then(response => this.setState({
+          id : response.data.idUser,
+          nom : response.data.nomUser,
+          prenom : response.data.prenomUser,
+          mail : response.data.mailUser,
+          ville : response.data.villeUser
+        }));
+      }
+     } catch (error) {
+       // Error retrieving data
+     }
   }
 
   _onPressButtonFollow = () => {
@@ -84,6 +108,12 @@ export default class ProfilScreen extends React.Component {
  }
  _onPressButtonModify = () => {
   alert('modify');
+}
+/* handleOnNavigateBack(){
+  this._retrieveData()
+} */
+componentDidMount() {
+  this._retrieveData()
 }
 }
 
