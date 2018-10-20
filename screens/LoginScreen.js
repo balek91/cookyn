@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text,View, TextInput,ScrollView,StatusBar, KeyboardAvoidingView,TouchableOpacity, Image, Alert, AsyncStorage } from 'react-native';
+import { StyleSheet,Text,View, TextInput,ScrollView, KeyboardAvoidingView,TouchableOpacity, Image, Alert, AsyncStorage } from 'react-native';
 import Axios from 'axios';
 
 export default class Login extends Component {
@@ -39,7 +39,7 @@ export default class Login extends Component {
 			<View style={styles.container}>
       
        <ScrollView showsVerticalScrollIndicator={false} >
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <KeyboardAvoidingView style={styles.container} behavior='padding' >
             <Image source={require('../assets/images/logo.png')} />
             <Text>{"\n"}{"\n"}</Text>
           <TextInput style={styles.inputBox} 

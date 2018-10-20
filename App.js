@@ -1,12 +1,12 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View,KeyboardAvoidingView } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { createStackNavigator } from 'react-navigation';
 import AppNavigator from './navigation/AppNavigator';
 import LoginScreen from './screens/LoginScreen.js';
 import SignUpScreen from './screens/SignUpScreen.js';
 import SignUpOkScreen from './screens/SignUpOk.js';
-import CameraScreen from './components/Camera.js';
+import QuickPicker from 'quick-picker';
 
 export default class App extends React.Component {
   state = {
@@ -28,6 +28,7 @@ export default class App extends React.Component {
                   <AppStackNavigator />
 
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <QuickPicker />
         </View>
       );
     }
@@ -65,7 +66,6 @@ export default class App extends React.Component {
    Home: AppNavigator,
    SignUp : SignUpScreen,
    SignUpOk : SignUpOkScreen,
-   Camera: CameraScreen,
  });
 
 

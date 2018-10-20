@@ -7,7 +7,7 @@ export default class SignUp extends Component {
 		return(
             <View style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false} >
-                <KeyboardAvoidingView style={styles.container} >
+                <KeyboardAvoidingView style={styles.container} behavior='padding'>
                     <Image source={require('../assets/images/logo.png')} />
                     <Text>{"\n"}{"\n"}</Text>
                     

@@ -3,9 +3,5 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
-<<<<<<< HEAD
   "urlRandomness": "9w-wid"
-=======
-  "urlRandomness": "yz-3ac"
->>>>>>> a4e16afced5702f3b58752173bf1e90aacce6834
 }

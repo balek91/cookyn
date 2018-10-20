@@ -1,8 +1,11 @@
 import React from 'react';
-import { Platform,StyleSheet,Text,View,Button, TextInput,TouchableOpacity, Modal, Image,TouchableHighlight, ScrollView , CameraRoll} from 'react-native';
+import { Platform,StyleSheet,Text,View, TextInput,TouchableOpacity, Modal, Image,ScrollView ,KeyboardAvoidingView} from 'react-native';
 import { WebBrowser } from 'expo';
 import OptionsMenu from "react-native-options-menu";
 import { ImagePicker, Permissions, Camera, Constants } from 'expo';
+import Picker from 'react-native-picker';
+import QuickPicker from 'quick-picker';
+	
 
 
 
@@ -15,7 +18,10 @@ export default class AddScreen extends React.Component {
     super(props);
     this._takePhoto = this._takePhoto.bind(this);
     this.state = {
-      Etapes : [],
+      EtapesView : [],
+      EtapesToSend : [],
+      IngredientsView: [],
+      IngredientsToSend : [],
       difficulte:null,
       PickerVisible : false,
       Photo:false,
@@ -24,20 +30,65 @@ export default class AddScreen extends React.Component {
       hasCameraRollPermission: null,
       HasCameraPermission: null,
       type: Camera.Constants.Type.back,
+      selectedDiff: null,
+      selectedUnit:null,
+      currentEtape:null,
+      selectedIngredient:null,
+      selectedQuantity:null,
+      ALL_QUANTITY:[]
     }
-
+    for(let i =0; i<= 1000; i++)
+    {
+      this.state.ALL_QUANTITY.push(i.toString());
+    }
 }
 
-addTextInput = (key) => {
-  let Etapes = this.state.Etapes;
-  Etapes.push(
-  <TextInput key={key}
-    style={styles.inputBoxEtape2} 
-    underlineColorAndroid='rgba(0,0,0,0)' 
-    placeholder="Étape"
-    placeholderTextColor = "#707070"
-    multiline={true} />);
-  this.setState({ Etapes })
+
+addTextInputEtapes = (key) => {
+ 
+  if(this.state.currentEtape != null){
+    if (this.state.currentEtape.length !=0 ){
+      let EtapesToSend = this.state.EtapesToSend;
+      EtapesToSend.push(this.state.currentEtape);
+      console.log(EtapesToSend);
+      let EtapesView = this.state.EtapesView;
+      EtapesView.push(
+      <Text key={'e' +key}
+       >{this.state.currentEtape}</Text>);
+      this.setState({ currentEtape:'' });
+      let textInput = this.refs.textInputEtape;
+      textInput.setNativeProps({ text: ' ' });
+      setTimeout(() => {  textInput.setNativeProps({ text: '' }) }, 5)  
+      }
+    }
+    
+  
+}
+
+addTextInputIngredients = (key) => {
+  if (this.state.selectedIngredient != null){
+    if( this.state.selectedUnit != null){
+      let IngredientsToSend = this.state.IngredientsToSend;
+      IngredientsToSend.push({
+        ingredients: this.state.selectedIngredient,
+        unite: this.state.selectedUnit,
+        quatite: this.state.selectedQuantity
+      });
+      let IngredientsView = this.state.IngredientsView;
+    IngredientsView.push(
+      
+      <Text key={'t'+key}>{ this.state.selectedQuantity + " " + this.state.selectedUnit + " de " + this.state.selectedIngredient}</Text> 
+      );
+  this.setState({
+    selectedUnit:'',
+    selectedIngredient: '',
+    selectedQuantity : ''
+  });
+  console.log(IngredientsToSend);
+    }
+    
+  } 
+  
 }
 
   onSelect = data => {
@@ -127,8 +178,40 @@ addTextInput = (key) => {
       this.setState({image :  this.props.navigation.getParam('photoCamera')})
     }
    */ 
-
+  _selectDifficulty = () => {
+    const { selectedDiff } = this.state;
+    QuickPicker.open({ 
+        items: ['Facile', 'Moyen', 'Difficile'], 
+        selectedValue: 'Difficile', // this could be this.state.selectedLetter as well.
+        onValueChange: (selectedValueFromPicker) => this.setState({ selectedDiff: selectedValueFromPicker }),
+        
+    });
+  }
+  _selectUnit = () => {
+    const { selectedUnit } = this.state;
+    QuickPicker.open({ 
+        items: ['Grammes', 'Kilogramme', 'Tranche'], 
+        selectedValue: 'Grammes', // this could be this.state.selectedLetter as well.
+        onValueChange: (selectedValueFromPicker) => this.setState({ selectedUnit: selectedValueFromPicker }),
+    });
+  }
+  _selectIngredient = () => {
+    const { selectedIngredient } = this.state;
+    QuickPicker.open({ 
+        items: ['Jambon', 'Fromage de chèvre', 'Aubergine'], 
+        selectedValue: 'Jambon', // this could be this.state.selectedLetter as well.
+        onValueChange: (selectedValueFromPicker) => this.setState({ selectedIngredient: selectedValueFromPicker }),
+    });
+  }
    
+  _selectQuantity = () => {
+    const { selectedQuantity } = this.state;
+    QuickPicker.open({ 
+        items: this.state.ALL_QUANTITY, 
+        selectedValue: '1', // this could be this.state.selectedLetter as well.
+        onValueChange: (selectedValueFromPicker) => this.setState({ selectedQuantity: selectedValueFromPicker }),
+    });
+  }
 
   render() {
     console.log(this.state.photoCamera);
@@ -154,6 +237,7 @@ addTextInput = (key) => {
     return(
     <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false} >
+        <KeyboardAvoidingView style={styles.container} behavior='padding'>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <OptionsMenu
               button={PhotoIcon}
@@ -195,41 +279,57 @@ addTextInput = (key) => {
               />  
               
               <View style={styles.viewSignUp}>
-              <TouchableOpacity style={styles.buttonDif}  onPress={() => this.displayPickerDiff()}>
-               <Text style={styles.buttonText}>Difficulté</Text>
-           </TouchableOpacity> 
 
-            <Text style={styles.inputBoxDif}>{this.displayDiff()}</Text>
+           <TouchableOpacity style={styles.buttonDif} feedback="opacity" native={false} onPress={this._selectDifficulty}>
+          <Text style={styles.buttonText}>Difficulté</Text>
+        </TouchableOpacity>
+
+            <Text style={styles.inputBoxIngredient}>{this.state.selectedDiff}</Text>
                 </View>    
            
-            <Modal visible={this.state.PickerVisible}>
-            <View style={{margin:20,backgroundColor:'#efefef', bottom:20,left:20, right:20, position:'absolute',alignItems:'center'}}>
-            <Text style={{fontWeight :'bold', marginBottom:10}}> Selectionnez la difficulté</Text>
-            { diffValue.map((value, index) => {
-              return(
-              <TouchableHighlight key={index} onPress={() => this.setDifficulte(value.value)} style={{paddingTop:4, paddingBottom:4, alignItems:'center'}} >
-              <Text>{value.title}</Text>
-          </TouchableHighlight>)
-            })}
-            </View>
-            </Modal>
             <View style={styles.viewSignUp}>
             <TextInput 
-              style={styles.inputBoxEtape1} 
+              style={styles.inputBoxEtape}
+              ref="textInputEtape" 
               underlineColorAndroid='rgba(0,0,0,0)' 
               placeholder="Étape"
               placeholderTextColor = "#707070"
               multiline={true}
-               />);
-             <TouchableOpacity style={styles.buttonPlus} onPress={() => this.addTextInput(this.state.Etapes.length)} > 
+              onChangeText={(value) => this.setState({
+                currentEtape:value})}
+               />
+             <TouchableOpacity style={styles.buttonPlus} onPress={() => this.addTextInputEtapes(this.state.EtapesView.length)} > 
              <Text style={styles.buttonText}>+</Text>
              </TouchableOpacity> 
                 </View>    
-                {this.state.Etapes.map((value, index) => {
-                    return value
+                {this.state.EtapesView.map((value, index) => {
+                  console.log(index)
+                    return (<Text  key={'lbE'+index} style={styles.itemAdd}>{value}</Text>)
                   })}
-                  
-            
+
+            <View style={styles.viewSelect}>
+
+              <Text style={styles.inputBoxIngredient} onPress={this._selectIngredient}>{this.state.selectedIngredient}</Text>
+               <Text style={styles.inputBoxIngredient} onPress={this._selectUnit} >{this.state.selectedUnit}</Text>
+               <Text style={styles.inputBoxIngredient} onPress={this._selectQuantity}>{this.state.selectedQuantity}</Text>
+
+             <TouchableOpacity style={styles.buttonPlus} onPress={() => this.addTextInputIngredients(this.state.IngredientsView.length)} > 
+             <Text style={styles.buttonText}>+</Text>
+             </TouchableOpacity> 
+                </View>    
+{this.state.IngredientsView.map((value, index) => {
+  return (<Text key={'lbIE'+index} style={styles.itemAdd}>{value}</Text>)
+})}
+
+<View style={styles.viewSignUp}>
+
+  <TouchableOpacity style={styles.buttonDif} feedback="opacity" native={false}>
+          <Text style={styles.buttonText}>Ajouter</Text>
+        </TouchableOpacity>
+</View>
+
+</KeyboardAvoidingView>
+  
             </ScrollView>
     </View> )
 
@@ -391,11 +491,12 @@ const styles = StyleSheet.create({
     fontSize:16,
     color:'#000',
     marginVertical: 10,
-    textAlign:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     fontSize:16,
     fontWeight:'500',    
   },
-  inputBoxEtape1: {
+  inputBoxEtape: {
     width:200,
     height:100,
     backgroundColor:'#fff',
@@ -407,19 +508,36 @@ const styles = StyleSheet.create({
     fontSize:16,
     fontWeight:'500',
     borderWidth:0.5,
+    margin: 10,
   },
-  inputBoxEtape2: {
+  itemAdd: {
     width:300,
-    height:100,
+    height:40,
     backgroundColor:'#fff',
+    borderRadius: 20,
     paddingHorizontal:16,
     fontSize:16,
     color:'#000',
     marginVertical: 10,
     textAlign:'center',
+    borderWidth:0.5,
+    padding:10,
+  },
+  inputBoxIngredient: {
+    width:70,
+    height:40,
+    backgroundColor:'#fff',
+    paddingHorizontal:16,
+    borderRadius:20,
+    padding:10,
+    fontSize:16,
+    color:'#707070',
+    marginVertical: 10,
+    textAlign:'center',
     fontSize:16,
     fontWeight:'500',
     borderWidth:0.5,
+    margin: 10,
   },
   button: {
     width:300,
@@ -443,6 +561,13 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     paddingVertical: 16,
+    flexDirection: 'row',
+  },
+  viewSelect: {
+    alignItems: "flex-end",
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingVertical: 5,
     flexDirection: 'row',
   },
   buttonDif: {
