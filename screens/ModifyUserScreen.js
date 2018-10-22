@@ -23,12 +23,21 @@ export default class ModifyUserScreen extends React.Component {
   constructor() {
     super()
     this.updateUser = this.updateUser.bind(this);
+    this.passwordField = this.passwordField.bind(this);
+    this.changePassword = this.changePassword.bind(this);
+    this.verifNewPassword = this.verifNewPassword.bind(this);
     this.state = {
       id: '',
       nom : '',
       prenom : '',
       mail : '',
-      ville : ''
+      ville : '', 
+      user : '',
+      oldPassword : '',
+      newPassword : '',
+      confirmPassword : '',
+      showChangePassword: false,
+      borderColorConfirmPassword : 'green',
     }
  }
 
@@ -48,6 +57,12 @@ export default class ModifyUserScreen extends React.Component {
         onChangeText={(nom) => this.setState({nom})}
         value={this.state.nom}
         />
+        <Text>Username: </Text>      
+        <TextInput
+        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        onChangeText={(user) => this.setState({user})}
+        value={this.state.user}
+        />
         <Text>Prenom:</Text>
         <TextInput
         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
@@ -66,6 +81,11 @@ export default class ModifyUserScreen extends React.Component {
         onChangeText={(ville) => this.setState({ville})}
         value={this.state.ville}
         />
+        {this.passwordField()}
+        <Button
+          title="Changer le mot de passe"
+          onPress={this.changePassword}
+        />
         <Button
           title="Mettre à jour les informations"
           onPress={this.updateUser}
@@ -76,16 +96,80 @@ export default class ModifyUserScreen extends React.Component {
     );
   }
 
+  changePassword(){
+    this.setState({
+        showChangePassword : true
+    });
+  }
+
+  passwordField() {
+    if (this.state.showChangePassword) {
+        return (
+        <View>
+          <Text>Ancien Mot de Passe:</Text>
+          <TextInput
+          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+          onChangeText={(oldPassword) => this.setState({oldPassword})}
+          secureTextEntry={true} 
+          />
+          <Text>Nouveau Mot de Passe:</Text>
+          <TextInput
+          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+          onChangeText={(newPassword) => this.setState({newPassword})}
+          secureTextEntry={true} 
+          />
+          <Text>Confirmer le Mot de passe:</Text>
+          <TextInput
+          style={this.verifNewPasswordStyle()}
+          secureTextEntry={true} 
+          onChangeText = {this.verifNewPassword}
+
+          />
+        </View>
+        );
+    } else {
+        return null;
+    }
+}
+
+verifNewPasswordStyle = function(options) {
+  return {
+    height: 40, 
+    borderColor: this.state.borderColorConfirmPassword,
+     borderWidth: 2
+  }
+}
+
+verifNewPassword(){
+  (confirmPassword) => this.setState({confirmPassword})
+}
+
   updateUser(){
-    let body = {
-      idUser: this.state.id,
-      nomUser: this.state.nom,
-      prenomUser: this.state.prenom,
-      mailUser: this.state.mail,
-      villeUser: this.state.ville
-      }
-    Axios.post('http://51.75.22.154:8080/Cookyn/user/CreateOrUpdateUser',body).then(response =>{
-        /* this.props.navigation.goBack() */
+    let body 
+    if(this.state.showChangePassword){
+      
+      body = {
+        idUser: this.state.id,
+        nomUser: this.state.nom,
+        prenomUser: this.state.prenom,
+        mailUser: this.state.mail,
+        villeUser: this.state.ville,
+        usernameUser : this.state.user,
+        passwordUser : this.state.oldPassword,
+        newPassword : this.state.newPassword
+        }
+    }else{
+      body = {
+        idUser: this.state.id,
+        nomUser: this.state.nom,
+        prenomUser: this.state.prenom,
+        mailUser: this.state.mail,
+        usernameUser : this.state.user,
+        villeUser: this.state.ville
+        }
+    }
+console.log(body)
+    Axios.post('http://51.75.22.154:8080/General/user/UpdateUser',body).then(response =>{
         this.props.navigation.state.params.onNavigateBack()
         this.props.navigation.navigate('Profil')
     }
@@ -99,7 +183,8 @@ export default class ModifyUserScreen extends React.Component {
       nom : navigation.getParam('nom', 'NO-NAME'),
       prenom : navigation.getParam('prenom', 'NO-PRENOM'),
       mail : navigation.getParam('mail', 'NO-MAIL'),
-      ville : navigation.getParam('ville', 'NO-VILLE')
+      ville : navigation.getParam('ville', 'NO-VILLE'),
+      user : navigation.getParam('user', 'NO-USERNAME')
     });
 }
 }

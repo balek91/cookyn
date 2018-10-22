@@ -30,7 +30,8 @@ export default class ProfilScreen extends React.Component {
        nom : '',
        prenom : '',
        mail : '',
-       ville : ''
+       ville : '', 
+       user : ''
     }
 
  }
@@ -50,7 +51,7 @@ export default class ProfilScreen extends React.Component {
           </View>
           <View style={styles.contentView}>
             <Text style={styles.title2Text}>Informations Personnelles : </Text>           
-            
+            <MonoText style={styles.contentText}>Username : {this.state.user}</MonoText>
             <MonoText style={styles.contentText}>Nom : {this.state.nom}</MonoText>
             <MonoText style={styles.contentText}>Prenom : {this.state.prenom}</MonoText>
             <MonoText style={styles.contentText}>Mail : {this.state.mail}</MonoText>
@@ -76,6 +77,7 @@ export default class ProfilScreen extends React.Component {
       prenom : this.state.prenom,
       mail : this.state.mail,
       ville : this.state.ville,
+      user : this.state.user,
       onNavigateBack: this._retrieveData.bind(this)
     });
   }
@@ -85,12 +87,13 @@ export default class ProfilScreen extends React.Component {
       const value = await AsyncStorage.getItem('idUser');
       if (value !== null) {
         this.setState({id: value})
-        Axios.get("http://51.75.22.154:8080/Cookyn/user/getUserById/"+value).then(response => this.setState({
+        Axios.get("http://51.75.22.154:8080/General/user/getUserById/"+value).then(response => this.setState({
           id : response.data.idUser,
           nom : response.data.nomUser,
           prenom : response.data.prenomUser,
           mail : response.data.mailUser,
-          ville : response.data.villeUser
+          ville : response.data.villeUser,
+          user : response.data.usernameUser
         }));
       }
      } catch (error) {
