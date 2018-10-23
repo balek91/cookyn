@@ -1,17 +1,16 @@
 import React from 'react';
-import { Platform,StyleSheet,Text,View, TextInput,TouchableOpacity, Modal, Image,ScrollView ,KeyboardAvoidingView} from 'react-native';
+import { Platform,StyleSheet,Text,View, TextInput,TouchableOpacity, Image,ScrollView ,KeyboardAvoidingView} from 'react-native';
 import { WebBrowser } from 'expo';
 import OptionsMenu from "react-native-options-menu";
 import { ImagePicker, Permissions, Camera, Constants } from 'expo';
-import Picker from 'react-native-picker';
 import QuickPicker from 'quick-picker';
-	
+import Picker from 'react-native-multiple-picker';
 
 
 
 export default class AddScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: "Ajout"
   };
 
   constructor(props) {
@@ -20,8 +19,13 @@ export default class AddScreen extends React.Component {
     this.state = {
       EtapesView : [],
       EtapesToSend : [],
+      IngredientsRecu: [],
       IngredientsView: [],
       IngredientsToSend : [],
+      UniteRecu : [],
+      ALL_QUANTITY:[],
+      dataPicker: [],
+      labelPicker: [],
       difficulte:null,
       PickerVisible : false,
       Photo:false,
@@ -35,17 +39,47 @@ export default class AddScreen extends React.Component {
       currentEtape:null,
       selectedIngredient:null,
       selectedQuantity:null,
-      ALL_QUANTITY:[]
+      phraseIngredient: "Cliquez pour chosir l'ingredients"
+      
     }
-    for(let i =0; i<= 1000; i++)
+    let test = [];
+    for(let i =1; i<= 1000; i++)
     {
-      this.state.ALL_QUANTITY.push(i.toString());
+      test.push(i.toString());
     }
+    console.log(test[2]);
+    let QuatityPicker = [];
+    for (let j = 1; j < 1000; j++){
+      QuatityPicker.push({key: test[j],label: test[j]});
+    }
+  //  console.log(QuatityPicker);
+    let IngredientsPicker =  [
+      {key: 0, label: 'Ananas'},
+      {key: 1, label: 'Bananes'},
+      {key: 2, label: 'Jambon'},
+      {key: 3, label: 'Tomate'},
+      {key: 4, label: 'Olives'},
+      {key: 5, label: 'Mayonaise'},
+      {key: 6, label: 'Herbes de Provance'},
+    ]
+let UnitésPicker = [
+      {key: 0, label: 'grammes'},
+      {key: 1, label: 'kilogrammes'},
+      {key: 2, label: 'tranches'},
+      {key: 3, label: 'cuillérées'},
+      {key: 4, label: 'pincées'},
+      {key: 5, label: 'lamelles'},
+   ]
+   this.state.UniteRecu = UnitésPicker;
+   this.state.IngredientsRecu = IngredientsPicker;
+    this.state.dataPicker = [IngredientsPicker, UnitésPicker, QuatityPicker];
+    this.state.labelPicker = ['Ingredients', 'Unités', 'Quantité'];
+//  console.log(this.state.dataPicker);
 }
 
 
 addTextInputEtapes = (key) => {
- 
+
   if(this.state.currentEtape != null){
     if (this.state.currentEtape.length !=0 ){
       let EtapesToSend = this.state.EtapesToSend;
@@ -54,7 +88,7 @@ addTextInputEtapes = (key) => {
       let EtapesView = this.state.EtapesView;
       EtapesView.push(
       <Text key={'e' +key}
-       >{this.state.currentEtape}</Text>);
+      >{this.state.currentEtape}</Text>);
       this.setState({ currentEtape:'' });
       let textInput = this.refs.textInputEtape;
       textInput.setNativeProps({ text: ' ' });
@@ -66,25 +100,29 @@ addTextInputEtapes = (key) => {
 }
 
 addTextInputIngredients = (key) => {
-  if (this.state.selectedIngredient != null){
-    if( this.state.selectedUnit != null){
-      let IngredientsToSend = this.state.IngredientsToSend;
-      IngredientsToSend.push({
-        ingredients: this.state.selectedIngredient,
-        unite: this.state.selectedUnit,
-        quatite: this.state.selectedQuantity
-      });
-      let IngredientsView = this.state.IngredientsView;
-    IngredientsView.push(
+  if (this.state.selectedIngredient != null || this.state.selectedIngredient !="Ingrédient"){
+    if( this.state.selectedUnit != null || this.state.selectedUnit !="Unité"){
+      if (this.state.selectedQuantity != null || this.state.selectedQuantity !="Nb"){
+        let IngredientsToSend = this.state.IngredientsToSend;
+        IngredientsToSend.push({
+          ingredients: this.state.selectedIngredient,
+          unite: this.state.selectedUnit,
+          quatite: this.state.selectedQuantity
+        });
+        let IngredientsView = this.state.IngredientsView;
       
-      <Text key={'t'+key}>{ this.state.selectedQuantity + " " + this.state.selectedUnit + " de " + this.state.selectedIngredient}</Text> 
-      );
-  this.setState({
-    selectedUnit:'',
-    selectedIngredient: '',
-    selectedQuantity : ''
-  });
-  console.log(IngredientsToSend);
+      IngredientsView.push(
+        
+        <Text key={'t'+key}>{ this.state.selectedQuantity + " " + this.state.selectedUnit + " de " + this.state.selectedIngredient}</Text> 
+        );
+    this.setState({
+      selectedUnit:'Unité',
+      selectedIngredient: 'Ingrédient',
+      selectedQuantity : 'Nb'
+    });
+      console.log(IngredientsToSend);
+      }
+      
     }
     
   } 
@@ -102,10 +140,10 @@ addTextInputIngredients = (key) => {
     this.setState({ hasCameraPermission: status2 === 'granted' });
   }
 
- 
+
 
   _takePhoto = async () => {
-   let result =  await ImagePicker.launchCameraAsync({allowsEditing: true,
+  let result =  await ImagePicker.launchCameraAsync({allowsEditing: true,
     aspect: [4, 3]});
 
     if (!result.cancelled) {
@@ -140,7 +178,7 @@ addTextInputIngredients = (key) => {
     }
   }
 
-   urlToBlob(url) {
+  urlToBlob(url) {
     return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
         xhr.onerror = reject;
@@ -153,7 +191,7 @@ addTextInputIngredients = (key) => {
         xhr.responseType = 'blob'; // convert type
         xhr.send();
     })
- }
+}
     returnData(photo) {
       console.log("Jsuis la");
       console.log(this.props.navigation.getParam('photoCamera'));
@@ -177,12 +215,13 @@ addTextInputIngredients = (key) => {
 /*     loadPicture(){
       this.setState({image :  this.props.navigation.getParam('photoCamera')})
     }
-   */ 
+  */ 
   _selectDifficulty = () => {
+    console.log("Dedans")
     const { selectedDiff } = this.state;
     QuickPicker.open({ 
         items: ['Facile', 'Moyen', 'Difficile'], 
-        selectedValue: 'Difficile', // this could be this.state.selectedLetter as well.
+        selectedValue: 'Facile', // this could be this.state.selectedLetter as well.
         onValueChange: (selectedValueFromPicker) => this.setState({ selectedDiff: selectedValueFromPicker }),
         
     });
@@ -193,6 +232,7 @@ addTextInputIngredients = (key) => {
         items: ['Grammes', 'Kilogramme', 'Tranche'], 
         selectedValue: 'Grammes', // this could be this.state.selectedLetter as well.
         onValueChange: (selectedValueFromPicker) => this.setState({ selectedUnit: selectedValueFromPicker }),
+        onPressDone: this._selectQuantity,
     });
   }
   _selectIngredient = () => {
@@ -201,20 +241,27 @@ addTextInputIngredients = (key) => {
         items: ['Jambon', 'Fromage de chèvre', 'Aubergine'], 
         selectedValue: 'Jambon', // this could be this.state.selectedLetter as well.
         onValueChange: (selectedValueFromPicker) => this.setState({ selectedIngredient: selectedValueFromPicker }),
+        onPressDone: this._selectUnit,
     });
   }
-   
+  
   _selectQuantity = () => {
     const { selectedQuantity } = this.state;
     QuickPicker.open({ 
         items: this.state.ALL_QUANTITY, 
         selectedValue: '1', // this could be this.state.selectedLetter as well.
         onValueChange: (selectedValueFromPicker) => this.setState({ selectedQuantity: selectedValueFromPicker }),
+        onPressDone:QuickPicker.close()
     });
   }
 
   render() {
-    console.log(this.state.photoCamera);
+    const gradStyle = {
+      start: {x: 0, y: 0},
+      end: {x: 1, y: 1.0},
+      locations: [0, 0.5, 1],
+      colors: ['#743e4e', '#fff', '#221d33']
+  };
     const diffValue =[
       {
         title:'Facile',
@@ -231,7 +278,7 @@ addTextInputIngredients = (key) => {
     ]
 
   let { image } = this.state;
-   /* const name = this.props.navigation.getParam('photoCamera');
+  /* const name = this.props.navigation.getParam('photoCamera');
     console.log(" TEEEEEESTT " + name); */
     const PhotoIcon = require("../assets/icons/addphoto.png");
     return(
@@ -255,6 +302,7 @@ addTextInputIngredients = (key) => {
               placeholder="Nom de la recette"
               placeholderTextColor = "#707070"
               ref={(input) => this.name = input}
+              onSubmitEditing={()=> this.categorie.focus()}
               />  
 
           <TextInput style={styles.inputBox} 
@@ -262,6 +310,7 @@ addTextInputIngredients = (key) => {
               placeholder="Catégorie"
               placeholderTextColor = "#707070"
               ref={(input) => this.categorie = input}
+              onSubmitEditing={()=> this.price.focus()}
               />  
 
               <TextInput style={styles.inputBox} 
@@ -269,6 +318,7 @@ addTextInputIngredients = (key) => {
               placeholder="Prix estimé"
               placeholderTextColor = "#707070"
               ref={(input) => this.price = input}
+              onSubmitEditing={()=> this.tps.focus()}
               />  
 
           <TextInput style={styles.inputBox} 
@@ -280,14 +330,14 @@ addTextInputIngredients = (key) => {
               
               <View style={styles.viewSignUp}>
 
-           <TouchableOpacity style={styles.buttonDif} feedback="opacity" native={false} onPress={this._selectDifficulty}>
+          <TouchableOpacity style={styles.buttonDif} feedback="opacity" native={false} onPress={this._selectDifficulty}>
           <Text style={styles.buttonText}>Difficulté</Text>
         </TouchableOpacity>
 
-            <Text style={styles.inputBoxIngredient}>{this.state.selectedDiff}</Text>
+            <Text style={styles.TextDiffculté}>{this.state.selectedDiff}</Text>
                 </View>    
-           
-            <View style={styles.viewSignUp}>
+          
+            <View style={styles.viewEtape}>
             <TextInput 
               style={styles.inputBoxEtape}
               ref="textInputEtape" 
@@ -297,10 +347,10 @@ addTextInputIngredients = (key) => {
               multiline={true}
               onChangeText={(value) => this.setState({
                 currentEtape:value})}
-               />
-             <TouchableOpacity style={styles.buttonPlus} onPress={() => this.addTextInputEtapes(this.state.EtapesView.length)} > 
-             <Text style={styles.buttonText}>+</Text>
-             </TouchableOpacity> 
+              />
+            <TouchableOpacity style={styles.buttonPlus} onPress={() => this.addTextInputEtapes(this.state.EtapesView.length)} > 
+            <Text style={styles.buttonText}>+</Text>
+            </TouchableOpacity> 
                 </View>    
                 {this.state.EtapesView.map((value, index) => {
                   console.log(index)
@@ -308,18 +358,42 @@ addTextInputIngredients = (key) => {
                   })}
 
             <View style={styles.viewSelect}>
+                  
+            <Picker
+              gradStyle = {{start: {x: 0, y: 0},
+              end: {x: 1, y: 1.0},
+              locations: [0, 0.5, 1],
+              colors: ['#743e4e', '#fff', '#221d33']}}
+              height = {0.5}
+                  data={this.state.dataPicker}
+                  onChange={(option) => {
+                    if (option !=undefined){
+                      this.setState({
+                        selectedIngredient : this.state.IngredientsRecu[option[0]].label,
+                        selectedQuantity : option[2],
+                        selectedUnit : this.state.UniteRecu[option[1]].label
+                      })
+                        console.log(this.state.IngredientsRecu[option[0]]);
+                        this.setState({selectedValue: ""})
+                    }
+                  }}
+                  label={this.state.labelPicker}
 
-              <Text style={styles.inputBoxIngredient} onPress={this._selectIngredient}>{this.state.selectedIngredient}</Text>
-               <Text style={styles.inputBoxIngredient} onPress={this._selectUnit} >{this.state.selectedUnit}</Text>
-               <Text style={styles.inputBoxIngredient} onPress={this._selectQuantity}>{this.state.selectedQuantity}</Text>
 
-             <TouchableOpacity style={styles.buttonPlus} onPress={() => this.addTextInputIngredients(this.state.IngredientsView.length)} > 
-             <Text style={styles.buttonText}>+</Text>
-             </TouchableOpacity> 
+              >
+                  <Text style={styles.inputBoxIngredient} >{this.state.phraseIngredient}</Text>
+
+              </Picker>
+           
+
+            <TouchableOpacity style={styles.buttonPlus} onPress={() => this.addTextInputIngredients(this.state.IngredientsView.length)} > 
+            <Text style={styles.buttonText}>+</Text>
+            </TouchableOpacity> 
                 </View>    
 {this.state.IngredientsView.map((value, index) => {
   return (<Text key={'lbIE'+index} style={styles.itemAdd}>{value}</Text>)
 })}
+
 
 <View style={styles.viewSignUp}>
 
@@ -340,10 +414,10 @@ addTextInputIngredients = (key) => {
 
   submit(){
     var data = 'data:image/png;base64,...';
- urlToBlob(data)
- .then(blob => {
+urlToBlob(data)
+.then(blob => {
     console.log(blob);
- })
+})
   }
 
   _maybeRenderDevelopmentModeWarning() {
@@ -508,7 +582,7 @@ const styles = StyleSheet.create({
     fontSize:16,
     fontWeight:'500',
     borderWidth:0.5,
-    margin: 10,
+    margin: 35,
   },
   itemAdd: {
     width:300,
@@ -524,7 +598,23 @@ const styles = StyleSheet.create({
     padding:10,
   },
   inputBoxIngredient: {
-    width:70,
+    width:260,
+    height:40,
+    backgroundColor:'#fff',
+    paddingHorizontal:16,
+    borderRadius:20,
+    padding:10,
+    fontSize:16,
+    color:'#707070',
+    marginVertical: 10,
+    textAlign:'center',
+    fontSize:16,
+    fontWeight:'500',
+    borderWidth:0.5,
+    margin: 10,
+  },
+   TextDiffculté: {
+    width:100,
     height:40,
     backgroundColor:'#fff',
     paddingHorizontal:16,
@@ -558,6 +648,13 @@ const styles = StyleSheet.create({
   },
   viewSignUp: {
     alignItems: "flex-end",
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingVertical: 16,
+    flexDirection: 'row',
+  },
+  viewEtape: {
+    alignItems: "center",
     flexGrow: 1,
     justifyContent: 'center',
     paddingVertical: 16,

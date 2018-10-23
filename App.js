@@ -1,18 +1,32 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View,KeyboardAvoidingView } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
-import { createStackNavigator } from 'react-navigation';
-import AppNavigator from './navigation/AppNavigator';
-import LoginScreen from './screens/LoginScreen.js';
-import SignUpScreen from './screens/SignUpScreen.js';
-import SignUpOkScreen from './screens/SignUpOk.js';
-import QuickPicker from 'quick-picker';
+import { createSwitchNavigator} from 'react-navigation';
+import { createRootNavigator} from './navigation/AppNavigator.js'
+import { isSignedIn} from  './components/Auth.js';
+import MainTabNavigator from './navigation/MainTabNavigator';
+import NotConnected from './navigation/SignedOutNavigator';
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
+    
   };
 
+  constructor(props){
+    super(props);
+    this.state = {
+      signedIn:false,
+    checkedSignIn: false
+     }
+  }
+
+  componentDidMount(){
+    isSignedIn()
+    .then(res => this.setState({signedIn: res, checkedSignIn: true}))
+    .catch(err => console.log("An error occured " + err ));
+
+  }
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
@@ -23,14 +37,8 @@ export default class App extends React.Component {
         />
       );
     } else {
-      return (
-        <View style={styles.container}>
-                  <AppStackNavigator />
-
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <QuickPicker />
-        </View>
-      );
+      const Layout = createRootNavigator(this.state.signedIn);
+      return <Layout />
     }
   }
 
@@ -60,15 +68,13 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 }
-
- const AppStackNavigator = createStackNavigator({
-   Login: LoginScreen,
-   Home: AppNavigator,
-   SignUp : SignUpScreen,
-   SignUpOk : SignUpOkScreen,
- });
-
-
+ const navigator = createSwitchNavigator({
+  // You could add another route here for authentication.
+  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
+  SignedIn: MainTabNavigator,
+  SignedOut: NotConnected
+  
+});
  
 const styles = StyleSheet.create({
   container: {

@@ -12,10 +12,15 @@ import ModifyUserScreen from '../screens/ModifyUserScreen';
 import CameraModule from '../components/Camera.js';
 
 import {learnColour} from '../assets/images';
-
+const headeStyle = {
+  margintop: Platform.OS ==='android' ? StatusBar.currentHeight : 0
+};
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: {screen : HomeScreen, navigationOptions : {
+    title: "Ajout",
+  }}
+  
 });
 
 
@@ -25,6 +30,7 @@ HomeStack.navigationOptions = {
     <Image style={{height:26, width:26}}
            source={require('../assets/icons/home.png')}
     />),
+    
 };
 
 const AddStack = createStackNavigator({
@@ -71,5 +77,4 @@ export default createBottomTabNavigator({
   HomeStack,
   ProfilStack, 
   CalendarStack,
-
 });

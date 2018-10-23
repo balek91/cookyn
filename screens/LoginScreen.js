@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet,Text,View, TextInput,ScrollView, KeyboardAvoidingView,TouchableOpacity, Image, Alert, AsyncStorage } from 'react-native';
 import Axios from 'axios';
+import {onSignIn} from '../components/Auth.js';
 
 export default class Login extends Component {
 
@@ -37,7 +38,6 @@ export default class Login extends Component {
 	render(){
 		return(
 			<View style={styles.container}>
-      
        <ScrollView showsVerticalScrollIndicator={false} >
       <KeyboardAvoidingView style={styles.container} behavior='padding' >
             <Image source={require('../assets/images/logo.png')} />
@@ -57,10 +57,10 @@ export default class Login extends Component {
               placeholderTextColor = "#707070"
               ref={(input) => this.password = input}
               />  
-           <TouchableOpacity style={styles.button}  onPress={() => this.Login()}>
+           <TouchableOpacity style={styles.button}  onPress={() => {onSignIn().then(() => this.props.navigation.navigate("SignedIn"))}}>
              <Text style={styles.buttonText}>Connexion</Text>
            </TouchableOpacity>  
-           <TouchableOpacity style={styles.button}  onPress={() =>  this.props.navigation.replace('Home', {id :1})}>
+           <TouchableOpacity style={styles.button}  onPress={() =>  this.props.navigation.navigate("SignedIn")}>
              <Text style={styles.buttonText}>Skip for dev</Text>
            </TouchableOpacity>  
            <Text>{"\n"}{"\n"}</Text>
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems: 'center',
     backgroundColor:'#fff',
+    margin: 10
   },
 
   inputBox: {

@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
       justifyContent:'center',
       alignItems: 'center',
       backgroundColor:'#fff',
+      margin:10
     },
   
     inputBox: {
