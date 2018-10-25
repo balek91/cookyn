@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { createSwitchNavigator} from 'react-navigation';
 import { createRootNavigator} from './navigation/AppNavigator.js'
 import { isSignedIn} from  './components/Auth.js';
 import MainTabNavigator from './navigation/MainTabNavigator';
 import NotConnected from './navigation/SignedOutNavigator';
+import QuickPicker from 'quick-picker';
+
 
 export default class App extends React.Component {
   state = {
@@ -38,7 +40,8 @@ export default class App extends React.Component {
       );
     } else {
       const Layout = createRootNavigator(this.state.signedIn);
-      return <Layout />
+      return(
+        <View style={styles.container}><Layout /> <QuickPicker /></View> )
     }
   }
 

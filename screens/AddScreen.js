@@ -95,8 +95,22 @@ addTextInputEtapes = (key) => {
       setTimeout(() => {  textInput.setNativeProps({ text: '' }) }, 5)  
       }
     }
-    
-  
+}
+
+deleteInputIngredients = (key) => {
+  console.log(key);
+  let Ingredients = this.state.IngredientsView;
+    for (let i = key; i <= Ingredients.length; i++){
+      if (Ingredients[i+1]!= null) {
+        Ingredients[i] = Ingredients[i+1];
+      } else {
+        Ingredients.splice(i, 1);
+      }
+    }
+
+  this.setState({
+    IngredientsView: Ingredients,
+  });
 }
 
 addTextInputIngredients = (key) => {
@@ -110,17 +124,29 @@ addTextInputIngredients = (key) => {
           quatite: this.state.selectedQuantity
         });
         let IngredientsView = this.state.IngredientsView;
-      
+      let index = 0;
+      if (key === this.state.nbAjout ){
+        index = key;
+        console.log("Index1 " + index + " Key : " + key);
+      }
+      if (key < this.state.nbAjout){
+        index = this.state.nbAjout - (this.state.nbAjout - key);
+        console.log("Index2 " + index);
+      }
       IngredientsView.push(
-        
-        <Text key={'t'+key}>{ this.state.selectedQuantity + " " + this.state.selectedUnit + " de " + this.state.selectedIngredient}</Text> 
+        <View style={styles.viewSelect}>
+        <Text  style={styles.inputBoxIngredient}>{ this.state.selectedQuantity + " " + this.state.selectedUnit + " de " + this.state.selectedIngredient}</Text> 
+        <TouchableOpacity key={'d'+index} style={styles.buttonPlus} onPress={() => this.deleteInputIngredients(index)} > 
+            <Text style={styles.buttonText}>-</Text>
+            </TouchableOpacity> </View>
         );
     this.setState({
       selectedUnit:'Unité',
       selectedIngredient: 'Ingrédient',
-      selectedQuantity : 'Nb'
+      selectedQuantity : 'Nb',
+      nbAjout: +1
     });
-      console.log(IngredientsToSend);
+     // console.log(IngredientsToSend);
       }
       
     }
@@ -216,16 +242,17 @@ addTextInputIngredients = (key) => {
       this.setState({image :  this.props.navigation.getParam('photoCamera')})
     }
   */ 
-  _selectDifficulty = () => {
-    console.log("Dedans")
-    const { selectedDiff } = this.state;
-    QuickPicker.open({ 
-        items: ['Facile', 'Moyen', 'Difficile'], 
-        selectedValue: 'Facile', // this could be this.state.selectedLetter as well.
-        onValueChange: (selectedValueFromPicker) => this.setState({ selectedDiff: selectedValueFromPicker }),
-        
-    });
-  }
+ _selectDifficulty = () => {
+  const { selectedDiff } = this.state;
+  QuickPicker.open({ 
+      items: ['Facile', 'Moyen', 'Difficile'], 
+      selectedValue: 'Facile', // this could be this.state.selectedLetter as well.
+      onPressDone: (selectedValueFromPicker) =>{
+          this.setState({ selectedDiff: selectedValueFromPicker });
+          QuickPicker.close();
+      }
+  });
+}
   _selectUnit = () => {
     const { selectedUnit } = this.state;
     QuickPicker.open({ 
@@ -391,8 +418,9 @@ addTextInputIngredients = (key) => {
             </TouchableOpacity> 
                 </View>    
 {this.state.IngredientsView.map((value, index) => {
-  return (<Text key={'lbIE'+index} style={styles.itemAdd}>{value}</Text>)
+  return (value);
 })}
+
 
 
 <View style={styles.viewSignUp}>
