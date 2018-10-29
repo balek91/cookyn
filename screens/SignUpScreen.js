@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text,View, ScrollView, KeyboardAvoidingView,TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet,Text,View, ScrollView,TextInput, TouchableOpacity, Image } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export default class SignUp extends Component {
 
@@ -7,7 +8,7 @@ export default class SignUp extends Component {
 		return(
             <View style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false} >
-                <KeyboardAvoidingView style={styles.container} behavior='padding'>
+                <KeyboardAwareScrollView contentContainerStyle={styles.container} behavior='padding' resetScrollToCoords={{x:0,y:0}} >
                     <Image source={require('../assets/images/logo.png')} />
                     <Text>{"\n"}{"\n"}</Text>
                     
@@ -61,7 +62,7 @@ export default class SignUp extends Component {
                     <TouchableOpacity style={styles.button}  onPress={() =>  this.props.navigation.replace("SignUpOk")}>
                         <Text style={styles.buttonText}>S'inscrire</Text>
                     </TouchableOpacity>     
-                    </KeyboardAvoidingView>
+                    </KeyboardAwareScrollView>
             </ScrollView>
           </View>
 			)
