@@ -46,9 +46,10 @@ export default class Login extends Component {
             <Text>{"\n"}{"\n"}</Text>
           <TextInput style={styles.inputBox} 
               underlineColorAndroid='rgba(0,0,0,0)' 
-              placeholder="Email"
+              placeholder="Email/Username"
               placeholderTextColor = "#707070"
-              selectionColor="#fff"
+              autoCapitalize="none"
+              autoCorrect = {false}
               keyboardType="email-address"
               onSubmitEditing={()=> this.password.focus()}
               />

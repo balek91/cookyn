@@ -14,6 +14,7 @@ import {
 import Axios from 'axios';
 import { WebBrowser } from 'expo';
 import {ModifyUserScreen} from '../screens/ModifyUserScreen';
+import {ListRecetteScreen} from '../screens/ListRecetteScreen';
 import { MonoText } from '../components/StyledText';
 
 export default class ProfilScreen extends React.Component {
@@ -31,7 +32,10 @@ export default class ProfilScreen extends React.Component {
        prenom : '',
        mail : '',
        ville : '', 
-       user : ''
+       user : '', 
+       nbFollow : '',
+       nbFollower : '',
+       showSuivre : false
     }
 
  }
@@ -57,10 +61,26 @@ export default class ProfilScreen extends React.Component {
             <MonoText style={styles.contentText}>Mail : {this.state.mail}</MonoText>
             <MonoText style={styles.contentText}>Ville : {this.state.ville}</MonoText>
           </View>
+          {this.showSuivreBtn()}
           <View style={styles.helpContainer}>
                   <TouchableOpacity>
-                    <Text style = {styles.button} onPress={this._onPressButtonFollow}>
-                    {this.state.following}
+                    <Text style = {styles.button}>
+                    {this.state.nbFollow} Abonnement(s)
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style = {styles.button} >
+                    {this.state.nbFollower} Abonné(s)
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style = {styles.button} onPress={this._onPressButtonFavoris}>
+                    Favoris
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style = {styles.button} onPress={this._onPressButtonCreations}>
+                    Créations
                     </Text>
                 </TouchableOpacity>
           </View>
@@ -82,6 +102,22 @@ export default class ProfilScreen extends React.Component {
     });
   }
 
+  showSuivreBtn() {
+    if (this.state.showSuivre) {
+        return (
+          <View style={styles.helpContainer}>
+                  <TouchableOpacity>
+                    <Text style = {styles.button} onPress={this._onPressButtonFollow}>
+                    {this.state.following}
+                    </Text>
+                </TouchableOpacity>
+          </View>
+        );
+    } else {
+        return null;
+    }
+}
+
   _retrieveData = async () => {
     try {
       const value = await AsyncStorage.getItem('idUser');
@@ -93,13 +129,24 @@ export default class ProfilScreen extends React.Component {
           prenom : response.data.prenomUser,
           mail : response.data.mailUser,
           ville : response.data.villeUser,
-          user : response.data.usernameUser
+          user : response.data.usernameUser,
+          nbFollow : response.data.nbFollowing,
+          nbFollower : response.data.nbFollower,
         }));
       }
      } catch (error) {
        // Error retrieving data
      }
   }
+  _onPressButtonFavoris = () => {
+    this.props.navigation.navigate('ListRecette');
+ }
+
+ _onPressButtonCreations = () => {
+  this.props.navigation.navigate('ListRecette');
+}
+
+
 
   _onPressButtonFollow = () => {
     if(this.state.following == 'Suivre'){
@@ -112,9 +159,6 @@ export default class ProfilScreen extends React.Component {
  _onPressButtonModify = () => {
   alert('modify');
 }
-/* handleOnNavigateBack(){
-  this._retrieveData()
-} */
 componentDidMount() {
   this._retrieveData()
 }
