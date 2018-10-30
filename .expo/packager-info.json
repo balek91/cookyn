@@ -1,9 +1,9 @@
 {
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://bz-vgm.espadasteve.cookyn.exp.direct",
-  "packagerNgrokUrl": "https://packager.bz-vgm.espadasteve.cookyn.exp.direct",
-  "ngrokPid": 41060,
-  "devToolsPort": 19002,
-  "packagerPort": 19004,
-  "packagerPid": 41036
+  "expoServerPort": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "devToolsPort": 19007,
+  "packagerPort": null,
+  "packagerPid": null
 }
