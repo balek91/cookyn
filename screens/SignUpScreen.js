@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text,View, ScrollView,TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet,Text,View,TextInput, TouchableOpacity, Image } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Axios from 'axios';
 
@@ -163,8 +163,7 @@ verifPassword(confirmPassword1){
 	render(){
 		return(
             <View style={styles.container}>
-                <ScrollView showsVerticalScrollIndicator={false} >
-                <KeyboardAwareScrollView contentContainerStyle={styles.container} behavior='padding' resetScrollToCoords={{x:0,y:0}} >
+                <KeyboardAwareScrollView contentContainerStyle={styles.container} resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false} >
                     <Image source={require('../assets/images/logo.png')} />
                     <Text>{"\n"}{"\n"}</Text>
                     
@@ -240,7 +239,6 @@ verifPassword(confirmPassword1){
                         <Text style={styles.buttonText}>S'inscrire</Text>
                     </TouchableOpacity>     
                     </KeyboardAwareScrollView>
-            </ScrollView>
           </View>
 			)
   }

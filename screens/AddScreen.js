@@ -1,13 +1,12 @@
 import React from 'react';
-import { Platform,StyleSheet,Text,View, TextInput,TouchableOpacity, Image,ScrollView ,KeyboardAvoidingView} from 'react-native';
+import { Platform,StyleSheet,Text,View, TextInput,TouchableOpacity, Image} from 'react-native';
 import { WebBrowser } from 'expo';
 import OptionsMenu from "react-native-options-menu";
 import { ImagePicker, Permissions, Camera, Constants } from 'expo';
 import QuickPicker from 'quick-picker';
 import Picker from 'react-native-multiple-picker';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import { ListItem, FormInput } from 'react-native-elements'
-
+import { ListItem } from 'react-native-elements';
 
 
 export default class AddScreen extends React.Component {
@@ -208,14 +207,13 @@ addTextInputIngredients = () => {
 
 
     _updateOrdre(index, value) {
-
       let objetTableau = this.state.EtapesToSend;
-      const tableau = JSON.stringify(objetTableau)
+      objetTableau[index].ordre = value;
+      this.setState({
+        EtapesToSend : objetTableau
+      });
+      const tableau = JSON.stringify(this.state.EtapesToSend)
       console.log("NEW TABLEAU  " + tableau);
-
-      // reccuperer l'élement index du tableau et chnager la valeur de la variable ordre en value
-      //puis update state.EtapesToSend
-
     }
    
 
@@ -279,8 +277,7 @@ addTextInputIngredients = () => {
     const PhotoIcon = require("../assets/icons/addphoto.png");
     return(
     <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false} >
-        <KeyboardAwareScrollView  behavior='padding' resetScrollToCoords={{x:0,y:0}} >
+        <KeyboardAwareScrollView  resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false}  >
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <OptionsMenu
               button={PhotoIcon}
@@ -350,11 +347,13 @@ addTextInputIngredients = () => {
                 </View>    
                 <View>
   {
-    this.state.EtapesToSend.map((item, index) => (
+    this.state.EtapesToSend
+    .sort((itemA, itemB) => itemA.ordre > itemB.ordre )
+    .map((item, index) => (
       <View key={'etape' + item.ordre}>
         <View style={styles.viewSignUp}>
         <Text  style={styles.labelListEtape}>{"Étape n° "}</Text> 
-        <TextInput value={item.ordre.toString()}  keyboardType='numeric' onChangeText={(value) => 
+        <TextInput value={item.ordre.toString()}  keyboardType='number-pad' onChangeText={(value) => 
           this._updateOrdre(index, value)} style={styles.inputBoxListEtape} />
           </View>
       <ListItem
@@ -434,7 +433,6 @@ addTextInputIngredients = () => {
 </View>
 </KeyboardAwareScrollView>
   
-            </ScrollView>
     </View> 
     
     )    
@@ -485,6 +483,13 @@ urlToBlob(data)
 }
 
 const styles = StyleSheet.create({
+  container : {
+    flexGrow: 1,
+    justifyContent:'center',
+    alignItems: 'center',
+    backgroundColor:'#fff',
+    paddingTop: Constants.statusBarHeight,
+  },
   container : {
     flexGrow: 1,
     justifyContent:'center',

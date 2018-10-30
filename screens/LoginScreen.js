@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet,Text,View, TextInput,ScrollView, KeyboardAvoidingView,TouchableOpacity, Image, Alert, AsyncStorage } from 'react-native';
+import { StyleSheet,Text,View, TextInput,TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import Axios from 'axios';
 import {onSignIn} from '../components/Auth.js';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -40,8 +40,7 @@ export default class Login extends Component {
 	render(){
 		return(
 			<View style={styles.container}>
-       <ScrollView showsVerticalScrollIndicator={false} >
-      <KeyboardAwareScrollView contentContainerStyle={styles.container} behavior='padding' resetScrollToCoords={{x:0,y:0}} >
+      <KeyboardAwareScrollView contentContainerStyle={styles.container} behavior='padding' resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false} >
             <Image source={require('../assets/images/logo.png')} />
             <Text>{"\n"}{"\n"}</Text>
           <TextInput style={styles.inputBox} 
@@ -72,7 +71,6 @@ export default class Login extends Component {
            <Text style={styles.signupBtn} onPress={() => this.props.navigation.push('SignUp')} >Inscrivez vous</Text>
            </View>
            </KeyboardAwareScrollView>
-           </ScrollView>
   		</View>
 			)
   }
