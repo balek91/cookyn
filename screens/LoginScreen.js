@@ -27,7 +27,7 @@ export default class Login extends Component {
 
   _storeData = async () => {
     try {
-      await AsyncStorage.setItem('idUser', '8');
+      await AsyncStorage.setItem('idUser', '1');
     } catch (error) {
       // Error saving data
     }
