@@ -64,12 +64,12 @@ export default class ProfilScreen extends React.Component {
           {this.showSuivreBtn()}
           <View style={styles.helpContainer}>
                   <TouchableOpacity>
-                    <Text style = {styles.button}>
+                    <Text style = {styles.button}  onPress={this._onPressButtonAbonnements}>
                     {this.state.nbFollow} Abonnement(s)
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <Text style = {styles.button} >
+                    <Text style = {styles.button}  onPress={this._onPressButtonAbonnes}>
                     {this.state.nbFollower} Abonné(s)
                     </Text>
                 </TouchableOpacity>
@@ -138,6 +138,22 @@ export default class ProfilScreen extends React.Component {
        // Error retrieving data
      }
   }
+
+  onBackFromListUser(user){
+    console.log(user);
+    if(user.idUser != null){
+      Axios.get("http://51.75.22.154:8080/General/user/getUserById/"+user.idUser).then(response => this.setState({
+          id : response.data.idUser,
+          nom : response.data.nomUser,
+          prenom : response.data.prenomUser,
+          mail : response.data.mailUser,
+          ville : response.data.villeUser,
+          user : response.data.usernameUser,
+          nbFollow : response.data.nbFollowing,
+          nbFollower : response.data.nbFollower,
+        }));
+    }
+  }
   _onPressButtonFavoris = () => {
     this.props.navigation.navigate('ListRecette');
  }
@@ -146,6 +162,23 @@ export default class ProfilScreen extends React.Component {
   this.props.navigation.navigate('ListRecette');
 }
 
+_onPressButtonAbonnes = () => {
+  Axios.get("http://51.75.22.154:8080/Cookyn/user/GetListAbonne/"+this.state.id).then(response => 
+    this.props.navigation.navigate('ListUsers', {
+      users : response.data,
+      namePage : 'Abonnes',
+      backToProfil: this.onBackFromListUser.bind(this)
+  }));
+}
+
+_onPressButtonAbonnements = () => {
+  Axios.get("http://51.75.22.154:8080/Cookyn/user/GetListAbonnement/"+this.state.id).then(response => 
+    this.props.navigation.navigate('ListUsers', {
+      users : response.data,
+      namePage : 'Abonnements',
+      backToProfil: this.onBackFromListUser.bind(this)
+  }));
+}
 
 
   _onPressButtonFollow = () => {
@@ -160,7 +193,7 @@ export default class ProfilScreen extends React.Component {
   alert('modify');
 }
 componentDidMount() {
-  this._retrieveData()
+  this._retrieveData();
 }
 }
 

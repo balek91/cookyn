@@ -10,6 +10,7 @@ import ProfilScreen from '../screens/ProfilScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import ModifyUserScreen from '../screens/ModifyUserScreen';
 import ListRecetteScreen from '../screens/ListRecetteScreen';
+import ListUsersScreen from '../screens/ListUsersScreen';
 import CameraModule from '../components/Camera.js';
 
 import {learnColour} from '../assets/images';
@@ -52,6 +53,7 @@ const ProfilStack = createStackNavigator({
   Profil: ProfilScreen,
   ModifyUser : ModifyUserScreen,
   ListRecette : ListRecetteScreen,
+  ListUsers : ListUsersScreen
 });
 
 ProfilStack.navigationOptions = {
