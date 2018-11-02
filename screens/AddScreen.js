@@ -7,6 +7,8 @@ import QuickPicker from 'quick-picker';
 import Picker from 'react-native-multiple-picker';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { ListItem } from 'react-native-elements';
+import Axios from 'axios';
+
 
 
 export default class AddScreen extends React.Component {
@@ -19,9 +21,8 @@ export default class AddScreen extends React.Component {
     this.addTextInputIngredients = this.addTextInputIngredients.bind(this);
     this.state = {
       EtapesToSend : [],
-      IngredientsRecu: [],
       IngredientsToSend : [],
-      UniteRecu : [],
+      IngredientsView:[],
       ALL_QUANTITY:[],
       dataPicker: [],
       labelPicker: [],
@@ -40,39 +41,50 @@ export default class AddScreen extends React.Component {
       phraseIngredient: "Cliquez pour chosir l'ingredient",
       nbEtape:0,
       currentValueUpdate:null,
-      
+      libelleRecette:"",
+      catRecette: "",
+      tempPrepRecette: null,
+      diffRecette : "",
+      prixRecette : null,
+      IngredientsPicker: [],
+      UnitésPicker:[]
     }
+
     let test = [];
     for(let i =1; i<= 1000; i++)
     {
       test.push(i.toString());
     }
-    console.log(test[0]);
     let QuatityPicker = [];
     for (let j = 0; j < 1000; j++){
       QuatityPicker.push({key: test[j],label: test[j]});
     }
   //  console.log(QuatityPicker);
-    let IngredientsPicker =  [
-      {key: 'Ananas', label: 'Ananas'},
-      {key: 'Bananes', label: 'Bananes'},
-      {key: 'Jambon', label: 'Jambon'},
-      {key: 'Tomate', label: 'Tomate'},
-      {key: 'Olives', label: 'Olives'},
-      {key: 'Mayonaise', label: 'Mayonaise'},
-      {key: 'Herbes de Provance', label: 'Herbes de Provance'},
-    ]
-let UnitésPicker = [
-      {key: 'grammes', label: 'grammes'},
-      {key: 'kilogrammes', label: 'kilogrammes'},
-      {key: 'tranches', label: 'tranches'},
-      {key: 'cuillérées', label: 'cuillérées'},
-      {key: 'pincées', label: 'pincées'},
-      {key: 'lamelles', label: 'lamelles'},
-   ]
+
+  let IngredientsPicker =  [];
+    Axios.get("http://51.75.22.154:8080/Cookyn/ingredient/GetListAllIngredient").then((response) =>{
+      response.data.map((item) =>{
+        this.state.IngredientsPicker.push({
+          key: 'ingr' +item.idIngredient,
+          label: item.libelleIngredient
+        });
+      });
+    })
+
+let UnitésPicker = [];
+Axios.get("http://51.75.22.154:8080/Cookyn/unite/ListUnites").then((response) =>{
+   response.data.map((item) =>{
+     this.state.UnitésPicker.push({
+       key: 'unit' +item.idUnite,
+       label: item.libelleUnite
+     })
+   })
+});
+
+
    this.state.UniteRecu = UnitésPicker;
    this.state.IngredientsRecu = IngredientsPicker;
-    this.state.dataPicker = [QuatityPicker,UnitésPicker, IngredientsPicker];
+    this.state.dataPicker = [QuatityPicker,this.state.UnitésPicker, this.state.IngredientsPicker];
     this.state.labelPicker = ['Quantité', 'Unités', 'Ingrédients'];
 //  console.log(this.state.dataPicker);
 }
@@ -88,7 +100,6 @@ addTextInputEtapes = () => {
       EtapesToSend.push({
         etape : this.state.currentEtape,
          ordre: nombreEtape});
-      console.log(EtapesToSend);
       this.setState({ currentEtape:'', nbEtape: nombreEtape });
       let textInput = this.refs.textInputEtape;
       textInput.setNativeProps({ text: ' ' });
@@ -98,7 +109,6 @@ addTextInputEtapes = () => {
 }
 
 deleteInputIngredients = (key) => {
-  console.log(key);
   let Ingredients = this.state.IngredientsView;
     for (let i = key; i <= Ingredients.length; i++){
       if (Ingredients[i+1]!= null) {
@@ -121,13 +131,20 @@ addTextInputIngredients = () => {
         IngredientsToSend.push({
           ingredients: this.state.selectedIngredient,
           unite: this.state.selectedUnit,
-          quatite: this.state.selectedQuantity
+          quantite: this.state.selectedQuantity
         });
+        let ingredientView = this.state.IngredientsView;
+        ingredientView.push({
+          ingredients: this.state.IngredientsPicker[this.state.selectedIngredient -1].label,
+          unite: this.state.UnitésPicker[this.state.selectedUnit -1].label,
+          quantite: this.state.selectedQuantity
+        })
     this.setState({
       selectedUnit:null,
       selectedIngredient: null,
       selectedQuantity : null,
       IngredientsToSend : IngredientsToSend,
+      IngredientsView : ingredientView,
       phraseIngredient: "Cliquez pour chosir l'ingredient"
     });
      // console.log(IngredientsToSend);
@@ -156,6 +173,42 @@ addTextInputIngredients = () => {
     this.setState({ hasCameraPermission: status2 === 'granted' });
   }
 
+  _sendRecepie= () =>{
+    let recette = [{
+      catRecette : this.state.catRecette,
+      libelleRecette : this.state.libelleRecette,
+      tempPrepRecette : this.state.tempPrepRecette,
+      diffRecette : this.state.selectedDiff,
+    //  prixRecette : this.state.prixRecette,
+    }];
+    let ingredients = [];
+    this.state.IngredientsToSend.map( (items)=>{
+      ingredients.push({
+        ingredient : items.ingredients,
+        unite : items.unite,
+        quantite : items.quantite
+      });
+    } );
+
+    let etapes = [];
+    this.state.EtapesToSend.map((items) => {
+      etapes.push({
+        descriptionEtape : items.etape,
+        indexEtape : items.ordre
+      });
+    });
+    let json = {
+      etapes: etapes,
+      ingredients : ingredients,
+      recette : recette,
+    };
+
+    console.log(json);
+
+   Axios.post("http://51.75.22.154:8080/Cookyn/recette/AddRecette",json).then((response) =>{
+     console.log(response.data);
+    });
+  }
 
 
   _takePhoto = async () => {
@@ -197,9 +250,6 @@ addTextInputIngredients = () => {
     })
 }
     returnData(photo) {
-      console.log("Jsuis la");
-      console.log(this.props.navigation.getParam('photoCamera'));
-      console.log(photo);
       this.setState({
         image: photo
       });
@@ -213,7 +263,6 @@ addTextInputIngredients = () => {
         EtapesToSend : objetTableau
       });
       const tableau = JSON.stringify(this.state.EtapesToSend)
-      console.log("NEW TABLEAU  " + tableau);
     }
    
 
@@ -228,34 +277,6 @@ addTextInputIngredients = () => {
       }
   });
 }
-  _selectUnit = () => {
-    const { selectedUnit } = this.state;
-    QuickPicker.open({ 
-        items: ['Grammes', 'Kilogramme', 'Tranche'], 
-        selectedValue: 'Grammes', // this could be this.state.selectedLetter as well.
-        onValueChange: (selectedValueFromPicker) => this.setState({ selectedUnit: selectedValueFromPicker }),
-        onPressDone: this._selectQuantity,
-    });
-  }
-  _selectIngredient = () => {
-    const { selectedIngredient } = this.state;
-    QuickPicker.open({ 
-        items: ['Jambon', 'Fromage de chèvre', 'Aubergine'], 
-        selectedValue: 'Jambon', // this could be this.state.selectedLetter as well.
-        onValueChange: (selectedValueFromPicker) => this.setState({ selectedIngredient: selectedValueFromPicker }),
-        onPressDone: this._selectUnit,
-    });
-  }
-  
-  _selectQuantity = () => {
-    const { selectedQuantity } = this.state;
-    QuickPicker.open({ 
-        items: this.state.ALL_QUANTITY, 
-        selectedValue: '1', // this could be this.state.selectedLetter as well.
-        onValueChange: (selectedValueFromPicker) => this.setState({ selectedQuantity: selectedValueFromPicker }),
-        onPressDone:QuickPicker.close()
-    });
-  }
   deleteListIngredient(index) {
     let tableau = this.state.IngredientsToSend;
     tableau.splice(index, 1);
@@ -295,6 +316,7 @@ addTextInputIngredients = () => {
               placeholder="Nom de la recette"
               placeholderTextColor = "#707070"
               ref={(input) => this.name = input}
+              onChangeText = {(val) => this.setState({libelleRecette : val})}
               onSubmitEditing={()=> this.categorie.focus()}
               />  
 
@@ -303,6 +325,7 @@ addTextInputIngredients = () => {
               placeholder="Catégorie"
               placeholderTextColor = "#707070"
               ref={(input) => this.categorie = input}
+              onChangeText = {(val) => this.setState({catRecette : val})}
               onSubmitEditing={()=> this.price.focus()}
               />  
 
@@ -311,6 +334,7 @@ addTextInputIngredients = () => {
               placeholder="Prix estimé"
               placeholderTextColor = "#707070"
               ref={(input) => this.price = input}
+              onChangeText = {(val) => this.setState({prixRecette : val})}
               onSubmitEditing={()=> this.tps.focus()}
               />  
 
@@ -318,9 +342,9 @@ addTextInputIngredients = () => {
               underlineColorAndroid='rgba(0,0,0,0)' 
               placeholder="Temps de préparation"
               placeholderTextColor = "#707070"
+              onChangeText = {(val) => this.setState({tempPrepRecette : val})}
               ref={(input) => this.tps = input}
               />  
-              
               <View style={styles.viewSignUp}>
 
           <TouchableOpacity style={styles.buttonDif} feedback="opacity" native={false} onPress={this._selectDifficulty}>
@@ -378,6 +402,7 @@ addTextInputIngredients = () => {
               height = {0.5}
               data={this.state.dataPicker}
               onChange={(option) => {
+                console.log(option);
                 if (option !=undefined){
                   if (option[0]!= undefined){
                     this.setState({
@@ -385,18 +410,18 @@ addTextInputIngredients = () => {
                     });
                     if (option[1] != undefined){
                       this.setState({
-                        selectedUnit : option[1]
+                        selectedUnit : option[1].toString().substring(4)
                       });
                       if (option[2] != undefined){
+                        idUnit = option[1].toString().substring(4);
+                        idIngredient = option[2].toString().substring(4);
                         this.setState({
-                          selectedIngredient : option[2],
-                          phraseIngredient: option[0] +" " + option[1] + " de " + option[2]
+                          selectedIngredient : option[2].toString().substring(4),
+                          phraseIngredient: option[0] +" " + this.state.UnitésPicker[idUnit - 1].label + " de " + this.state.IngredientsPicker[idIngredient - 1].label
                         });
                       }
                     }
                   }
-                  
-                    console.log(this.state.IngredientsRecu[option[0]]);
                     this.setState({selectedValue: ""})
                 }
               }}
@@ -413,10 +438,10 @@ addTextInputIngredients = () => {
 
 <View>
   {
-    this.state.IngredientsToSend.map((item, index) => (
+    this.state.IngredientsView.map((item, index) => (
       <ListItem
         key={index}
-        title={item.quatite + ' ' + item.unite + ' de ' + item.ingredients}
+        title={item.quantite + ' ' + item.unite + ' de ' + item.ingredients}
         rightIcon= {{name: 'delete'}}
         onPressRightIcon= {() => this.deleteListIngredient(index)}
       />
@@ -427,7 +452,7 @@ addTextInputIngredients = () => {
 
 <View style={styles.viewSignUp}>
 
-  <TouchableOpacity style={styles.buttonDif} feedback="opacity" native={false}>
+  <TouchableOpacity style={styles.buttonDif} feedback="opacity" native={false} onPress={this._sendRecepie}>
           <Text style={styles.buttonText}>Ajouter</Text>
         </TouchableOpacity>
 </View>

@@ -58,8 +58,8 @@ render() {
       </View>)
 }
   onPress(contact) {
-      this.props.navigation.navigate("Profil");
-      this.props.navigation.state.params.backToProfil(contact)
+      this.props.navigation.navigate("ProfilUser");
+   //   this.props.navigation.state.params.backToProfil(contact)
     }
 
   componentDidMount() {

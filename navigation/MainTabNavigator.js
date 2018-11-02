@@ -51,6 +51,7 @@ AddStack.navigationOptions = {
 
 const ProfilStack = createStackNavigator({
   Profil: ProfilScreen,
+  ProfilUser: ProfilScreen,
   ModifyUser : ModifyUserScreen,
   ListRecette : ListRecetteScreen,
   ListUsers : ListUsersScreen
