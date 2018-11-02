@@ -174,19 +174,26 @@ addTextInputIngredients = () => {
   }
 
   _sendRecepie= () =>{
-    let recette = [{
+    let recette = {
       catRecette : this.state.catRecette,
       libelleRecette : this.state.libelleRecette,
-      tempPrepRecette : this.state.tempPrepRecette,
+      tempPrepRecette :  parseInt(this.state.tempPrepRecette,10),
       diffRecette : this.state.selectedDiff,
+      user :{
+        idUser : 1
+      }
     //  prixRecette : this.state.prixRecette,
-    }];
+    };
     let ingredients = [];
     this.state.IngredientsToSend.map( (items)=>{
       ingredients.push({
-        ingredient : items.ingredients,
-        unite : items.unite,
-        quantite : items.quantite
+        ingredient : {
+          idIngredient :  parseInt(items.ingredients, 10)
+        },
+        unite :{
+          idUnite :  parseInt(items.unite, 10)
+        },
+        quantite : parseInt(items.quantite,10)
       });
     } );
 
@@ -194,7 +201,7 @@ addTextInputIngredients = () => {
     this.state.EtapesToSend.map((items) => {
       etapes.push({
         descriptionEtape : items.etape,
-        indexEtape : items.ordre
+        indexEtape :  parseInt(items.ordre,10)
       });
     });
     let json = {
@@ -334,6 +341,7 @@ addTextInputIngredients = () => {
               placeholder="Prix estimé"
               placeholderTextColor = "#707070"
               ref={(input) => this.price = input}
+              keyboardType='number-pad'
               onChangeText = {(val) => this.setState({prixRecette : val})}
               onSubmitEditing={()=> this.tps.focus()}
               />  
@@ -342,6 +350,7 @@ addTextInputIngredients = () => {
               underlineColorAndroid='rgba(0,0,0,0)' 
               placeholder="Temps de préparation"
               placeholderTextColor = "#707070"
+              keyboardType='number-pad'
               onChangeText = {(val) => this.setState({tempPrepRecette : val})}
               ref={(input) => this.tps = input}
               />  
