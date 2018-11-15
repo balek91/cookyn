@@ -1,24 +1,26 @@
 import React from 'react';
 import { Platform,StyleSheet,Text,View, TextInput,TouchableOpacity, Image} from 'react-native';
 import { WebBrowser } from 'expo';
-import OptionsMenu from "react-native-options-menu";
+import InputText from '../components/TextInput/index'
 import { ImagePicker, Permissions, Camera, Constants } from 'expo';
 import QuickPicker from 'quick-picker';
 import Picker from 'react-native-multiple-picker';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { ListItem } from 'react-native-elements';
 import Axios from 'axios';
+import OptionPicker from '../components/OptionPicker/index'
+import Touchable from '../components/Touchable/index'
 
 
 
 export default class AddScreen extends React.Component {
   static navigationOptions = {
-    title: "Ajout"
+    title: null
   };
 
   constructor(props) {
     super(props);
-    this.addTextInputIngredients = this.addTextInputIngredients.bind(this);
+    this._addTextInputIngredients = this._addTextInputIngredients.bind(this);
     this.state = {
       EtapesToSend : [],
       IngredientsToSend : [],
@@ -90,7 +92,19 @@ Axios.get("http://51.75.22.154:8080/Cookyn/unite/ListUnites").then((response) =>
 }
 
 
-addTextInputEtapes = () => {
+_isVoyelle = (item) => {
+  let allVoyelle = ['a','e','i','o', 'u', 'y'];
+  let result = false;
+  allVoyelle.forEach(element => {
+    if (element == item.toString().charAt(0)){
+      result = true;
+    } 
+  });
+
+  return result;
+}
+
+_addTextInputEtapes = () => {
 
   if(this.state.currentEtape != null){
     if (this.state.currentEtape.length !=0 ){
@@ -122,7 +136,7 @@ deleteInputIngredients = (key) => {
   });
 }
 
-addTextInputIngredients = () => {
+_addTextInputIngredients = () => {
   
   if (this.state.selectedIngredient != null) {
     if( this.state.selectedUnit != null){
@@ -159,7 +173,7 @@ addTextInputIngredients = () => {
   } else {
     alert("Veuillez choisir un ingrédient");
   } 
-  
+
 }
 
   onSelect = data => {
@@ -284,11 +298,14 @@ addTextInputIngredients = () => {
       }
   });
 }
-  deleteListIngredient(index) {
+  _deleteListIngredient(index) {
     let tableau = this.state.IngredientsToSend;
+    let tableauView = this.state.IngredientsView;
     tableau.splice(index, 1);
+    tableauView.splice(index, 1);
     this.setState({
-      IngredientsToSend: tableau
+      IngredientsToSend: tableau,
+      IngredientsView : tableauView
     })
   }
 
@@ -300,66 +317,81 @@ addTextInputIngredients = () => {
     })
   }
 
+
+  _setLibelle = (val) => 
+  {
+   let text = this.state.libelleRecette;
+   text = val;
+   this.setState({
+     libelleRecette : t
+   })
+
+  }
+  
+
   render() {
   let { image } = this.state;
     const PhotoIcon = require("../assets/icons/addphoto.png");
     return(
     <View style={styles.container}>
         <KeyboardAwareScrollView  resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false}  >
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <OptionsMenu
-              button={PhotoIcon}
-              buttonStyle={{ width: 50, height: 50, margin: 7.5, resizeMode: "contain" }}
-              options={["Choisir une photo de la bibliothèque", "Prendre une photo", "Annuler"]}
-              actions={[this._pickImage, this._takePhoto,null]}/>
+     
+      <OptionPicker 
+          option={["Choisir une photo de la bibliothèque", "Prendre une photo", "Annuler"]} 
+          action={[this._pickImage, this._takePhoto,null]} 
+          image={image}
+      />
 
-        {image &&
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}> 
+
+      <InputText
+      reference= {(input)=> this.name = input}
+      placeholderText="Nom de la recette"
+      onChangeTextFunction={(val) => this.setState({libelleRecette: val})}
+      onSubmitEditingFunction={() => this.categorie.focus()}
+      multi={false}
+      width={300}
+      />
+      
+       <InputText
+      reference= {(input)=> this.categorie = input}
+      placeholderText="Catégorie"
+      onChangeTextFunction={(val) => this.setState({catRecette: val})}
+      onSubmitEditingFunction={() => this.price.focus()}
+      multi={false}
+      width={300}
+
+      />
+      <InputText
+      reference= {(input)=> this.price = input}
+      placeholderText="Prix estimé"
+      onChangeTextFunction={(val) => this.setState({prixRecette: val})}
+      onSubmitEditingFunction={() => this.tps.focus()}
+      keyboard="number-pad"
+      multi={false}
+      width={300}
+      />
+
+       <InputText
+      reference= {(input)=> this.tps = input}
+      placeholderText="Temps de préparation"
+      onChangeTextFunction={(val) => this.setState({tempPrepRecette: val})}
+      onSubmitEditingFunction={() => this.tps.focus()}
+      keyboard="number-pad"
+      multi={false}
+      width={300}
+      />
+
       </View>
 
-      
-              <TextInput style={styles.inputBox} 
-              underlineColorAndroid='rgba(0,0,0,0)' 
-              placeholder="Nom de la recette"
-              placeholderTextColor = "#707070"
-              ref={(input) => this.name = input}
-              onChangeText = {(val) => this.setState({libelleRecette : val})}
-              onSubmitEditing={()=> this.categorie.focus()}
-              />  
-
-          <TextInput style={styles.inputBox} 
-              underlineColorAndroid='rgba(0,0,0,0)' 
-              placeholder="Catégorie"
-              placeholderTextColor = "#707070"
-              ref={(input) => this.categorie = input}
-              onChangeText = {(val) => this.setState({catRecette : val})}
-              onSubmitEditing={()=> this.price.focus()}
-              />  
-
-              <TextInput style={styles.inputBox} 
-              underlineColorAndroid='rgba(0,0,0,0)' 
-              placeholder="Prix estimé"
-              placeholderTextColor = "#707070"
-              ref={(input) => this.price = input}
-              keyboardType='number-pad'
-              onChangeText = {(val) => this.setState({prixRecette : val})}
-              onSubmitEditing={()=> this.tps.focus()}
-              />  
-
-          <TextInput style={styles.inputBox} 
-              underlineColorAndroid='rgba(0,0,0,0)' 
-              placeholder="Temps de préparation"
-              placeholderTextColor = "#707070"
-              keyboardType='number-pad'
-              onChangeText = {(val) => this.setState({tempPrepRecette : val})}
-              ref={(input) => this.tps = input}
-              />  
               <View style={styles.viewSignUp}>
-
-          <TouchableOpacity style={styles.buttonDif} feedback="opacity" native={false} onPress={this._selectDifficulty}>
-          <Text style={styles.buttonText}>Difficulté</Text>
-        </TouchableOpacity>
-
+              <Touchable
+                text="Difficulté"
+                onPressFunction={this._selectDifficulty}
+                widthTouchable={100}
+                backgroundColorTouchable="#78C9DC"
+                colorText="#FFF"
+              />
             <Text style={styles.TextDiffculté}>{this.state.selectedDiff}</Text>
                 </View>    
           
@@ -374,9 +406,14 @@ addTextInputIngredients = () => {
               onChangeText={(value) => this.setState({
                 currentEtape:value})}
               />
-            <TouchableOpacity style={styles.buttonPlus} onPress={() => this.addTextInputEtapes()} > 
-            <Text style={styles.buttonText}>+</Text>
-            </TouchableOpacity> 
+
+               <Touchable
+                text="+"
+                onPressFunction={this._addTextInputEtapes}
+                widthTouchable={50}
+                backgroundColorTouchable="#78C9DC"
+                colorText="#FFF"
+              />
                 </View>    
                 <View>
   {
@@ -386,8 +423,12 @@ addTextInputIngredients = () => {
       <View key={'etape' + item.ordre}>
         <View style={styles.viewSignUp}>
         <Text  style={styles.labelListEtape}>{"Étape n° "}</Text> 
-        <TextInput value={item.ordre.toString()}  keyboardType='number-pad' onChangeText={(value) => 
-          this._updateOrdre(index, value)} style={styles.inputBoxListEtape} />
+           <InputText
+      onChangeTextFunction={(val) => this._updateOrdre(index, val)}
+      keyboard="number-pad" 
+      value={item.ordre.toString()}  
+      width={60}
+      />
           </View>
       <ListItem
         key={index}
@@ -424,10 +465,17 @@ addTextInputIngredients = () => {
                       if (option[2] != undefined){
                         idUnit = option[1].toString().substring(4);
                         idIngredient = option[2].toString().substring(4);
-                        this.setState({
-                          selectedIngredient : option[2].toString().substring(4),
-                          phraseIngredient: option[0] +" " + this.state.UnitésPicker[idUnit - 1].label + " de " + this.state.IngredientsPicker[idIngredient - 1].label
-                        });
+                        if (this._isVoyelle(this.state.IngredientsPicker[idIngredient - 1].label)){
+                          this.setState({
+                            selectedIngredient : option[2].toString().substring(4),
+                            phraseIngredient: option[0] +" " + this.state.UnitésPicker[idUnit - 1].label + " d'" + this.state.IngredientsPicker[idIngredient - 1].label
+                          });
+                        } else{
+                          this.setState({
+                            selectedIngredient : option[2].toString().substring(4),
+                            phraseIngredient: option[0] +" " + this.state.UnitésPicker[idUnit - 1].label + " de " + this.state.IngredientsPicker[idIngredient - 1].label
+                          });
+                        } 
                       }
                     }
                   }
@@ -438,11 +486,14 @@ addTextInputIngredients = () => {
                   <Text style={styles.inputBoxIngredient} >{this.state.phraseIngredient}</Text>
 
               </Picker>
-           
 
-            <TouchableOpacity style={styles.buttonPlus} onPress={() => this.addTextInputIngredients()} > 
-            <Text style={styles.buttonText}>+</Text>
-            </TouchableOpacity> 
+            <Touchable
+                text="+"
+                onPressFunction={this._addTextInputIngredients}
+                widthTouchable={50}
+                backgroundColorTouchable="#78C9DC"
+                colorText="#FFF"
+              />
                 </View>    
 
 <View>
@@ -450,9 +501,9 @@ addTextInputIngredients = () => {
     this.state.IngredientsView.map((item, index) => (
       <ListItem
         key={index}
-        title={item.quantite + ' ' + item.unite + ' de ' + item.ingredients}
+        title={this._isVoyelle(item.ingredients) ? item.quantite + ' ' + item.unite + ' d\'' + item.ingredients :  item.quantite + ' ' + item.unite + ' de ' + item.ingredients}
         rightIcon= {{name: 'delete'}}
-        onPressRightIcon= {() => this.deleteListIngredient(index)}
+        onPressRightIcon= {() => this._deleteListIngredient(index)}
       />
     ))
   }
@@ -460,10 +511,13 @@ addTextInputIngredients = () => {
 
 
 <View style={styles.viewSignUp}>
-
-  <TouchableOpacity style={styles.buttonDif} feedback="opacity" native={false} onPress={this._sendRecepie}>
-          <Text style={styles.buttonText}>Ajouter</Text>
-        </TouchableOpacity>
+         <Touchable
+                text="Ajouter"
+                onPressFunction={this._sendRecepie}
+                widthTouchable={100}
+                backgroundColorTouchable="#78C9DC"
+                colorText="#FFF"
+              />
 </View>
 </KeyboardAwareScrollView>
   

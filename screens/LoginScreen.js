@@ -3,6 +3,8 @@ import { StyleSheet,Text,View, TextInput,TouchableOpacity, Image, AsyncStorage }
 import Axios from 'axios';
 import {onSignIn} from '../components/Auth.js';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import InputText from '../components/TextInput/index'
+import Touchable from '../components/Touchable/index'
 
 
 export default class Login extends Component {
@@ -43,28 +45,38 @@ export default class Login extends Component {
       <KeyboardAwareScrollView contentContainerStyle={styles.container} behavior='padding' resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false} >
             <Image source={require('../assets/images/logo.png')} />
             <Text>{"\n"}{"\n"}</Text>
-          <TextInput style={styles.inputBox} 
-              underlineColorAndroid='rgba(0,0,0,0)' 
-              placeholder="Email/Username"
-              placeholderTextColor = "#707070"
-              autoCapitalize="none"
-              autoCorrect = {false}
-              keyboardType="email-address"
-              onSubmitEditing={()=> this.password.focus()}
+
+       <InputText
+      reference= {(input)=> this.login = input}
+      placeholderText="Email/Username"
+      width={300}
+      onSubmitEditingFunction={()=> this.password.focus()}
+
+      />
+           <InputText
+      reference= {(input)=> this.password = input}
+      placeholderText="Password"
+      width={300}
+      isPassword={true}
+      />
+        
+        <Touchable
+                text="Connexion"
+                onPressFunction={() => {onSignIn().then(() => this.props.navigation.navigate("SignedIn"))}}
+                widthTouchable={300}
+                backgroundColorTouchable="#E88110"
+                colorText="#FFF"
               />
-          <TextInput style={styles.inputBox} 
-              underlineColorAndroid='rgba(0,0,0,0)' 
-              placeholder="Password"
-              secureTextEntry={true}
-              placeholderTextColor = "#707070"
-              ref={(input) => this.password = input}
-              />  
-           <TouchableOpacity style={styles.button}  onPress={() => {onSignIn().then(() => this.props.navigation.navigate("SignedIn"))}}>
-             <Text style={styles.buttonText}>Connexion</Text>
-           </TouchableOpacity>  
-           <TouchableOpacity style={styles.button}  onPress={() =>  this.props.navigation.navigate("SignedIn")}>
-             <Text style={styles.buttonText}>Skip for dev</Text>
-           </TouchableOpacity>  
+
+               
+        <Touchable
+                text="Skip for dev"
+                onPressFunction={() =>  this.props.navigation.navigate("SignedIn")}
+                widthTouchable={300}
+                backgroundColorTouchable="#E88110"
+                colorText="#FFF"
+              />
+
            <Text>{"\n"}{"\n"}</Text>
            <View style={styles.viewSignUp}>
            <Text>Vous n'avez pas de compte ? </Text>
@@ -75,6 +87,7 @@ export default class Login extends Component {
 			)
   }
 }
+
 const styles = StyleSheet.create({
   container : {
     flexGrow: 1,
@@ -120,5 +133,4 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     flexDirection: 'row',
   }
-  
 });

@@ -20,7 +20,7 @@ const headeStyle = {
 
 const HomeStack = createStackNavigator({
   Home: {screen : HomeScreen, navigationOptions : {
-    title: "Ajout",
+    title: null,
   }}
   
 });
