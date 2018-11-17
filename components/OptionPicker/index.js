@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Image} from 'react-native'
-import OptionsMenu from "react-native-options-menu"
+import OptionsMenu from 'react-native-options-menu'
 import PropTypes from 'prop-types'
 
 
@@ -14,7 +14,7 @@ export default class OptionPicker extends React.Component {
 
     render(){
         const {action,option, image} = this.props;
-        const PhotoIcon = require("../../assets/icons/addphoto.png")
+        const PhotoIcon = require('../../assets/icons/addphoto.png')
         return(
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <OptionsMenu

@@ -2,9 +2,32 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {View, Text} from 'react-native'
 import {ListItem} from 'react-native-elements'
-import styled from 'styled-components/native'
+import styled from 'styled-components'
 import InputText from '../TextInput/index'
 
+const StyledView = styled.View
+`
+align-items:flex-end;
+flex-grow: 1;
+justify-content: center;
+padding-vertical: 16;
+flex-direction: row;
+`
+
+const StyledText = styled.Text
+` 
+width:90;
+height:40;
+background-color:#fff;
+padding-horizontal:16;
+border-radius:70;
+padding:2%;
+font-size:16;
+color:#707070;
+margin-vertical: 10;
+text-align:center;
+font-size:16;
+font-weight:500;`
 
 export default class EtapeView extends React.Component {
 
@@ -17,32 +40,6 @@ export default class EtapeView extends React.Component {
 
     render(){
         const {data, onChangeTextFunction, onPressRightIconFunction} = this.props;
-
-    
-        const StyledView = styled.View
-        `
-        alignItems:flex-end;
-        flexGrow: 1;
-        justifyContent: center;
-        paddingVertical: 16;
-        flexDirection: row;
-        `
-
-        const StyledText = styled.Text
-        ` 
-        width:90;
-        height:40;
-        backgroundColor:#fff;
-        paddingHorizontal:16;
-        borderRadius:70;
-        padding:2%;
-        fontSize:16;
-        color:#707070;
-        marginVertical: 10;
-        textAlign:center;
-        fontSize:16;
-        fontWeight:500;`
-
         return(
             <View>
             {
@@ -51,10 +48,10 @@ export default class EtapeView extends React.Component {
               .map((item, index) => (
                 <View key={'etape' + item.ordre}>
                   <StyledView>
-                  <StyledText>{"Étape n° "}</StyledText> 
+                  <StyledText>{'Étape n° '}</StyledText> 
                      <InputText
                 onChangeTextFunction={(val) => onChangeTextFunction(index, val)}
-                keyboard="number-pad" 
+                keyboard='number-pad'
                 value={item.ordre.toString()}  
                 width={60}
                 />
