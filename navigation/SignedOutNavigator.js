@@ -31,20 +31,19 @@ export const LoginStack = createStackNavigator({
     SignUpOk :{ 
         screen : SignUpOkScreen,
     navigationOptions : {
-        title: "Inscription",
-        headeStyle
+        header : null
     }}
   });
 
   export default createStackNavigator({
       SignIn : {screen: LoginStack,
     navigationOptions: {
-        title: "Connexion",
-        headeStyle
+       header: null
     }},
       SignUp : {screen : SignUpStack,
-    navigationOptions : 
-{title: "Inscription", headeStyle}}
+    navigationOptions : {
+        header: null
+    }}
   });
 
 

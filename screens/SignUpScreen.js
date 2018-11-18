@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { StyleSheet,Text,View,TextInput, TouchableOpacity, Image } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Axios from 'axios';
+import HeaderContainer from '../components/HeaderContainer/index'
+import ViewContainer from '../components/ViewContainer/index'
+import ContentContainer from '../components/ContentContainer/index'
+import Touchable from '../components/Touchable/index'
+
 
 export default class SignUp extends Component {
   constructor() {
@@ -162,7 +167,9 @@ verifPassword(confirmPassword1){
   }
 	render(){
 		return(
-            <View style={styles.container}>
+            <ViewContainer>
+              <HeaderContainer titleText={"Inscription"} />
+              <ContentContainer>
                 <KeyboardAwareScrollView contentContainerStyle={styles.container} resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false} >
                     <Image source={require('../assets/images/logo.png')} />
                     <Text>{"\n"}{"\n"}</Text>
@@ -234,12 +241,17 @@ verifPassword(confirmPassword1){
                         placeholderTextColor = "#000000"
                         onChangeText={(user) => this.setState({user})}
                         ref={(input) => this.user = input}
-                        />  
-                    <TouchableOpacity style={styles.button}  onPress={() =>  this.createAccount()}>
-                        <Text style={styles.buttonText}>S'inscrire</Text>
-                    </TouchableOpacity>     
+                        />   
+                     <Touchable
+                      text="S'inscrire"
+                      onPressFunction={this.createAccount}
+                      widthTouchable={300}
+                      backgroundColorTouchable="#E88110"
+                      colorText="#FFF"
+                    />
                     </KeyboardAwareScrollView>
-          </View>
+                    </ContentContainer>
+          </ViewContainer>
 			)
   }
   

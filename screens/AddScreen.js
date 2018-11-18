@@ -10,12 +10,15 @@ import { ListItem } from 'react-native-elements';
 import Axios from 'axios';
 import OptionPicker from '../components/OptionPicker/index'
 import Touchable from '../components/Touchable/index'
+import HeaderContainer from '../components/HeaderContainer/index'
+import ViewContainer from '../components/ViewContainer/index'
+import ContentContainer from '../components/ContentContainer/index'
 
 
 
 export default class AddScreen extends React.Component {
   static navigationOptions = {
-    title: null
+    header: null
   };
 
   constructor(props) {
@@ -333,9 +336,11 @@ _addTextInputIngredients = () => {
   let { image } = this.state;
     const PhotoIcon = require("../assets/icons/addphoto.png");
     return(
-    <View style={styles.container}>
+    <ViewContainer>
+       <HeaderContainer titleText={"Ajout de recette"}></HeaderContainer>
+       <ContentContainer>
         <KeyboardAwareScrollView  resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false}  >
-     
+       
       <OptionPicker 
           option={["Choisir une photo de la bibliothèque", "Prendre une photo", "Annuler"]} 
           action={[this._pickImage, this._takePhoto,null]} 
@@ -520,8 +525,8 @@ _addTextInputIngredients = () => {
               />
 </View>
 </KeyboardAwareScrollView>
-  
-    </View> 
+</ContentContainer>
+    </ViewContainer> 
     
     )    
   }
