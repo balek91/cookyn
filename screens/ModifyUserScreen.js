@@ -33,67 +33,66 @@ export default class ModifyUserScreen extends React.Component {
   render() {
     return (
       <ScrollViewCustom>
-      <KeyboardAwareScrollView resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false}>
-      <ViewCustom>
-      <TextCustom fontsize={18} text={'Nom:'}/> 
-      <InputText
-      reference= {(input)=> this.nom = input}
-      onChangeTextFunction={(val) => this.setState({nom: val})}
-      value ={this.state.nom}
-      />
-      <TextCustom fontsize={18} text={'Prenom:'}/>
-      <InputText
-      reference= {(input)=> this.prenom = input}
-      onChangeTextFunction={(val) => this.setState({prenom: val})}
-      value ={this.state.prenom}
-      />
-      <TextCustom fontsize={18} text={'Mail:'}/>
-      <InputText
-      reference= {(input)=> this.mail = input}
-      onChangeTextFunction={(val) => this.setState({mail: val})}
-      value ={this.state.mail}
-      />
-      <TextCustom fontsize={18} text={'Ville:'}/>
-      <InputText
-      reference= {(input)=> this.ville = input}
-      onChangeTextFunction={(val) => this.setState({ville: val})}
-      value ={this.state.ville}
-      />
-        </ViewCustom>
-      {this.state.showChangePassword ? (
-        <ViewCustom>
-      <TextCustom fontsize={18} text={'Ancien Mot de Passe:'}/>
-      <InputText
-      reference= {(input)=> this.oldPassword = input}
-      onChangeTextFunction={(oldPassword) => this.setState({oldPassword})}
-      isPassword={true}
-      />
-      <TextCustom fontsize={18} text={'Nouveau Mot de Passe:'}/>
-      <InputText
-      reference= {(input)=> this.oldPassword = input}
-      bordercolor={this.state.borderColorNewPassword}
-      onChangeTextFunction={(newPassword) => this.regexNewPassword(newPassword)}
-      isPassword={true}
-      />
-      <TextCustom fontsize={18} text={'Confirmer Mot de Passe:'}/>
-      <InputText
-      reference= {(input)=> this.confirmPassword = input}
-      bordercolor={this.state.borderColorConfirmPassword}
-      onChangeTextFunction={(confirmPassword) => this.verifNewPassword(confirmPassword)}
-      isPassword={true}
-      />
-      </ViewCustom>
-
-      )  :
-      ( <Button
-        title="Changer le mot de passe"
-        onPress={this.changePassword}/>
-      )}
-      <Button
-        title="Mettre à jour les informations"
-        onPress={this.updateUser}
-      />
-      </KeyboardAwareScrollView>
+        <KeyboardAwareScrollView resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false}>
+          <ViewCustom>
+            <TextCustom fontsize={18} text={'Nom:'}/> 
+            <InputText
+            reference= {(input)=> this.nom = input}
+            onChangeTextFunction={(val) => this.setState({nom: val})}
+            value ={this.state.nom}
+            />
+            <TextCustom fontsize={18} text={'Prenom:'}/>
+            <InputText
+            reference= {(input)=> this.prenom = input}
+            onChangeTextFunction={(val) => this.setState({prenom: val})}
+            value ={this.state.prenom}
+            />
+            <TextCustom fontsize={18} text={'Mail:'}/>
+            <InputText
+            reference= {(input)=> this.mail = input}
+            onChangeTextFunction={(val) => this.setState({mail: val})}
+            value ={this.state.mail}
+            />
+            <TextCustom fontsize={18} text={'Ville:'}/>
+            <InputText
+            reference= {(input)=> this.ville = input}
+            onChangeTextFunction={(val) => this.setState({ville: val})}
+            value ={this.state.ville}
+            />
+          </ViewCustom>
+          {this.state.showChangePassword ? (
+          <ViewCustom>
+            <TextCustom fontsize={18} text={'Ancien Mot de Passe:'}/>
+            <InputText
+            reference= {(input)=> this.oldPassword = input}
+            onChangeTextFunction={(oldPassword) => this.setState({oldPassword})}
+            isPassword={true}
+            />
+            <TextCustom fontsize={18} text={'Nouveau Mot de Passe:'}/>
+            <InputText
+            reference= {(input)=> this.oldPassword = input}
+            bordercolor={this.state.borderColorNewPassword}
+            onChangeTextFunction={(newPassword) => this.regexNewPassword(newPassword)}
+            isPassword={true}
+            />
+            <TextCustom fontsize={18} text={'Confirmer Mot de Passe:'}/>
+            <InputText
+            reference= {(input)=> this.confirmPassword = input}
+            bordercolor={this.state.borderColorConfirmPassword}
+            onChangeTextFunction={(confirmPassword) => this.verifNewPassword(confirmPassword)}
+            isPassword={true}
+            />
+          </ViewCustom>
+          ):( 
+          <Button
+          title="Changer le mot de passe"
+          onPress={this.changePassword}/>
+          )}
+          <Button
+          title="Mettre à jour les informations"
+          onPress={this.updateUser}
+          />
+        </KeyboardAwareScrollView>
       </ScrollViewCustom>
     );
   }
@@ -103,40 +102,40 @@ export default class ModifyUserScreen extends React.Component {
         showChangePassword : true
     });
   }
-verifNewPassword = (confirmPassword1) =>{
-  this.setState({
-    confirmPassword : confirmPassword1
-  })
-  if(this.state.newPassword == confirmPassword1){
+  verifNewPassword = (confirmPassword1) =>{
     this.setState({
-      borderColorConfirmPassword : 'green',
-      statusConfirmPassword : true
-  });
-  }else{
-    this.setState({
-      borderColorConfirmPassword : 'red',
-      statusConfirmPassword : true
-  });
+      confirmPassword : confirmPassword1
+    })
+    if(this.state.newPassword == confirmPassword1){
+      this.setState({
+        borderColorConfirmPassword : 'green',
+        statusConfirmPassword : true
+    });
+    }else{
+      this.setState({
+        borderColorConfirmPassword : 'red',
+        statusConfirmPassword : true
+    });
+    }
   }
-}
 
-regexNewPassword = (newPass) =>{
-  this.setState({
-    newPassword : newPass
-  })
-  var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
-  if(re.test(newPass)){
+  regexNewPassword = (newPass) =>{
     this.setState({
-      borderColorNewPassword : 'green',
-      statusNewPassword : true
-  });
-  }else{
-    this.setState({
-      borderColorNewPassword : 'red',
-      statusNewPassword : false
-  });
+      newPassword : newPass
+    })
+    var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    if(re.test(newPass)){
+      this.setState({
+        borderColorNewPassword : 'green',
+        statusNewPassword : true
+    });
+    }else{
+      this.setState({
+        borderColorNewPassword : 'red',
+        statusNewPassword : false
+    });
+    }
   }
-}
 
   updateUser = () =>{
     let body 
@@ -198,5 +197,5 @@ regexNewPassword = (newPass) =>{
       ville : navigation.getParam('ville', 'NO-VILLE'),
       user : navigation.getParam('user', 'NO-USERNAME')
     });
-}
+  }
 }

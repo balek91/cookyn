@@ -32,6 +32,7 @@ export default class InputText extends React.Component {
     const {
       reference,
       placeholderText,
+      placeholderTextColor,
       onChangeTextFunction,
       onSubmitEditingFunction,
       keyboard,
@@ -39,7 +40,9 @@ export default class InputText extends React.Component {
       width,
       value,
       isPassword,
-      bordercolor
+      bordercolor,
+      autoCapitalize,
+      autoCorrection
     } = this.props;
 
     return (
@@ -47,17 +50,17 @@ export default class InputText extends React.Component {
         width={width}
         bordercolor={bordercolor}
         value={value}
+        autoCorrect = {autoCorrection ? autoCorrection : false}
+        autoCapitalize = {autoCapitalize ? autoCapitalize : 'sentences'}
         underlineColorAndroid='rgba(0,0,0,0)'
         placeholder={placeholderText ? placeholderText : ''}
-        placeholderTextColor='#707070'
+        placeholderTextColor={placeholderTextColor ? placeholderTextColor :'#707070'}
         ref={reference ? reference : null}
         keyboardType={keyboard ? keyboard : 'default'}
         multiline={multi ? multi : false}
         secureTextEntry={isPassword ? isPassword : false}
         onChangeText={onChangeTextFunction ? onChangeTextFunction : null}
-        onSubmitEditing={() =>
-          onSubmitEditingFunction ? onSubmitEditingFunction : null
-        }
+        onSubmitEditing={ onSubmitEditingFunction ? onSubmitEditingFunction : null}
       />
     )
   }
