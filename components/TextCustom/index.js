@@ -13,9 +13,8 @@ line-height: 24;
 export default class TextCustom extends React.Component {
 
     static propTypes = {
-        data: PropTypes.array,
-        onChangeTextFunction: PropTypes.func,
-        onPressRightIconFunction : PropTypes.func
+        text: PropTypes.string,
+        fontsize: PropTypes.number,
     }
 
     render(){
