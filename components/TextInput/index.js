@@ -44,7 +44,7 @@ export default class InputText extends React.Component {
       bordercolor,
       autoCapitalize,
       autoCorrection,
-      editable
+      editable = true
     } = this.props;
 
     return (
@@ -59,7 +59,7 @@ export default class InputText extends React.Component {
         placeholderTextColor={placeholderTextColor ? placeholderTextColor :'#707070'}
         ref={reference ? reference : null}
         keyboardType={keyboard ? keyboard : 'default'}
-        editable={editable ? editable : true}
+        editable={editable}
         multiline={multi ? multi : false}
         secureTextEntry={isPassword ? isPassword : false}
         onChangeText={onChangeTextFunction ? onChangeTextFunction : null}

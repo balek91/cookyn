@@ -385,8 +385,6 @@ export default class AddScreen extends React.Component {
                 ))
               }
             </View>
-
-
             <ViewCenter>
               <Touchable
                 text='Ajouter'
@@ -413,7 +411,7 @@ export default class AddScreen extends React.Component {
   _selectDifficulty = () => {
     QuickPicker.open({
       items: ['Facile', 'Moyen', 'Difficile'],
-      selectedValue: 'Facile', // this could be this.state.selectedLetter as well.
+      selectedValue: 'Facile',
       onPressDone: (selectedValueFromPicker) => {
         this.setState({ selectedDiff: selectedValueFromPicker })
         QuickPicker.close()
@@ -430,7 +428,6 @@ export default class AddScreen extends React.Component {
       user: {
         idUser: 1
       }
-      //  prixRecette : this.state.prixRecette,
     }
     let ingredients = []
     this.state.IngredientsToSend.map((items) => {
@@ -514,7 +511,6 @@ export default class AddScreen extends React.Component {
       this.setState({ image: result.uri })
     }
     console.log(result)
-    //this.props.navigation.navigate("Camera", {returnData: this.returnData.bind(this)})
   }
 
   _updateOrdre = (index, value) => {

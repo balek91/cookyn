@@ -152,7 +152,7 @@ export default class ModifyUserScreen extends React.Component {
         newPassword: this.state.newPassword
       }
       if (this.state.statusNewPassword && this.state.statusConfirmPassword) {
-        Axios.post('http://51.75.22.154:8080/General/user/UpdateUser', body).then(response => {
+        Axios.post('http://51.75.22.154:8080/Cookyn/user/UpdateUser', body).then(response => {
           if (response.data.idUser != null) {
             this.props.navigation.state.params.onNavigateBack()
             this.props.navigation.navigate('Profil')
@@ -173,7 +173,7 @@ export default class ModifyUserScreen extends React.Component {
         usernameUser: this.state.user,
         villeUser: this.state.ville
       }
-      Axios.post('http://51.75.22.154:8080/General/user/UpdateUser', body).then(response => {
+      Axios.post('http://51.75.22.154:8080/Cookyn/user/UpdateUser', body).then(response => {
         if (response.data.idUser != null) {
           this.props.navigation.state.params.onNavigateBack()
           this.props.navigation.navigate('Profil')

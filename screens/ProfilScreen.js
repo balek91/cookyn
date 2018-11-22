@@ -88,7 +88,7 @@ export default class ProfilScreen extends React.Component {
 			const value = await AsyncStorage.getItem('idUser');
 			if (value !== null) {
 				this.setState({id: value})
-				Axios.get('http://51.75.22.154:8080/General/user/getUserById/'+value).then(response => this.setState({
+				Axios.get('http://51.75.22.154:8080/Cookyn/user/getUserById/'+value).then(response => this.setState({
 					id : response.data.idUser,
 					nom : response.data.nomUser,
 					prenom : response.data.prenomUser,
@@ -107,7 +107,7 @@ export default class ProfilScreen extends React.Component {
 	onBackFromListUser= () =>{
 		console.log(user);
 		if(user.idUser != null){
-			Axios.get('http://51.75.22.154:8080/General/user/getUserById/'+user.idUser).then(response => this.setState({
+			Axios.get('http://51.75.22.154:8080/Cookyn/user/getUserById/'+user.idUser).then(response => this.setState({
 					id : response.data.idUser,
 					nom : response.data.nomUser,
 					prenom : response.data.prenomUser,
