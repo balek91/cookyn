@@ -18,9 +18,6 @@ export default class HeaderContainer extends React.Component {
 
 
 	static propTypes = {
-		data: PropTypes.array,
-		onChangeTextFunction: PropTypes.func,
-        onPressRightIconFunction : PropTypes.func,
         titleText: PropTypes.string
     }
     

@@ -4,6 +4,7 @@ import {View, Text} from 'react-native'
 import {ListItem} from 'react-native-elements'
 import styled from 'styled-components'
 import InputText from '../TextInput/index'
+import ViewAlignItemRow from '../ViewsAlignItemRow/index'
 
 const StyledView = styled.View
 `
@@ -32,22 +33,22 @@ font-weight:500;`
 export default class EtapeView extends React.Component {
 
     static propTypes = {
-        data: PropTypes.array,
+        array: PropTypes.array,
         onChangeTextFunction: PropTypes.func,
         onPressRightIconFunction : PropTypes.func
     }
   
 
     render(){
-        const {data, onChangeTextFunction, onPressRightIconFunction} = this.props;
+        const {array, onChangeTextFunction, onPressRightIconFunction} = this.props;
         return(
             <View>
             {
-             data
+             array
              .sort((itemA, itemB) => itemA.ordre > itemB.ordre )
               .map((item, index) => (
                 <View key={'etape' + item.ordre}>
-                  <StyledView>
+                  <ViewAlignItemRow>
                   <StyledText>{'Étape n° '}</StyledText> 
                      <InputText
                 onChangeTextFunction={(val) => onChangeTextFunction(index, val)}
@@ -55,12 +56,12 @@ export default class EtapeView extends React.Component {
                 value={item.ordre.toString()}  
                 width={60}
                 />
-                    </StyledView>
+                    </ViewAlignItemRow>
                 <ListItem
                   key={index}
                   title={item.etape}
                   rightIcon= {{name: 'delete'}}
-                  onPressRightIcon= {onPressRightIconFunction}
+                  onPressRightIcon= {onPressRightIconFunction(index)}
                   input={item.ordre}
                 />
                 </View>
@@ -68,6 +69,6 @@ export default class EtapeView extends React.Component {
             }
           </View>
 
-        );
+        )
     }
 }

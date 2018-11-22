@@ -6,7 +6,7 @@ const StyledTextInput = styled.TextInput`
   width: ${props => props.width ? props.width : 300};
   height: 40;
   background-color: #fff;
-  border-radius: 50;
+  border-radius: ${props => props.width ? props.width/2 : 300/2};
   padding-horizontal: 16;
   font-size: 16;
   color: #000;
@@ -25,7 +25,8 @@ export default class InputText extends React.Component {
     onSubmitEditingFunction: PropTypes.func,
     keyboard: PropTypes.string,
     multi: PropTypes.bool,
-    isPassword: PropTypes.bool
+    isPassword: PropTypes.bool,
+    editable: PropTypes.bool
   }
 
   render() {
@@ -42,7 +43,8 @@ export default class InputText extends React.Component {
       isPassword,
       bordercolor,
       autoCapitalize,
-      autoCorrection
+      autoCorrection,
+      editable
     } = this.props;
 
     return (
@@ -57,6 +59,7 @@ export default class InputText extends React.Component {
         placeholderTextColor={placeholderTextColor ? placeholderTextColor :'#707070'}
         ref={reference ? reference : null}
         keyboardType={keyboard ? keyboard : 'default'}
+        editable={editable ? editable : true}
         multiline={multi ? multi : false}
         secureTextEntry={isPassword ? isPassword : false}
         onChangeText={onChangeTextFunction ? onChangeTextFunction : null}

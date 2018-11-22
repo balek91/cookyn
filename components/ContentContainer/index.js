@@ -10,12 +10,6 @@ alignItems: center;
 
 
 export default class ContentContainer extends React.Component {
-    static propTypes = {
-        data: PropTypes.array,
-        onChangeTextFunction: PropTypes.func,
-        onPressRightIconFunction : PropTypes.func
-    }
-
     render(){
         return(
             <Content>
