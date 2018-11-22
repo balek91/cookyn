@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList} from 'react-native'
+import { FlatList } from 'react-native'
 import Touchable from '../components/Touchable'
 import ViewContainer from '../components/ViewContainer'
 import ScrollViewCustom from '../components/ScrollViewContainer'
