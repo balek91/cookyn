@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 const Content = styled.View`
@@ -10,10 +9,10 @@ alignItems: center;
 
 
 export default class ContentContainer extends React.Component {
-    render(){
-        return(
+    render() {
+        return (
             <Content>
-                  {this.props.children}
+                {this.props.children}
             </Content>
         )
     }

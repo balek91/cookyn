@@ -9,7 +9,6 @@ flexDirection:row;
 flex-grow: 1;
 `
 
-
 export default class ViewAlignItemRow extends React.Component {
     render(){
         return(

@@ -16,6 +16,8 @@ export default class TextCustom extends React.Component {
     static propTypes = {
         text: PropTypes.string,
         fontsize: PropTypes.number,
+        onPress : PropTypes.func,
+        fontWeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     }
 
     render(){

@@ -11,23 +11,21 @@ background-color: #fff`
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
-
     signedIn: false,
     checkedSignIn: false
-
   }
 
   componentDidMount() {
     isSignedIn()
       .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
       .catch(err => console.log('An error occured ' + err));
-
   }
   render() {
-
     const Layout = createRootNavigator(this.state.signedIn);
     return (
-      <StyledView><Layout /> <QuickPicker /></StyledView>)
-
+      <StyledView>
+        <Layout /> <QuickPicker />
+      </StyledView>
+    )
   }
 }

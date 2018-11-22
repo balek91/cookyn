@@ -1,8 +1,15 @@
 import React from 'react'
 import { FlatList } from 'react-native'
-import Touchable from '../components/Touchable'
 import ViewContainer from '../components/ViewContainer'
+import ListItemElement from '../components/FlatListElement'
 import ScrollViewCustom from '../components/ScrollViewContainer'
+import styled from 'styled-components'
+
+const StyledFlatList = styled.FlatList`
+flex: 1;
+width: 100%;
+`
+
 
 export default class ListUsersScreen extends React.Component {
 
@@ -18,19 +25,20 @@ export default class ListUsersScreen extends React.Component {
 
 keyExtractor = item => item.idUser.toString()
 
+
+
 render() {
     const {users} = this.state
+    console.log("users sss",users)
     return (
         <ViewContainer>
-            <ScrollViewCustom>
                 {users ? (
-                    <FlatList
+                    <StyledFlatList
                         data={users}
                         keyExtractor={this.keyExtractor}
                         renderItem={({ item }) => (
-                            <Touchable text={`${item.prenomUser} ${item.nomUser}`} onPressFunction={() => { this.onPress(item) }} />
+                            <ListItemElement textPrincipal={item.prenomUser} textDetail={item.nomUser} onPressFunction={() => { this.onPress(item) }} />
                         )} />) : (null)}
-            </ScrollViewCustom>
         </ViewContainer>
         )
 }

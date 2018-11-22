@@ -30,10 +30,11 @@ export default class InputTextNoRadius extends React.Component {
         onSubmitEditingFunction: PropTypes.func,
         keyboard: PropTypes.string,
         multi: PropTypes.bool,
-        isPassword: PropTypes.bool
-      }
-    
-    render(){
+        isPassword: PropTypes.bool,
+        bordercolor: PropTypes.string,
+        value: PropTypes.string
+    }
+    render() {
         const {
             reference,
             placeholderText,
@@ -46,24 +47,24 @@ export default class InputTextNoRadius extends React.Component {
             value,
             isPassword,
             bordercolor
-          } = this.props;
-        return(
+        } = this.props;
+        return (
             <StyledTextInput
-        width={width}
-        height={height}
-        bordercolor={bordercolor}
-        value={value}
-        underlineColorAndroid='rgba(0,0,0,0)'
-        placeholder={placeholderText ? placeholderText : ''}
-        placeholderTextColor='#707070'
-        ref={reference ? reference : null}
-        keyboardType={keyboard ? keyboard : 'default'}
-        multiline={multi ? multi : false}
-        secureTextEntry={isPassword ? isPassword : false}
-        onChangeText={onChangeTextFunction ? onChangeTextFunction : null}
-        onSubmitEditing={() =>
-          onSubmitEditingFunction ? onSubmitEditingFunction : null
-        } />
+                width={width}
+                height={height}
+                bordercolor={bordercolor}
+                value={value}
+                underlineColorAndroid='rgba(0,0,0,0)'
+                placeholder={placeholderText ? placeholderText : ''}
+                placeholderTextColor='#707070'
+                ref={reference ? reference : null}
+                keyboardType={keyboard ? keyboard : 'default'}
+                multiline={multi ? multi : false}
+                secureTextEntry={isPassword ? isPassword : false}
+                onChangeText={onChangeTextFunction ? onChangeTextFunction : null}
+                onSubmitEditing={() =>
+                    onSubmitEditingFunction ? onSubmitEditingFunction : null
+                } />
         )
     }
 }

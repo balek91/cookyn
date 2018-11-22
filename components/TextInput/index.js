@@ -26,7 +26,12 @@ export default class InputText extends React.Component {
     keyboard: PropTypes.string,
     multi: PropTypes.bool,
     isPassword: PropTypes.bool,
-    editable: PropTypes.bool
+    editable: PropTypes.bool,
+    autoCapitalize : PropTypes.string,
+    autoCorrection : PropTypes.bool,
+    placeholderTextColor : PropTypes.string,
+    value : PropTypes.string,
+    bordercolor : PropTypes.string
   }
 
   render() {
