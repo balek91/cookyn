@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import { StyleSheet,Text,View,TextInput, TouchableOpacity, Image } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Axios from 'axios';
-import HeaderContainer from '../components/HeaderContainer/index'
-import ViewContainer from '../components/ViewContainer/index'
-import ContentContainer from '../components/ContentContainer/index'
-import Touchable from '../components/Touchable/index'
+import Axios from 'axios'
+import React from 'react'
+import { Image } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import ContentContainer from '../components/ContentContainer'
+import HeaderContainer from '../components/HeaderContainer'
+import InputText from '../components/TextInput'
+import TextCustom from '../components/TextCustom'
+import Touchable from '../components/Touchable'
+import ViewContainer from '../components/ViewContainer'
 
-
-export default class SignUp extends Component {
+export default class SignUp extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -19,15 +20,104 @@ export default class SignUp extends Component {
       user : '',
       password : '',
       confirmPassword : '',
-      borderColorPassword : 'black',
+      borderColorPassword : 'gray',
       statusPassword :false,
-      borderColorConfirmPassword : 'black',
+      borderColorConfirmPassword : 'gray',
       statusConfirmPassword : false,
-      borderColorEmail : 'black',
+      borderColorEmail : 'gray',
       statusEmail : false
     }
  }
- regexPassword(Pass){
+ render(){
+  return(
+    <ViewContainer>
+      <HeaderContainer titleText={'Inscription'} />
+      <ContentContainer>
+        <KeyboardAwareScrollView resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false} >
+          <ViewContainer>
+            <Image source={require('../assets/images/logo.png')} />
+          </ViewContainer>
+          <TextCustom text={'\n'}></TextCustom>
+          <InputText
+          onChangeTextFunction={(user) => this.setState({user})}
+          placeholderText='Username'
+          onSubmitEditingFunction={()=> this.nom.focus()}
+          reference={(input)=> this.user = input}
+          />
+          <InputText
+          onChangeTextFunction={(nom) => this.setState({nom})}
+          placeholderText='Nom'
+          onSubmitEditingFunction={()=> this.prenom.focus()}
+          reference={(input)=> this.nom = input}
+          />
+          <InputText
+          onChangeTextFunction={(prenom) => this.setState({prenom})}
+          placeholderText='Prenom'
+          onSubmitEditingFunction={()=> this.mail.focus()}
+          reference={(input) => this.prenom = input}
+          />
+          <InputText
+          reference={(input) => this.mail = input}
+          onChangeTextFunction={(mail) => this.regexMail(mail)}
+          placeholderText='Mail'
+          onSubmitEditingFunction={()=> this.ville.focus()}
+          autoCapitalize = 'none'
+          keyboard='email-address'
+          bordercolor= {this.state.borderColorEmail}
+          /> 
+          <InputText
+          reference= {(input) => this.ville = input}
+          onChangeTextFunction={(ville) => this.setState({ville})}
+          placeholderText='Ville'
+          onSubmitEditingFunction={()=> this.password.focus()}
+          /> 
+          <InputText
+          reference= {(input) => this.password = input}
+          onChangeTextFunction={(password) => this.regexPassword(password)}
+          placeholderText='Mot de passe'
+          isPassword = {true}
+          bordercolor = {this.state.borderColorPassword}
+          onSubmitEditingFunction={()=> this.confirm.focus()}
+          /> 
+          <InputText
+          reference= {(input) => this.confirm = input}
+          onChangeTextFunction={(confirmPassword) => this.verifPassword(confirmPassword)}
+          placeholderText='Confirmer le mot de passe'
+          isPassword = {true}
+          bordercolor = {this.state.borderColorConfirmPassword}
+          />   
+          <Touchable
+            text={'S\'inscrire'}
+            onPressFunction={this.createAccount}
+            widthTouchable={300}
+            backgroundColorTouchable='#E88110'
+            colorText='#FFF'
+          />
+        </KeyboardAwareScrollView>
+      </ContentContainer>
+    </ViewContainer>
+    )
+}
+
+regexMail = (email) =>{
+  this.setState({
+    mail : email
+  })
+  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+   if(re.test(email)){
+    this.setState({
+      borderColorEmail : 'green',
+      statusEmail : true
+  });
+   }else{
+    this.setState({
+      borderColorEmail : 'red',
+      statusEmail: false
+  });
+   }
+}
+
+ regexPassword = (Pass) =>{
   this.setState({
     password : Pass
   })
@@ -45,72 +135,7 @@ export default class SignUp extends Component {
    }
 }
 
-regexMail(email){
-  this.setState({
-    mail : email
-  })
-  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-   if(re.test(email)){
-    this.setState({
-      borderColorEmail : 'green',
-      statusEmail : true
-  });
-   }else{
-    this.setState({
-      borderColorEmail : 'red',
-      statusEmail: false
-  });
-   }
-}
- passwordStyle = function(options) {
-  return {
-    width:300,
-    height:40,
-    backgroundColor:'#fff',
-    borderRadius: 50,
-    paddingHorizontal:16,
-    fontSize:16,
-    color:'#000',
-    marginVertical: 10,
-    textAlign:'center',
-    borderWidth:0.5,
-    borderColor: this.state.borderColorPassword,
-  }
-}
-
-confirmPasswordStyle = function(options) {
-  return {
-    width:300,
-    height:40,
-    backgroundColor:'#fff',
-    borderRadius: 50,
-    paddingHorizontal:16,
-    fontSize:16,
-    color:'#000',
-    marginVertical: 10,
-    textAlign:'center',
-    borderWidth:0.5,
-    borderColor: this.state.borderColorConfirmPassword,
-  }
-}
-
-mailStyle = function(options) {
-  return {
-    width:300,
-    height:40,
-    backgroundColor:'#fff',
-    borderRadius: 50,
-    paddingHorizontal:16,
-    fontSize:16,
-    color:'#000',
-    marginVertical: 10,
-    textAlign:'center',
-    borderWidth:0.5,
-    borderColor: this.state.borderColorEmail,
-  }
-}
-
-verifPassword(confirmPassword1){
+verifPassword = (confirmPassword1) =>{
   console.log(this.state.confirmPassword)
   console.log(confirmPassword1)
   this.setState({
@@ -129,7 +154,7 @@ verifPassword(confirmPassword1){
   }
 }
 
-  createAccount(){
+  createAccount = () =>{
     body = {
       nomUser: this.state.nom,
       prenomUser: this.state.prenom,
@@ -146,153 +171,23 @@ verifPassword(confirmPassword1){
             if(this.state.confirmPassword){
               Axios.post('http://51.75.22.154:8080/Cookyn/user/CreateUser',body).then(response =>{
                 if(response.data.idUser != null ){
-                  this.props.navigation.replace("SignUpOk")
+                  this.props.navigation.replace('SignUpOk')
                 }else{
                   alert(response.data.errortxt)
                 }
             }
             ) 
             }else{
-              alert("La confirmation du mot de passe n'est pas bonne")
+              alert('La confirmation du mot de passe n\'est pas bonne')
             }
           }else{
-            alert("Le mot de passe ne respecte pas les règles de sécurité")
+            alert('Le mot de passe ne respecte pas les règles de sécurité')
           }
         }else{
-          alert("l'adresse mail n'est pas valide")
+          alert('l\'adresse mail n\'est pas valide')
         }
     }else{
-      alert("Tous les champs doivent être remplis")
+      alert('Tous les champs doivent être remplis')
     }
-  }
-	render(){
-		return(
-            <ViewContainer>
-              <HeaderContainer titleText={"Inscription"} />
-              <ContentContainer>
-                <KeyboardAwareScrollView contentContainerStyle={styles.container} resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false} >
-                    <Image source={require('../assets/images/logo.png')} />
-                    <Text>{"\n"}{"\n"}</Text>
-                    
-                        <TextInput style={styles.inputBox} 
-                        underlineColorAndroid='rgba(0,0,0,0)' 
-                        placeholder="Nom"
-                        placeholderTextColor = "#000000"
-                        autoCorrect = {false}
-                        onChangeText={(nom) => this.setState({nom})}
-                        onSubmitEditing={()=> this.prenom.focus()}
-                        ref={(input) => this.nom = input}
-                        />
-                    <TextInput style={styles.inputBox} 
-                        underlineColorAndroid='rgba(0,0,0,0)' 
-                        placeholder="Prenom"
-                        placeholderTextColor = "#000000"
-                        autoCorrect = {false}
-                        onChangeText={(prenom) => this.setState({prenom})}
-                        onSubmitEditing={()=> this.mail.focus()}
-                        ref={(input) => this.prenom = input}
-                        />  
-
-                        <TextInput style={this.mailStyle()}
-                        underlineColorAndroid='rgba(0,0,0,0)' 
-                        placeholder="Mail"
-                        placeholderTextColor = "#000000"
-                        autoCapitalize="none"
-                        keyboardType="email-address"
-                        autoCorrect = {false}
-                        onChangeText={(mail) => this.regexMail(mail)}
-                        onSubmitEditing={()=> this.ville.focus()}
-                        ref={(input) => this.mail = input}
-                        />  
-                        <TextInput style={styles.inputBox} 
-                        underlineColorAndroid='rgba(0,0,0,0)' 
-                        placeholder="Ville"
-                        placeholderTextColor = "#000000"
-                        autoCorrect = {false}
-                        onChangeText={(ville) => this.setState({ville})}
-                        onSubmitEditing={()=> this.password.focus()}
-                        ref={(input) => this.ville = input}
-                        />
-                        <TextInput style={this.passwordStyle()}
-                        underlineColorAndroid='rgba(0,0,0,0)' 
-                        placeholder="Mot de passe"
-                        secureTextEntry={true}
-                        placeholderTextColor = "#000000"
-                        onChangeText={(password) => this.regexPassword(password)}
-                        onSubmitEditing={()=> this.confirm.focus()}
-                        ref={(input) => this.password = input}
-                        />  
-
-                        <TextInput style={this.confirmPasswordStyle()}
-                        underlineColorAndroid='rgba(0,0,0,0)' 
-                        placeholder="Confirmer le mot de passe"
-                        secureTextEntry={true}
-                        placeholderTextColor = "#000000"
-                        onChangeText =   {(confirmPassword) => this.verifPassword(confirmPassword)}
-                        onSubmitEditing={()=> this.user.focus()}
-                        ref={(input) => this.confirm = input}
-                        /> 
-
-                        <TextInput style={styles.inputBox} 
-                        underlineColorAndroid='rgba(0,0,0,0)' 
-                        placeholder="Identifiant"
-                        autoCapitalize="none"
-                        autoCorrect = {false}
-                        placeholderTextColor = "#000000"
-                        onChangeText={(user) => this.setState({user})}
-                        ref={(input) => this.user = input}
-                        />   
-                     <Touchable
-                      text="S'inscrire"
-                      onPressFunction={this.createAccount}
-                      widthTouchable={300}
-                      backgroundColorTouchable="#E88110"
-                      colorText="#FFF"
-                    />
-                    </KeyboardAwareScrollView>
-                    </ContentContainer>
-          </ViewContainer>
-			)
-  }
-  
-  login(){
-    this.props.navigation.replace("SignUpOk");
   }
 }
-
-const styles = StyleSheet.create({
-    container : {
-      flexGrow: 1,
-      justifyContent:'center',
-      alignItems: 'center',
-      backgroundColor:'#fff',
-      margin:10
-    },
-  
-    inputBox: {
-      width:300,
-      height:40,
-      backgroundColor:'#fff',
-      borderRadius: 50,
-      paddingHorizontal:16,
-      fontSize:16,
-      color:'#000',
-      marginVertical: 10,
-      textAlign:'center',
-      borderWidth:0.5,
-    },
-    button: {
-      width:300,
-      backgroundColor:'#E88110',
-       borderRadius: 25,
-        marginVertical: 10,
-        paddingVertical: 13
-    },
-    buttonText: {
-      fontSize:16,
-      fontWeight:'500',
-      color:'#ffffff',
-      textAlign:'center'
-    }
-    
-  });
