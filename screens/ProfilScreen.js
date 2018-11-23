@@ -20,8 +20,8 @@ export default class ProfilScreen extends React.Component {
 			mail : '',
 			ville : '', 
 			user : '', 
-			nbFollow : '',
-			nbFollower : '',
+			nbAbonnement : '',
+			nbAbonnee : '',
 			showSuivre : false
 	}
 
@@ -50,11 +50,11 @@ export default class ProfilScreen extends React.Component {
 						onPressFunction={this.onPressButtonFollow}
 						/>): (null)}
 						<Touchable
-							text={`${this.state.nbFollow} Abonnement(s)`} 
+							text={`${this.state.nbAbonnement} Abonnement(s)`} 
 							onPressFunction={this.onPressButtonAbonnements}
 						/>
 						<Touchable
-							text={`${this.state.nbFollow} Abonné(s)`} 
+							text={`${this.state.nbAbonnee} Abonné(s)`} 
 							onPressFunction={this.onPressButtonAbonnes}
 						/>
 						<Touchable
@@ -95,8 +95,8 @@ export default class ProfilScreen extends React.Component {
 					mail : response.data.mailUser,
 					ville : response.data.villeUser,
 					user : response.data.usernameUser,
-					nbFollow : response.data.nbFollowing,
-					nbFollower : response.data.nbFollower,
+					nbAbonnement : response.data.nbAbonnement,
+					nbAbonnee : response.data.nbAbonnee,
 				}))
 			}
 		} catch (error) {
@@ -114,8 +114,8 @@ export default class ProfilScreen extends React.Component {
 					mail : response.data.mailUser,
 					ville : response.data.villeUser,
 					user : response.data.usernameUser,
-					nbFollow : response.data.nbFollowing,
-					nbFollower : response.data.nbFollower,
+					nbAbonnement : response.data.nbFollowing,
+					nbAbonnee : response.data.nbFollower,
 				}));
 		}
 	}

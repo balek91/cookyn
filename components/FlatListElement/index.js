@@ -1,28 +1,44 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import {Text} from 'react-native'
 
-// const StyledView = styled.View`
-// flex : 1;
-// height : 30px;
-// background-color:blue;
-// flex-direction : row;
-// `
 const ImageContainer = styled.View`
 flex : 1;
-background-color : yellow`
+`
 
 const TextContainer = styled.View`
-flex : 3;
-background-color : green`
+flex : 6;
+`
 
 const StyledTouchable = styled.TouchableOpacity`
 flex : 1;
-height : 30px;
-background-color:blue;
+height : 80px;
 flex-direction : row;
+align-items : center;
+justify-content : center;
+flex-shrink : 0;
+border-bottom-width : 0.3px;
+border-bottom-color : #707070;
 `
+
+const StyledImage = styled.Image`
+height: 26;
+width: 26; 
+`
+
+const TextPrincipal = styled.Text`
+font-size: 17;
+padding-left: 20;
+line-height: 24;
+`
+
+const TextDetail = styled.Text`
+font-size: 13;
+padding-left: 20;
+line-height: 24;
+`
+
+
 
 export default class Touchable extends React.Component {
 
@@ -38,9 +54,13 @@ export default class Touchable extends React.Component {
 
                 <StyledTouchable onPress={onPressFunction}>
                     <TextContainer>
-                        <Text>{textPrincipal}</Text>
+                        <TextPrincipal>{textPrincipal}</TextPrincipal>
+                        <TextDetail>{textDetail}</TextDetail>
                     </TextContainer>
                     <ImageContainer>
+                    <StyledImage
+                    source={require('../../assets/icons/right-arrow.png')}
+                />
                     </ImageContainer>
                 </StyledTouchable>
 
@@ -48,16 +68,3 @@ export default class Touchable extends React.Component {
         )
     }
 }
-
-
-//  <StyledView>
-//                     <StyledTextPrincipal>
-//                         {textPrincipal}
-//                     </StyledTextPrincipal>
-//                     <StyledTextDetail>
-//                         {textDetail}
-//                     </StyledTextDetail>
-//                 </StyledView>
-//                 <StyledImage
-//                     source={require('../../assets/icons/right-arrow.png')}
-//                 />
