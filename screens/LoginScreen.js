@@ -9,14 +9,26 @@ import TextCustom from '../components/TextCustom'
 import InputText from '../components/TextInput/index'
 import Touchable from '../components/Touchable/index'
 import ViewContainer from '../components/ViewContainer/index'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-export default class Login extends React.Component {
+
+import allTheActions from '../actions'
+
+
+class Login extends React.Component {
   state = {
     login : false,
     prenom: null,
     username: '',
     password : ''
   }
+
+  connexion = (id) => {
+    const { actions } = this.props
+    actions.user.connexion(id)
+  }
+  
 	render(){
 		return(
 			<ViewContainer>
@@ -92,9 +104,27 @@ export default class Login extends React.Component {
   
   storeData = async (idUser) => {
     try {
+      this.connexion(idUser)
       await AsyncStorage.setItem('idUser', idUser)
     } catch (error) {
       console.log(error)
     }
   }
 }
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    allState : state
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  actions: {
+    user: bindActionCreators(allTheActions.user, dispatch)
+  }
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)

@@ -16,11 +16,13 @@ import Touchable from '../components/Touchable/index'
 import ViewAlignItemRow from '../components/ViewsAlignItemRow/index'
 import ViewCenter from '../components/ViewCenter/index'
 import ViewContainer from '../components/ViewContainer/index'
+import allTheActions from '../actions'
+import { connect } from 'react-redux';
 
 
 
 
-export default class AddScreen extends React.Component {
+class AddScreen extends React.Component {
   static navigationOptions = {
     header: null
   }
@@ -157,6 +159,7 @@ export default class AddScreen extends React.Component {
   }
 
   async componentWillMount() {
+    console.log('User : ', this.props.user);
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
     this.setState({ hasCameraRollPermission: status === 'granted' })
     const { status2 } = await Permissions.askAsync(Permissions.CAMERA)
@@ -536,3 +539,11 @@ export default class AddScreen extends React.Component {
     })
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+   }
+}
+
+export default connect(mapStateToProps)(AddScreen)
