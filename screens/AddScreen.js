@@ -16,8 +16,8 @@ import Touchable from '../components/Touchable/index'
 import ViewAlignItemRow from '../components/ViewsAlignItemRow/index'
 import ViewCenter from '../components/ViewCenter/index'
 import ViewContainer from '../components/ViewContainer/index'
-import allTheActions from '../actions'
 import { connect } from 'react-redux';
+import TouchablePlus from '../components/TouchablePlus'
 
 
 
@@ -314,14 +314,7 @@ class AddScreen extends React.Component {
                   currentEtape: value
                 })}
               />
-
-              <Touchable
-                text='+'
-                onPressFunction={this._addTextInputEtapes}
-                widthTouchable={50}
-                backgroundColorTouchable='#78C9DC'
-                colorText='#FFF'
-              />
+                <TouchablePlus onPressFunction={this._addTextInputEtapes} />
             </ViewAlignItemRow>
             <View>
 
@@ -331,7 +324,7 @@ class AddScreen extends React.Component {
                   .map((item, index) => (
                     <View key={'etape' + item.ordre}>
                       <ViewAlignItemRow align={'flex-end'}>
-                        <Label text={'Étape n° '} width={50} height={40} fontSize={16} radius={0} />
+                        <Label text={'Étape '} width={50} height={40} fontSize={16} radius={0} />
                         <InputText
                           onChangeTextFunction={(val) => this._updateOrdre(index, val)}
                           keyboard='number-pad'
@@ -364,16 +357,11 @@ class AddScreen extends React.Component {
                 data={this.state.dataPicker}
                 onChange={(option) => this._setInputTextIngredients(option)}
                 label={this.state.labelPicker}>
-                <Label width={260} height={40} text={this.state.phraseIngredient} />
+                <Label width={260} height={40} radius={20} text={this.state.phraseIngredient} />
               </Picker>
+              
+              <TouchablePlus onPressFunction={this._addTextInputIngredients} />
 
-              <Touchable
-                text='+'
-                onPressFunction={this._addTextInputIngredients}
-                widthTouchable={50}
-                backgroundColorTouchable='#78C9DC'
-                colorText='#FFF'
-              />
             </ViewAlignItemRow>
 
             <View>
