@@ -33,7 +33,7 @@ export default class ListUsersScreen extends React.Component {
 keyExtractor = item => item.idUser.toString()
 
 onPress = (contact) => {
-    this.props.navigation.navigate('ProfilUser')
+    this.props.navigation.navigate('ProfilUser', {contact : contact})
 }
 
 

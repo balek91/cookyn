@@ -9,11 +9,11 @@ import ViewCustom from '../components/ViewContainer'
 
 export default class ProfilScreen extends React.Component {
 	static navigationOptions = {
-		header: null,
+		title: 'Profil',
 	}
 
 	state = {
-		id : '',
+			id : '',
 			following: 'Suivre',
 			nom : '',
 			prenom : '',
@@ -22,6 +22,7 @@ export default class ProfilScreen extends React.Component {
 			user : '', 
 			nbAbonnement : '',
 			nbAbonnee : '',
+			idConnecteUser : '',
 			showSuivre : false
 	}
 
@@ -29,10 +30,12 @@ export default class ProfilScreen extends React.Component {
 		return (
 			<ViewCustom>
 				<ScrollViewCustom>
-					<Touchable
+					{this.state.showSuivre ? (null) : 
+					(<Touchable
 						text='Modifier Informations'
 						onPressFunction={this.redirectModify}
-					/>
+					/>)
+					}
 					<ViewCustom>
 						<TextCustom fontsize={18} text={'Informations Personnelles :'}/>
 					</ViewCustom>
@@ -104,6 +107,16 @@ export default class ProfilScreen extends React.Component {
 		}
 	}
 
+	loadUserConnect = async () => {
+
+		const value = await AsyncStorage.getItem('idUser');
+			if (value !== null) {
+				this.setState({idConnecteUser: value})
+				console.log("VALUUUUUUUUUUUE",value)
+			}
+
+	}
+
 	onBackFromListUser= () =>{
 		console.log(user);
 		if(user.idUser != null){
@@ -114,8 +127,8 @@ export default class ProfilScreen extends React.Component {
 					mail : response.data.mailUser,
 					ville : response.data.villeUser,
 					user : response.data.usernameUser,
-					nbAbonnement : response.data.nbFollowing,
-					nbAbonnee : response.data.nbFollower,
+					nbAbonnement : response.data.nbAbonnee,
+					nbAbonnee : response.data.nbAbonnee,
 				}));
 		}
 	}
@@ -154,7 +167,31 @@ export default class ProfilScreen extends React.Component {
 		}
 	}
 
+	loadContactDetail = (contact) => {
+		console.log(contact)
+		if(contact.idUser != null){
+			Axios.get('http://51.75.22.154:8080/Cookyn/user/getUserById/'+contact.idUser).then(response => this.setState({
+					id : response.data.idUser,
+					nom : response.data.nomUser,
+					prenom : response.data.prenomUser,
+					mail : response.data.mailUser,
+					ville : response.data.villeUser,
+					user : response.data.usernameUser,
+					nbAbonnement : response.data.nbAbonnement,
+					nbAbonnee : response.data.nbAbonnee,
+					showSuivre : true,
+
+				}));
+				this.loadUserConnect()
+
+		}
+	}
+
 	componentDidMount() {
-		this.retrieveData();
+		const { navigation } = this.props
+		{navigation.getParam('contact') ? this.loadContactDetail(navigation.getParam('contact')): 
+		
+		this.retrieveData()
+	}
 	}
 }
