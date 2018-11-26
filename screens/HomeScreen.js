@@ -1,113 +1,77 @@
-import React from 'react';
-import {
+import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import styled from 'styled-components'
+import allTheActions from '../actions'
 
-  Platform,
+import ListItemElement from '../components/FlatListElement'
+import ViewCustom from '../components/ViewContainer'
 
-  StyleSheet,
+const StyledFlatList = styled.FlatList`
+flex: 1;
+width: 100%;
+`
 
-  View,
-} from 'react-native';
-
-
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+  componentDidMount() {
+    this.props.actions.recette.getRecettes()
+
+  }
+  loadMoreContentAsync = async () => {
+    const { limite, offset } = this.props
+
+    this.props.actions.recette.getRecettes(offset + limite)
+  }
+  refreshContentAsync = async () => {
+    this.props.actions.recette.getRecettes(0, true)
+  }
+
+  navigateToDetail = (recette) => {
+    this.props.navigation.navigate('DetailRecette', { recette: recette })
+  }
+
+  keyExtractor = item => item.idRecette.toString()
 
   render() {
+    const { recettes } = this.props
     return (
-      <View style={styles.container}>
-        
-      </View>
+      <ViewCustom>
+        {recettes ? (
+          <StyledFlatList
+            data={recettes}
+            onEndReached={() => this.loadMoreContentAsync()}
+            onEndReachedThreshold={0}
+            keyExtractor={this.keyExtractor}
+            refreshing={false}
+            onRefresh={() => this.refreshContentAsync()}
+            renderItem={({ item }) => (
+              <ListItemElement textPrincipal={item.libelleRecette} textDetail={`Categorie : ${item.catRecette} / temps de prépartation : ${item.tempPrepaRecette}`} onPressFunction={() => { this.navigateToDetail(item) }} />
+            )} />) : (null)}
+      </ViewCustom>
     );
+  }
+
+}
+
+const mapStateToProps = state => {
+  return {
+    recettes: state.recette.list,
+    offset: state.recette.offset,
+    limite: state.recette.limite,
+    allState: state
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
-});
+const mapDispatchToProps = dispatch => ({
+  actions: {
+    recette: bindActionCreators(allTheActions.recette, dispatch)
+  }
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeScreen)

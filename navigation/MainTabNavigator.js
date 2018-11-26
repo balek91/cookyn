@@ -8,17 +8,12 @@ import ListRecetteScreen from '../screens/ListRecetteScreen'
 import ListUsersScreen from '../screens/ListUsersScreen'
 import ModifyUserScreen from '../screens/ModifyUserScreen'
 import ProfilScreen from '../screens/ProfilScreen'
-
-const headeStyle = {
-  margintop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
-};
+import DetailRecetteScreen from '../screens/DetailRecetteScreen'
 
 const HomeStack = createStackNavigator({
-  Home: {
-    screen: HomeScreen, navigationOptions: {
-      title: null,
-    }
-  }
+  Home: HomeScreen,
+  DetailRecette : DetailRecetteScreen
+  
 });
 
 

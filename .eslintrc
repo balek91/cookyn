@@ -1,0 +1,14 @@
+{
+  "parser": "babel-eslint",
+  "plugins": ["react"],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "rules": {
+    "no-unused-vars": 1,
+    "no-trailing-spaces": 1,
+    "prefer-template": 1,
+    "quotes": [1, "single", { "avoidEscape": true }],
+    "react/no-redundant-should-component-update": 1,
+    "react/sort-comp": 1,
+    "semi": [1, "never"]
+  }
+}
