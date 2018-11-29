@@ -26,7 +26,7 @@ export const LoginStack = createStackNavigator({
     SignUpPage:{ 
         screen : SignUpScreen,
     navigationOptions : {
-        header:null
+        header : null
     }},
     SignUpOk :{ 
         screen : SignUpOkScreen,
@@ -42,7 +42,7 @@ export const LoginStack = createStackNavigator({
     }},
       SignUp : {screen : SignUpStack,
     navigationOptions : {
-        header: null
+        title: 'Inscription'
     }}
   });
 

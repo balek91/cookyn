@@ -8,6 +8,13 @@ import InputText from '../components/TextInput'
 import TextCustom from '../components/TextCustom'
 import Touchable from '../components/Touchable'
 import ViewContainer from '../components/ViewContainer'
+import styled from 'styled-components'
+
+
+const StyledView = styled(ViewContainer)`
+padding : 20px 0px 0px 0px;`
+
+
 
 export default class SignUp extends React.Component {
   static navigationOptions = {
@@ -35,9 +42,9 @@ export default class SignUp extends React.Component {
     <ViewContainer>
       <ContentContainer>
         <KeyboardAwareScrollView resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false} >
-          <ViewContainer>
+          <StyledView>
             <Image source={require('../assets/images/logo.png')} />
-          </ViewContainer>
+          </StyledView>
           <TextCustom text={'\n'}></TextCustom>
           <InputText
           onChangeTextFunction={(user) => this.setState({user})}

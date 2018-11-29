@@ -1,21 +1,29 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, KeyboardAvoidingView, Image } from 'react-native';
-
+import Touchable from '../components/Touchable'
 
 
 export default class SignUpOk extends Component {
 
+
+  goToLogin =() => {
+    this.props.navigation.navigate('Login');
+  }
   render() {
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false} >
-          <KeyboardAvoidingView style={styles.container} behavior="padding">
             <Image source={require('../assets/images/logo.png')} />
-
             <View style={styles.viewSignUp}>
               <Text>Inscription Complète !</Text>
             </View>
-          </KeyboardAvoidingView>
+            <Touchable
+                text={'Retour à l\'acceuil'}
+                onPressFunction={this.goToLogin}
+                widthTouchable={200}
+                backgroundColorTouchable='#E88110'
+                colorText='#FFF'
+              />
         </ScrollView>
       </View>
     )
