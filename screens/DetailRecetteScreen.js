@@ -22,7 +22,7 @@ const Header = styled.View`
 flex: 1;
 justifyContent: center;
 alignItems: center;
-backgroundColor: #E88110;
+backgroundColor: #FFFFFF;
 `
 
 const Footer = styled.View`
@@ -46,8 +46,10 @@ margin: 0px 20px 20px 20px
 const StyledImage = styled.Image
 	`
   height : 150;
-  width : 150;
-  border-radius:75;
+  width : 300;
+  border-radius:20;
+  borderColor:black;
+  borderWidth:1;
 `
 
 const StyledIcon = styled.Image

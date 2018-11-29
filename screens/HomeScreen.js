@@ -12,6 +12,12 @@ flex: 1;
 width: 100%;
 `
 
+const StyledView = styled(ViewCustom)`
+padding : 20px 0px 0px 0px;`
+
+
+
+
 class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -38,7 +44,7 @@ class HomeScreen extends React.Component {
   render() {
     const { recettes } = this.props
     return (
-      <ViewCustom>
+      <StyledView>
         {recettes ? (
           <StyledFlatList
             data={recettes}
@@ -50,7 +56,7 @@ class HomeScreen extends React.Component {
             renderItem={({ item }) => (
               <ListItemElement textPrincipal={item.libelleRecette} textDetail={`Categorie : ${item.catRecette} / temps de prépartation : ${item.tempPrepaRecette}`} onPressFunction={() => { this.navigateToDetail(item) }} />
             )} />) : (null)}
-      </ViewCustom>
+      </StyledView>
     );
   }
 

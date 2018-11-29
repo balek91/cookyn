@@ -10,7 +10,7 @@ import ViewCustom from '../components/ViewContainer'
 
 export default class ModifyUserScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: 'Modifier Profil',
   }
 
   state = {
@@ -32,7 +32,7 @@ export default class ModifyUserScreen extends React.Component {
 
   render() {
     return (
-      <ScrollViewCustom>
+      <ViewCustom>
         <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} showsVerticalScrollIndicator={false}>
           <ViewCustom>
             <TextCustom fontsize={18} text={'Nom:'} />
@@ -93,7 +93,7 @@ export default class ModifyUserScreen extends React.Component {
             onPress={this.updateUser}
           />
         </KeyboardAwareScrollView>
-      </ScrollViewCustom>
+        </ViewCustom>
     )
   }
 
