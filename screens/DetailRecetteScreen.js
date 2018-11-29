@@ -190,7 +190,7 @@ export default class DetailScreen extends React.Component {
 		this.setState({
 			idRecette: navigation.getParam('recette').idRecette
 		})
-		axios.get('http://51.75.22.154:8080/Cookyn/recette/ByIdRecetteAll/'+ this.state.idRecette)
+		axios.get('http://51.75.22.154:8080/Cookyn/recette/GetRecetteById/'+ this.state.idRecette)
 		.then(res =>{
 			this.setState({
 				data : res.data

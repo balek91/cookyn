@@ -1,7 +1,7 @@
 import { ImagePicker, Permissions, Camera } from 'expo'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ListItem } from 'react-native-elements'
-import { View } from 'react-native'
+import { View, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import Axios from 'axios'
 import ContentContainer from '../components/ContentContainer/index'
 import HeaderContainer from '../components/HeaderContainer/index'
@@ -11,7 +11,7 @@ import Label from '../components/LabelEtapeList/index'
 import OptionPicker from '../components/OptionPicker/index'
 import Picker from 'react-native-multiple-picker'
 import QuickPicker from 'quick-picker'
-import React from 'react'
+import React, { Children } from 'react'
 import Touchable from '../components/Touchable/index'
 import ViewAlignItemRow from '../components/ViewsAlignItemRow/index'
 import ViewCenter from '../components/ViewCenter/index'
@@ -82,7 +82,7 @@ class AddScreen extends React.Component {
     })
 
     let UnitésPicker = []
-    Axios.get('http://51.75.22.154:8080/Cookyn/unite/ListUnites').then((response) => {
+    Axios.get('http://51.75.22.154:8080/Cookyn/unite/GetListUnites').then((response) => {
       response.data.map((item) => {
         this.state.UnitésPicker.push({
           key: 'unit' + item.idUnite,
@@ -233,11 +233,16 @@ class AddScreen extends React.Component {
 
   render() {
     let { image } = this.state
+    const DissmissKeyboard = ({Children}) => (
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        {Children}
+      </TouchableWithoutFeedback>
+    )
     return (
       <ViewContainer>
         <HeaderContainer titleText={'Ajout de recette'}></HeaderContainer>
         <ContentContainer>
-          <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} showsVerticalScrollIndicator={false}  >
+          <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}  >
 
             <OptionPicker
               option={['Choisir une photo de la bibliothèque', 'Prendre une photo', 'Annuler']}
@@ -248,45 +253,36 @@ class AddScreen extends React.Component {
             <ViewCenter>
 
               <InputText
-                reference={(input) => this.name = input}
                 placeholderText='Nom de la recette'
                 onChangeTextFunction={(val) => this.setState({ libelleRecette: val })}
-                onSubmitEditingFunction={() => this.categorie.focus()}
                 multi={false}
                 width={300}
               />
 
               <InputText
-                reference={(input) => this.categorie = input}
                 placeholderText='Catégorie'
                 onChangeTextFunction={(val) => this.setState({ catRecette: val })}
-                onSubmitEditingFunction={() => this.price.focus()}
                 multi={false}
                 width={300}
 
               />
               <InputText
-                reference={(input) => this.price = input}
-                placeholderText='Prix estimé'
+                placeholderText='Prix estimé (en €)'
                 onChangeTextFunction={(val) => this.setState({ prixRecette: val })}
-                onSubmitEditingFunction={() => this.tps.focus()}
                 keyboard='number-pad'
                 multi={false}
                 width={300}
               />
 
               <InputText
-                reference={(input) => this.tps = input}
-                placeholderText='Temps de préparation'
+                placeholderText='Temps de préparation (en min)'
                 onChangeTextFunction={(val) => this.setState({ tempPrepRecette: val })}
-                onSubmitEditingFunction={() => this.tps.focus()}
                 keyboard='number-pad'
                 multi={false}
                 width={300}
               />
-
             </ViewCenter>
-
+            
             <ViewAlignItemRow>
               <Touchable
                 text='Difficulté'
@@ -400,6 +396,7 @@ class AddScreen extends React.Component {
   }
 
   _selectDifficulty = () => {
+    Keyboard.dismiss()
     QuickPicker.open({
       items: ['Facile', 'Moyen', 'Difficile'],
       selectedValue: 'Facile',

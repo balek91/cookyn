@@ -17,7 +17,7 @@ export const refreshRecette = (recette) => ({
 
 export const getRecettes = (offset = 0, refresh = false) => dispatch => {
   console.log("OFFFFSEEEEEEET", offset)
-  axios.get('http://51.75.22.154:8080/Cookyn/recette/GetListRecetteByindex/' + offset)
+  axios.get('http://51.75.22.154:8080/Cookyn/recette/GetListRecetteByOffSet/' + offset)
     .then(res => {
       if (!refresh) {
         dispatch(
