@@ -10,9 +10,11 @@ import Touchable from '../components/Touchable'
 import ViewContainer from '../components/ViewContainer'
 
 export default class SignUp extends React.Component {
-  constructor() {
-    super()
-    this.state = {
+  static navigationOptions = {
+    title: '',
+  }
+
+  state = {
       nom : '',
       prenom : '',
       mail : '',
@@ -27,11 +29,10 @@ export default class SignUp extends React.Component {
       borderColorEmail : 'gray',
       statusEmail : false
     }
- }
+ 
  render(){
   return(
     <ViewContainer>
-      <HeaderContainer titleText={'Inscription'} />
       <ContentContainer>
         <KeyboardAwareScrollView resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false} >
           <ViewContainer>
