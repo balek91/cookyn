@@ -75,7 +75,7 @@ class AddScreen extends React.Component {
     Axios.get('http://51.75.22.154:8080/Cookyn/ingredient/GetListAllIngredient').then((response) => {
       response.data.map((item) => {
         this.state.IngredientsPicker.push({
-          key: 'ingr' + item.idIngredient,
+          key: `ingr${item.idIngredient}`,
           label: item.libelleIngredient
         })
       })
@@ -85,7 +85,7 @@ class AddScreen extends React.Component {
     Axios.get('http://51.75.22.154:8080/Cookyn/unite/GetListUnites').then((response) => {
       response.data.map((item) => {
         this.state.UnitésPicker.push({
-          key: 'unit' + item.idUnite,
+          key: `unit${item.idUnite}`,
           label: item.libelleUnite
         })
       })
@@ -158,12 +158,8 @@ class AddScreen extends React.Component {
 
   }
 
-  async componentWillMount() {
-    console.log('User : ', this.props.user);
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
-    this.setState({ hasCameraRollPermission: status === 'granted' })
-    const { status2 } = await Permissions.askAsync(Permissions.CAMERA)
-    this.setState({ hasCameraPermission: status2 === 'granted' })
+  componentWillMount() {
+    console.log('User : ', this.props.user); 
   }
 
   _deleteInputIngredients = (key) => {
@@ -219,6 +215,8 @@ class AddScreen extends React.Component {
   }
 
   _pickImage = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+    this.setState({ hasCameraRollPermission: status === 'granted' })
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -233,11 +231,6 @@ class AddScreen extends React.Component {
 
   render() {
     let { image } = this.state
-    const DissmissKeyboard = ({Children}) => (
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        {Children}
-      </TouchableWithoutFeedback>
-    )
     return (
       <ViewContainer>
         <HeaderContainer titleText={'Ajout de recette'}></HeaderContainer>
@@ -318,7 +311,7 @@ class AddScreen extends React.Component {
                 this.state.EtapesToSend
                   .sort((itemA, itemB) => itemA.ordre > itemB.ordre)
                   .map((item, index) => (
-                    <View key={'etape' + item.ordre}>
+                    <View key={`${etape}item.ordre`}>
                       <ViewAlignItemRow align={'flex-end'}>
                         <Label text={'Étape '} width={50} height={40} fontSize={16} radius={0} />
                         <InputText
@@ -365,7 +358,7 @@ class AddScreen extends React.Component {
                 this.state.IngredientsView.map((item, index) => (
                   <ListItem
                     key={index}
-                    title={this._isVoyelle(item.ingredients) ? item.quantite + ' ' + item.unite + ' d\'' + item.ingredients : item.quantite + ' ' + item.unite + ' de ' + item.ingredients}
+                    title={this._isVoyelle(item.ingredients) ? `${item.quantite} ${item.unite} d'${item.ingredients}` : `${item.quantite} ${item.unite} de ${item.ingredients}`}
                     rightIcon={{ name: 'delete' }}
                     onPressRightIcon={() => this._deleteListIngredient(index)}
                   />
@@ -467,12 +460,12 @@ class AddScreen extends React.Component {
             if (this._isVoyelle(this.state.IngredientsPicker[idIngredient - 1].label)) {
               this.setState({
                 selectedIngredient: option[2].toString().substring(4),
-                phraseIngredient: option[0] + ' ' + this.state.UnitésPicker[idUnit - 1].label + ' d\'' + this.state.IngredientsPicker[idIngredient - 1].label
+                phraseIngredient: `${option[0]} ${this.state.UnitésPicker[idUnit - 1].label} d' ${this.state.IngredientsPicker[idIngredient - 1].label}`
               })
             } else {
               this.setState({
                 selectedIngredient: option[2].toString().substring(4),
-                phraseIngredient: option[0] + ' ' + this.state.UnitésPicker[idUnit - 1].label + ' de ' + this.state.IngredientsPicker[idIngredient - 1].label
+                phraseIngredient: `${option[0]} ${this.state.UnitésPicker[idUnit - 1].label} de ${this.state.IngredientsPicker[idIngredient - 1].label}`
               })
             }
           }
@@ -491,6 +484,8 @@ class AddScreen extends React.Component {
   }
 
   _takePhoto = async () => {
+    const { status2 } = await Permissions.askAsync(Permissions.CAMERA)
+    this.setState({ hasCameraPermission: status2 === 'granted' })
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4, 3]
