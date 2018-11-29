@@ -39,7 +39,6 @@ onPress = (contact) => {
 
 render() {
     const {users} = this.state
-    console.log("users sss",users)
     return (
         <ViewContainer>
                 {users ? (

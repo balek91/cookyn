@@ -416,6 +416,7 @@ class AddScreen extends React.Component {
       libelleRecette: this.state.libelleRecette,
       tempPrepRecette: parseInt(this.state.tempPrepRecette, 10),
       diffRecette: this.state.selectedDiff,
+      prix : this.state.prixRecette,
       user: {
         idUser: 1
       }

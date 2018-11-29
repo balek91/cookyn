@@ -14,7 +14,7 @@ export default class ProfilScreen extends React.Component {
 
 	state = {
 			id : '',
-			following: 'Suivre',
+			following: true,
 			nom : '',
 			prenom : '',
 			mail : '',
@@ -27,6 +27,7 @@ export default class ProfilScreen extends React.Component {
 	}
 
 	render() {
+		const{following, showSuivre} = this.state
 		return (
 			<ViewCustom>
 				<ScrollViewCustom>
@@ -47,11 +48,13 @@ export default class ProfilScreen extends React.Component {
 						<TextCustom text={`Ville : ${this.state.ville}`}/> 
 					</ViewCustom>
 					<ViewCustom>
-						{this.state.showSuivre ? 
+						{showSuivre ? 
 						(<ButtonFollow
-						text={this.state.following}
+						text={following ? ('Suivre') : ('Ne plus suivre')}
 						onPressFunction={this.onPressButtonFollow}
-						/>): (null)}
+						/>) 
+						:
+						(null)}
 						<Touchable
 							text={`${this.state.nbAbonnement} Abonnement(s)`} 
 							onPressFunction={this.onPressButtonAbonnements}
@@ -107,11 +110,12 @@ export default class ProfilScreen extends React.Component {
 		}
 	}
 
-	loadUserConnect = async () => {
+	loadUserConnect = async (id) => {
 
 		const value = await AsyncStorage.getItem('idUser');
 			if (value !== null) {
 				this.setState({idConnecteUser: value})
+				this.getRelation(value,id)
 				console.log("VALUUUUUUUUUUUE",value)
 			}
 
@@ -159,18 +163,31 @@ export default class ProfilScreen extends React.Component {
 	}
 
 	onPressButtonFollow = () => {
-		if(this.state.following == 'Suivre'){
-			this.setState({following: 'Ne plus suivre'})
+		const {following,idConnecteUser, id } = this.state
+		if(following == true){
+			Axios.get('http://51.75.22.154:8080/Cookyn/user/DeleteRelation/'+idConnecteUser+'/'+id).then(this.setState({
+				following: false
+			}))	
 		}
 		else{
-			this.setState({following: 'Suivre'})
+			Axios.get('http://51.75.22.154:8080/Cookyn/user/CreateRelation/'+idConnecteUser+'/'+id).then( this.setState({
+				following: true
+			}))	
 		}
+	}
+
+	getRelation = (idConnect, id) => {
+		console.log('http://51.75.22.154:8080/Cookyn/user/EtreAmie/'+idConnect+'/'+id)
+		Axios.get('http://51.75.22.154:8080/Cookyn/user/EtreAmie/'+idConnect+'/'+id).then(response => this.setState({
+					following : response.data
+				}));
 	}
 
 	loadContactDetail = (contact) => {
 		console.log(contact)
 		if(contact.idUser != null){
-			Axios.get('http://51.75.22.154:8080/Cookyn/user/getUserById/'+contact.idUser).then(response => this.setState({
+			Axios.get('http://51.75.22.154:8080/Cookyn/user/getUserById/'+contact.idUser).then(response => 
+			this.setState({
 					id : response.data.idUser,
 					nom : response.data.nomUser,
 					prenom : response.data.prenomUser,
@@ -180,9 +197,10 @@ export default class ProfilScreen extends React.Component {
 					nbAbonnement : response.data.nbAbonnement,
 					nbAbonnee : response.data.nbAbonnee,
 					showSuivre : true,
-
 				}));
-				this.loadUserConnect()
+				this.loadUserConnect(contact.idUser)
+				
+				
 
 		}
 	}
