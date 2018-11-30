@@ -1,7 +1,8 @@
 import React from 'react'
+import styled from 'styled-components'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import styled from 'styled-components'
 import allTheActions from '../actions'
 
 import ListItemElement from '../components/FlatListElement'

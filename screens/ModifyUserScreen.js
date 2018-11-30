@@ -1,70 +1,63 @@
 import Axios from 'axios'
 import React from 'react'
-import { Button , TouchableOpacity, Image} from 'react-native'
+import { Button } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import TextCustom from '../components/TextCustom'
 import InputText from '../components/TextInput'
 import ViewCustom from '../components/ViewContainer'
 
-const   goBack = () => {
-  console.log('test')
-}
-
 export default class ModifyUserScreen extends React.Component {
-
-  static navigationOptions =  ({ navigation}) => ({
-    title: 'Modifier Profil', 
-    headerLeft: (
-        <TouchableOpacity onPress={goBack}>
-            <Image source={ require('../assets/icons/right-arrow.png') }/>
-        </TouchableOpacity>
-    )
-})
+  static navigationOptions = {
+    title: 'Modifier Profil'
+  };
   state = {
-    id: '',
-    nom: '',
-    prenom: '',
-    mail: '',
-    ville: '',
-    user: '',
-    oldPassword: '',
-    newPassword: '',
-    confirmPassword: '',
-    showChangePassword: false,
     borderColorConfirmPassword: 'gray',
     borderColorNewPassword: 'gray',
+    confirmPassword: '',
+    id: '',
+    mail: '',
+    newPassword: '',
+    nom: '',
+    oldPassword: '',
+    prenom: '',
+    showChangePassword: false,
+    statusConfirmPassword: false,
     statusNewPassword: false,
-    statusConfirmPassword: false
-  }
+    user: '',
+    ville: '',
+  };
 
   render() {
     return (
       <ViewCustom>
-        <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} showsVerticalScrollIndicator={false}>
+        <KeyboardAwareScrollView
+          resetScrollToCoords={{ x: 0, y: 0 }}
+          showsVerticalScrollIndicator={false}
+        >
           <ViewCustom>
             <TextCustom fontsize={18} text={'Nom:'} />
             <InputText
-              reference={(input) => this.nom = input}
-              onChangeTextFunction={(val) => this.setState({ nom: val })}
+              reference={input => (this.nom = input)}
+              onChangeTextFunction={val => this.setState({ nom: val })}
               value={this.state.nom}
             />
             <TextCustom fontsize={18} text={'Prenom:'} />
             <InputText
-              reference={(input) => this.prenom = input}
-              onChangeTextFunction={(val) => this.setState({ prenom: val })}
+              reference={input => (this.prenom = input)}
+              onChangeTextFunction={val => this.setState({ prenom: val })}
               value={this.state.prenom}
             />
             <TextCustom fontsize={18} text={'Mail:'} />
             <InputText
-              reference={(input) => this.mail = input}
-              onChangeTextFunction={(val) => this.setState({ mail: val })}
+              reference={input => (this.mail = input)}
+              onChangeTextFunction={val => this.setState({ mail: val })}
               value={this.state.mail}
             />
             <TextCustom fontsize={18} text={'Ville:'} />
             <InputText
-              reference={(input) => this.ville = input}
-              onChangeTextFunction={(val) => this.setState({ ville: val })}
+              reference={input => (this.ville = input)}
+              onChangeTextFunction={val => this.setState({ ville: val })}
               value={this.state.ville}
             />
           </ViewCustom>
@@ -72,50 +65,55 @@ export default class ModifyUserScreen extends React.Component {
             <ViewCustom>
               <TextCustom fontsize={18} text={'Ancien Mot de Passe:'} />
               <InputText
-                reference={(input) => this.oldPassword = input}
-                onChangeTextFunction={(oldPassword) => this.setState({ oldPassword })}
+                reference={input => (this.oldPassword = input)}
+                onChangeTextFunction={oldPassword =>
+                  this.setState({ oldPassword })
+                }
                 isPassword={true}
               />
               <TextCustom fontsize={18} text={'Nouveau Mot de Passe:'} />
               <InputText
-                reference={(input) => this.oldPassword = input}
+                reference={input => (this.oldPassword = input)}
                 bordercolor={this.state.borderColorNewPassword}
-                onChangeTextFunction={(newPassword) => this.regexNewPassword(newPassword)}
+                onChangeTextFunction={newPassword =>
+                  this.regexNewPassword(newPassword)
+                }
                 isPassword={true}
               />
               <TextCustom fontsize={18} text={'Confirmer Mot de Passe:'} />
               <InputText
-                reference={(input) => this.confirmPassword = input}
+                reference={input => (this.confirmPassword = input)}
                 bordercolor={this.state.borderColorConfirmPassword}
-                onChangeTextFunction={(confirmPassword) => this.verifNewPassword(confirmPassword)}
+                onChangeTextFunction={confirmPassword =>
+                  this.verifNewPassword(confirmPassword)
+                }
                 isPassword={true}
               />
             </ViewCustom>
           ) : (
-              <Button
-                title='Changer le mot de passe'
-                onPress={this.changePassword} />
-            )}
+            <Button
+              title='Changer le mot de passe'
+              onPress={this.changePassword}
+            />
+          )}
           <Button
             title='Mettre à jour les informations'
             onPress={this.updateUser}
           />
         </KeyboardAwareScrollView>
       </ViewCustom>
-    )
+    );
   }
-
-
 
   changePassword = () => {
     this.setState({
       showChangePassword: true
     });
-  }
-  verifNewPassword = (confirmPassword1) => {
+  };
+  verifNewPassword = confirmPassword1 => {
     this.setState({
       confirmPassword: confirmPassword1
-    })
+    });
     if (this.state.newPassword == confirmPassword1) {
       this.setState({
         borderColorConfirmPassword: 'green',
@@ -127,12 +125,12 @@ export default class ModifyUserScreen extends React.Component {
         statusConfirmPassword: true
       });
     }
-  }
+  };
 
-  regexNewPassword = (newPass) => {
+  regexNewPassword = newPass => {
     this.setState({
       newPassword: newPass
-    })
+    });
     var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
     if (re.test(newPass)) {
       this.setState({
@@ -145,13 +143,12 @@ export default class ModifyUserScreen extends React.Component {
         statusNewPassword: false
       });
     }
-  }
+  };
 
   updateUser = () => {
-    console.log('test')
-    let body
+    console.log('test');
+    let body;
     if (this.state.showChangePassword) {
-
       body = {
         idUser: this.state.id,
         nomUser: this.state.nom,
@@ -161,19 +158,21 @@ export default class ModifyUserScreen extends React.Component {
         usernameUser: this.state.user,
         passwordUser: this.state.oldPassword,
         newPassword: this.state.newPassword
-      }
+      };
       if (this.state.statusNewPassword && this.state.statusConfirmPassword) {
-        Axios.post('http://51.75.22.154:8080/Cookyn/user/UpdateUser', body).then(response => {
+        Axios.post(
+          'http://51.75.22.154:8080/Cookyn/user/UpdateUser',
+          body
+        ).then(response => {
           if (response.data.idUser != null) {
-            this.props.navigation.state.params.onNavigateBack()
-            this.props.navigation.navigate('Profil')
+            this.props.navigation.state.params.onNavigateBack();
+            this.props.navigation.navigate('Profil');
           } else {
-            alert('probleme dans l\'ancien mot de passe')
+            alert('probleme dans l\'ancien mot de passe');
           }
-        }
-        )
+        });
       } else {
-        alert('probleme dans le nouveau mot de passe')
+        alert('probleme dans le nouveau mot de passe');
       }
     } else {
       body = {
@@ -183,20 +182,18 @@ export default class ModifyUserScreen extends React.Component {
         mailUser: this.state.mail,
         usernameUser: this.state.user,
         villeUser: this.state.ville
-      }
-      Axios.post('http://51.75.22.154:8080/Cookyn/user/UpdateUser', body).then(response => {
-        if (response.data.idUser != null) {
-          this.props.navigation.state.params.onNavigateBack()
-          this.props.navigation.navigate('Profil')
-        } else {
-          alert('erreur')
+      };
+      Axios.post('http://51.75.22.154:8080/Cookyn/user/UpdateUser', body).then(
+        response => {
+          if (response.data.idUser != null) {
+            this.props.navigation.state.params.onNavigateBack()
+          } else {
+            alert('erreur');
+          }
         }
-
-      }
-      )
+      );
     }
-
-  }
+  };
 
   componentDidMount() {
     const { navigation } = this.props;
