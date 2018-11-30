@@ -8,18 +8,18 @@ generer une liste de course en fonction des recettes choisies.
 
 # Objectif
 Les objectifs du projet sont :
-    - la refonte de notre application en react native nommé cookyn
-    - Utiliser Redux pour de stocker en session les users.
-    - Axios pour les requette http liés à notre api
-    - Iniformiser le code sous la norme ES6.
+- la refonte de notre application en react native nommé cookyn
+- Utiliser Redux pour de stocker en session les users.
+- Axios pour les requette http liés à notre api
+- Iniformiser le code sous la norme ES6.
 
 # Répartition du travail 
-    Antoine :
-        Pages : Profil, Modification du Profil, "Home" (Liste de toutes les recette), Login, SignUp
-    Mouhsin : 
-        Mise en place de l'architechture Reedux (Reducers, actions..), Developpement de l'API (back-end)
-    Steve :
-        Pages : AddRecette, DetailRecette, flux d'authentification de connexion 
+- Antoine :
+    Pages : Profil, Modification du Profil, "Home" (Liste de toutes les recette), Login, SignUp
+- Mouhsin : 
+    Mise en place de l'architechture Reedux (Reducers, actions..), Developpement de l'API (back-end)
+- Steve :
+    Pages : AddRecette, DetailRecette, flux d'authentification de connexion 
 
 # Les technologies utilisées
 - React-native
