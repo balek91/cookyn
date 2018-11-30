@@ -104,7 +104,6 @@ class AddScreen extends React.Component {
             IngredientsView: ingredientView,
             phraseIngredient: 'Cliquez pour chosir l\'ingredient'
           })
-          // console.log(IngredientsToSend)
         } else {
           alert('Veuillez choisir un ingrédient')
         }
@@ -120,7 +119,6 @@ class AddScreen extends React.Component {
   }
 
   componentWillMount() {
-    console.log('User : ', this.props.user);
     let test = []
     for (let i = 1; i <= 1000; i++) {
       test.push(i.toString())
@@ -129,8 +127,6 @@ class AddScreen extends React.Component {
     for (let j = 0; j < 1000; j++) {
       QuatityPicker.push({ key: test[j], label: test[j] })
     }
-    //  console.log(QuatityPicker)
-
     let IngredientsPicker = []
     Axios.get('http://51.75.22.154:8080/Cookyn/ingredient/GetListAllIngredient').then((response) => {
       response.data.map((item) => {
@@ -156,7 +152,6 @@ class AddScreen extends React.Component {
     this.state.IngredientsRecu = IngredientsPicker
     this.state.dataPicker = [QuatityPicker, this.state.UnitésPicker, this.state.IngredientsPicker]
     this.state.labelPicker = ['Quantité', 'Unités', 'Ingrédients']
-    //  console.log(this.state.dataPicker)
   
   }
 
@@ -219,9 +214,6 @@ class AddScreen extends React.Component {
       allowsEditing: true,
       aspect: [4, 3],
     })
-
-    console.log(result)
-
     if (!result.cancelled) {
       this.setState({ image: result.uri })
     }
@@ -280,9 +272,6 @@ class AddScreen extends React.Component {
       ingredients: ingredients,
       recette: recette,
     }
-
-    console.log(json)
-
     Axios.post('http://51.75.22.154:8080/Cookyn/recette/AddRecette', json).then((response) => {
       if (response.status =='200'){
         alert('La recette a bien été ajoutée !')
@@ -361,7 +350,6 @@ class AddScreen extends React.Component {
     if (!result.cancelled) {
       this.setState({ image: result.uri })
     }
-    console.log(result)
   }
 
   updateOrdre = (index, value) => {

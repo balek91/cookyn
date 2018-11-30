@@ -127,9 +127,6 @@ export default class DetailScreen extends React.Component {
 		} else {
 			const ingredients = data.ingredients
 			const etapes = data.etapes
-			etapes.map((item) => {
-				console.log(item.indexEtape + ' - ' + item.descriptionEtape)
-			})
 			return (
 				<StyledView>
 					<Content>
