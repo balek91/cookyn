@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { View } from 'react-native'
 import { ListItem } from 'react-native-elements'
-import styled from 'styled-components'
+import { View } from 'react-native'
 import InputText from '../TextInput/index'
+import PropTypes from 'prop-types'
+import React from 'react'
+import styled from 'styled-components'
 import ViewAlignItemRow from '../ViewsAlignItemRow/index'
 
 const StyledView = styled.View

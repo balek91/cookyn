@@ -2,6 +2,7 @@ import { ImagePicker, Permissions, Camera } from 'expo'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ListItem } from 'react-native-elements'
 import { View } from 'react-native'
+import { connect } from 'react-redux';
 import Axios from 'axios'
 import ContentContainer from '../components/ContentContainer/index'
 import InputText from '../components/TextInput/index'
@@ -10,14 +11,13 @@ import Label from '../components/LabelEtapeList/index'
 import OptionPicker from '../components/OptionPicker/index'
 import Picker from 'react-native-multiple-picker'
 import QuickPicker from 'quick-picker'
-import React, { Children } from 'react'
+import React from 'react'
+import styled from 'styled-components'
 import Touchable from '../components/Touchable/index'
+import TouchablePlus from '../components/TouchablePlus'
 import ViewAlignItemRow from '../components/ViewsAlignItemRow/index'
 import ViewCenter from '../components/ViewCenter/index'
 import ViewContainer from '../components/ViewContainer/index'
-import { connect } from 'react-redux';
-import styled from 'styled-components'
-import TouchablePlus from '../components/TouchablePlus'
 
 
 const StyledView = styled(ViewContainer)`
@@ -30,33 +30,33 @@ class AddScreen extends React.Component {
   }
 
     state = {
+      ALL_QUANTITY: [],
+      catRecette: '',
+      currentEtape: null,
+      currentValueUpdate: null,
+      dataPicker: [],
+      difficulte: null,
+      diffRecette: '',
       EtapesToSend: [],
+      HasCameraPermission: null,
+      hasCameraRollPermission: null,
+      image: null,
+      IngredientsPicker: [],
       IngredientsToSend: [],
       IngredientsView: [],
-      ALL_QUANTITY: [],
-      dataPicker: [],
       labelPicker: [],
-      difficulte: null,
+      libelleRecette: '',
+      nbEtape: 0,
       Photo: false,
       photoCamera: null,
-      image: null,
-      hasCameraRollPermission: null,
-      HasCameraPermission: null,
-      type: Camera.Constants.Type.back,
+      phraseIngredient: 'Cliquez pour choisir l\'ingredient',
+      prixRecette: null,
       selectedDiff: null,
-      selectedUnit: null,
-      currentEtape: null,
       selectedIngredient: null,
       selectedQuantity: null,
-      phraseIngredient: 'Cliquez pour choisir l\'ingredient',
-      nbEtape: 0,
-      currentValueUpdate: null,
-      libelleRecette: '',
-      catRecette: '',
+      selectedUnit: null,
       tempPrepRecette: null,
-      diffRecette: '',
-      prixRecette: null,
-      IngredientsPicker: [],
+      type: Camera.Constants.Type.back,
       UnitésPicker: []
     }
 
@@ -104,7 +104,6 @@ class AddScreen extends React.Component {
             IngredientsView: ingredientView,
             phraseIngredient: 'Cliquez pour chosir l\'ingredient'
           })
-          // console.log(IngredientsToSend)
         } else {
           alert('Veuillez choisir un ingrédient')
         }
@@ -120,7 +119,6 @@ class AddScreen extends React.Component {
   }
 
   componentWillMount() {
-    console.log('User : ', this.props.user);
     let test = []
     for (let i = 1; i <= 1000; i++) {
       test.push(i.toString())
@@ -129,8 +127,6 @@ class AddScreen extends React.Component {
     for (let j = 0; j < 1000; j++) {
       QuatityPicker.push({ key: test[j], label: test[j] })
     }
-    //  console.log(QuatityPicker)
-
     let IngredientsPicker = []
     Axios.get('http://51.75.22.154:8080/Cookyn/ingredient/GetListAllIngredient').then((response) => {
       response.data.map((item) => {
@@ -156,7 +152,6 @@ class AddScreen extends React.Component {
     this.state.IngredientsRecu = IngredientsPicker
     this.state.dataPicker = [QuatityPicker, this.state.UnitésPicker, this.state.IngredientsPicker]
     this.state.labelPicker = ['Quantité', 'Unités', 'Ingrédients']
-    //  console.log(this.state.dataPicker)
   
   }
 
@@ -219,9 +214,6 @@ class AddScreen extends React.Component {
       allowsEditing: true,
       aspect: [4, 3],
     })
-
-    console.log(result)
-
     if (!result.cancelled) {
       this.setState({ image: result.uri })
     }
@@ -280,12 +272,27 @@ class AddScreen extends React.Component {
       ingredients: ingredients,
       recette: recette,
     }
-
-    console.log(json)
-
     Axios.post('http://51.75.22.154:8080/Cookyn/recette/AddRecette', json).then((response) => {
-      console.log(response.data)
+      if (response.status =='200'){
+        alert('La recette a bien été ajoutée !')
+        this.setState({
+          catRecette:'',
+          EtapesToSend:[],
+          image:'',
+          IngredientsToSend:[],
+          IngredientsView:[],
+          libelleRecette:'',
+          nbEtape:0,
+          prixRecette:'',
+          selectedDiff:'',
+          tempPrepRecette:'',
+    
+        })
+      }
+      
     })
+
+    
   }
 
   setInputTextIngredients = (option) => {
@@ -344,7 +351,6 @@ class AddScreen extends React.Component {
     if (!result.cancelled) {
       this.setState({ image: result.uri })
     }
-    console.log(result)
   }
 
   updateOrdre = (index, value) => {
@@ -389,6 +395,7 @@ class AddScreen extends React.Component {
                 placeholderText='Nom de la recette'
                 onChangeTextFunction={(val) => this.setState({ libelleRecette: val })}
                 multi={false}
+                value={this.state.libelleRecette}
                 width={300}
               />
 
@@ -396,6 +403,7 @@ class AddScreen extends React.Component {
                 placeholderText='Catégorie'
                 onChangeTextFunction={(val) => this.setState({ catRecette: val })}
                 multi={false}
+                value={this.state.catRecette}
                 width={300}
 
               />
@@ -404,6 +412,7 @@ class AddScreen extends React.Component {
                 onChangeTextFunction={(val) => this.setState({ prixRecette: val })}
                 keyboard='number-pad'
                 multi={false}
+                value={this.state.prixRecette}
                 width={300}
               />
 
@@ -411,6 +420,7 @@ class AddScreen extends React.Component {
                 placeholderText='Temps de préparation (en min)'
                 onChangeTextFunction={(val) => this.setState({ tempPrepRecette: val })}
                 keyboard='number-pad'
+                value={this.state.tempPrepRecette}
                 multi={false}
                 width={300}
               />

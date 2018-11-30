@@ -1,13 +1,12 @@
-import React from 'react'
-import Label from '../components/LabelEtapeList'
-import styled from 'styled-components/native'
-import PropTypes from 'prop-types'
 import axios from 'axios'
+import PropTypes from 'prop-types'
+import React from 'react'
+import styled from 'styled-components/native'
 
 
 const Content = styled.ScrollView`
 flex: 3;
-backgroundColor: #F5FCFF;
+backgroundColor: #FFFFFF;
 width:100%
 `
 
@@ -16,7 +15,7 @@ const StyledView = styled.View
 flex: 1;
 justifyContent: center;
 alignItems: center;
-backgroundColor: #F5FCFF;
+backgroundColor: #FFFFFF;
 `
 const Header = styled.View`
 flex: 1;
@@ -127,9 +126,6 @@ export default class DetailScreen extends React.Component {
 		} else {
 			const ingredients = data.ingredients
 			const etapes = data.etapes
-			etapes.map((item) => {
-				console.log(item.indexEtape + ' - ' + item.descriptionEtape)
-			})
 			return (
 				<StyledView>
 					<Content>
