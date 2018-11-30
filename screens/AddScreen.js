@@ -2,6 +2,7 @@ import { ImagePicker, Permissions, Camera } from 'expo'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ListItem } from 'react-native-elements'
 import { View } from 'react-native'
+import { connect } from 'react-redux';
 import Axios from 'axios'
 import ContentContainer from '../components/ContentContainer/index'
 import InputText from '../components/TextInput/index'
@@ -10,14 +11,13 @@ import Label from '../components/LabelEtapeList/index'
 import OptionPicker from '../components/OptionPicker/index'
 import Picker from 'react-native-multiple-picker'
 import QuickPicker from 'quick-picker'
-import React, { Children } from 'react'
+import React from 'react'
+import styled from 'styled-components'
 import Touchable from '../components/Touchable/index'
+import TouchablePlus from '../components/TouchablePlus'
 import ViewAlignItemRow from '../components/ViewsAlignItemRow/index'
 import ViewCenter from '../components/ViewCenter/index'
 import ViewContainer from '../components/ViewContainer/index'
-import { connect } from 'react-redux';
-import styled from 'styled-components'
-import TouchablePlus from '../components/TouchablePlus'
 
 
 const StyledView = styled(ViewContainer)`
@@ -30,33 +30,33 @@ class AddScreen extends React.Component {
   }
 
     state = {
+      ALL_QUANTITY: [],
+      catRecette: '',
+      currentEtape: null,
+      currentValueUpdate: null,
+      dataPicker: [],
+      difficulte: null,
+      diffRecette: '',
       EtapesToSend: [],
+      HasCameraPermission: null,
+      hasCameraRollPermission: null,
+      image: null,
+      IngredientsPicker: [],
       IngredientsToSend: [],
       IngredientsView: [],
-      ALL_QUANTITY: [],
-      dataPicker: [],
       labelPicker: [],
-      difficulte: null,
+      libelleRecette: '',
+      nbEtape: 0,
       Photo: false,
       photoCamera: null,
-      image: null,
-      hasCameraRollPermission: null,
-      HasCameraPermission: null,
-      type: Camera.Constants.Type.back,
+      phraseIngredient: 'Cliquez pour choisir l\'ingredient',
+      prixRecette: null,
       selectedDiff: null,
-      selectedUnit: null,
-      currentEtape: null,
       selectedIngredient: null,
       selectedQuantity: null,
-      phraseIngredient: 'Cliquez pour choisir l\'ingredient',
-      nbEtape: 0,
-      currentValueUpdate: null,
-      libelleRecette: '',
-      catRecette: '',
+      selectedUnit: null,
       tempPrepRecette: null,
-      diffRecette: '',
-      prixRecette: null,
-      IngredientsPicker: [],
+      type: Camera.Constants.Type.back,
       UnitésPicker: []
     }
 
@@ -276,15 +276,16 @@ class AddScreen extends React.Component {
       if (response.status =='200'){
         alert('La recette a bien été ajoutée !')
         this.setState({
-          libelleRecette:'',
           catRecette:'',
-          tempPrepRecette:'',
-          selectedDiff:'',
-          prixRecette:'',
-          IngredientsView:[],
-          IngredientsToSend:[],
           EtapesToSend:[],
-          image:''
+          image:'',
+          IngredientsToSend:[],
+          IngredientsView:[],
+          libelleRecette:'',
+          nbEtape:0,
+          prixRecette:'',
+          selectedDiff:'',
+          tempPrepRecette:'',
     
         })
       }

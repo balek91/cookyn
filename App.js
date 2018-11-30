@@ -20,6 +20,7 @@ export default class App extends React.Component {
   componentDidMount() {
     isSignedIn()
       .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
+      .catch(err => console.log('An error occured ' + err));
   }
   render() {
     const Layout = createRootNavigator(this.state.signedIn);

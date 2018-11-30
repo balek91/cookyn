@@ -1,14 +1,13 @@
-import Axios from 'axios'
-import React from 'react'
 import { Image } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import Axios from 'axios'
 import ContentContainer from '../components/ContentContainer'
-import HeaderContainer from '../components/HeaderContainer'
 import InputText from '../components/TextInput'
+import React from 'react'
+import styled from 'styled-components'
 import TextCustom from '../components/TextCustom'
 import Touchable from '../components/Touchable'
 import ViewContainer from '../components/ViewContainer'
-import styled from 'styled-components'
 
 
 const StyledView = styled(ViewContainer)`
