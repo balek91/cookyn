@@ -22,13 +22,13 @@ Les objectifs du projet sont :
         Pages : AddRecette, DetailRecette, flux d'authentification de connexion 
 
 # Les technologies utilisées
-React-native
-Axios
-Reedux
-Norme ES6
-Styled component
-React-native-mutiple-picker : https://www.npmjs.com/package/react-native-multiple-picker
-React-native-elements : ListItem (https://react-native-training.github.io/react-native-elements/docs/listitem.html#docsNav )
-quick-picker : https://www.npmjs.com/package/quick-picker
-react-native-keyboard-aware-scroll-view : https://github.com/APSL/react-native-keyboard-aware-scroll-view
+- React-native
+- Axios
+- Reedux
+- Norme ES6
+- Styled component
+- React-native-mutiple-picker : https://www.npmjs.com/package/react-native-multiple-picker
+- React-native-elements : ListItem (https://react-native-training.github.io/react-native-elements/docs/listitem.html#docsNav )
+- quick-picker : https://www.npmjs.com/package/quick-picker
+- react-native-keyboard-aware-scroll-view : https://github.com/APSL/react-native-keyboard-aware-scroll-view
 
