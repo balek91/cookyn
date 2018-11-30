@@ -15,11 +15,11 @@ Les objectifs du projet sont :
 
 # Répartition du travail 
 - Antoine :
-    Pages : Profil, Modification du Profil, "Home" (Liste de toutes les recette), Login, SignUp
+    - Pages : Profil, Modification du Profil, "Home" (Liste de toutes les recette), Login, SignUp
 - Mouhsin : 
-    Mise en place de l'architechture Reedux (Reducers, actions..), Developpement de l'API (back-end)
+    - Mise en place de l'architechture Reedux (Reducers, actions..), Developpement de l'API (back-end)
 - Steve :
-    Pages : AddRecette, DetailRecette, flux d'authentification de connexion 
+   -  Pages : AddRecette, DetailRecette, flux d'authentification de connexion 
 
 # Les technologies utilisées
 - React-native
