@@ -146,6 +146,7 @@ class ProfilScreen extends React.Component {
 		const { user, userProfil } = this.props
 		if (following == true) {
 			Axios.get(`http://51.75.22.154:8080/Cookyn/relation/DeleteRelation/${userProfil.user.idUser}/${user}`).then(() => {
+				this.props.actions.user.getAbonnesByUser(user)
 				this.props.actions.user.getUserConnect(userProfil.user.idUser)
 				this.setState({
 					following: false
@@ -155,6 +156,7 @@ class ProfilScreen extends React.Component {
 		else {
 			Axios.get(`http://51.75.22.154:8080/Cookyn/relation/CreateRelation/${userProfil.user.idUser}/${user}`).then(() => {
 				this.props.actions.user.getUserConnect(userProfil.user.idUser)
+				this.props.actions.user.getAbonnesByUser(user)
 				this.setState({
 					following: true
 				})
