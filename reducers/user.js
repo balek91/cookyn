@@ -1,7 +1,10 @@
-import { CONNEXION, DECONNEXION } from '../actions/user'
+import { CONNEXION, DECONNEXION, ABONNEMENT , ABONNE, CONNECT} from '../actions/user'
 
 const initialState = {
-  user:null
+  user:null,
+  abonnementList : [],
+  abonneList : [],
+  userProfil : null
 }
 
 export default (state = initialState, action) => {
@@ -16,6 +19,24 @@ export default (state = initialState, action) => {
             ...state,
             user: null
           }
+      case ABONNEMENT: {
+        return{
+          ...state,
+          abonnementList : [...action.user.users],
+        }
+      }
+      case ABONNE: {
+        return{
+          ...state,
+          abonneList : [...action.user.users],
+        }
+      }
+      case CONNECT : {
+        return{
+          ...state,
+          userProfil : action.u
+        }
+      }
       default:
         return state
     }
