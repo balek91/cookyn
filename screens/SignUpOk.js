@@ -28,7 +28,6 @@ export default class SignUpOk extends Component {
       </View>
     )
   }
-
 }
 
 const styles = StyleSheet.create({

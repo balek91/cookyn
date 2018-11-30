@@ -67,7 +67,7 @@ class Login extends React.Component {
             />      
             <Touchable
             text='Skip for dev'
-            onPressFunction={() =>  this.signUpOk()}
+            onPressFunction={() =>  this.SignedIn()}
             widthTouchable={300}
             backgroundColorTouchable='#E88110'
             colorText='#FFF'

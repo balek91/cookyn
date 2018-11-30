@@ -284,8 +284,25 @@ class AddScreen extends React.Component {
     console.log(json)
 
     Axios.post('http://51.75.22.154:8080/Cookyn/recette/AddRecette', json).then((response) => {
-      console.log(response.data)
+      if (response.status =='200'){
+        alert('La recette a bien été ajoutée !')
+        this.setState({
+          libelleRecette:'',
+          catRecette:'',
+          tempPrepRecette:'',
+          selectedDiff:'',
+          prixRecette:'',
+          IngredientsView:[],
+          IngredientsToSend:[],
+          EtapesToSend:[],
+          image:''
+    
+        })
+      }
+      
     })
+
+    
   }
 
   setInputTextIngredients = (option) => {
@@ -389,6 +406,7 @@ class AddScreen extends React.Component {
                 placeholderText='Nom de la recette'
                 onChangeTextFunction={(val) => this.setState({ libelleRecette: val })}
                 multi={false}
+                value={this.state.libelleRecette}
                 width={300}
               />
 
@@ -396,6 +414,7 @@ class AddScreen extends React.Component {
                 placeholderText='Catégorie'
                 onChangeTextFunction={(val) => this.setState({ catRecette: val })}
                 multi={false}
+                value={this.state.catRecette}
                 width={300}
 
               />
@@ -404,6 +423,7 @@ class AddScreen extends React.Component {
                 onChangeTextFunction={(val) => this.setState({ prixRecette: val })}
                 keyboard='number-pad'
                 multi={false}
+                value={this.state.prixRecette}
                 width={300}
               />
 
@@ -411,6 +431,7 @@ class AddScreen extends React.Component {
                 placeholderText='Temps de préparation (en min)'
                 onChangeTextFunction={(val) => this.setState({ tempPrepRecette: val })}
                 keyboard='number-pad'
+                value={this.state.tempPrepRecette}
                 multi={false}
                 width={300}
               />
