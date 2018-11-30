@@ -1,18 +1,26 @@
 import Axios from 'axios'
 import React from 'react'
-import { Button } from 'react-native'
+import { Button , TouchableOpacity, Image} from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import ScrollViewCustom from '../components/ScrollViewContainer'
+
 import TextCustom from '../components/TextCustom'
 import InputText from '../components/TextInput'
 import ViewCustom from '../components/ViewContainer'
 
+const   goBack = () => {
+  console.log('test')
+}
 
 export default class ModifyUserScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Modifier Profil',
-  }
 
+  static navigationOptions =  ({ navigation}) => ({
+    title: 'Modifier Profil', 
+    headerLeft: (
+        <TouchableOpacity onPress={goBack}>
+            <Image source={ require('../assets/icons/right-arrow.png') }/>
+        </TouchableOpacity>
+    )
+})
   state = {
     id: '',
     nom: '',
@@ -85,17 +93,19 @@ export default class ModifyUserScreen extends React.Component {
             </ViewCustom>
           ) : (
               <Button
-                title="Changer le mot de passe"
+                title='Changer le mot de passe'
                 onPress={this.changePassword} />
             )}
           <Button
-            title="Mettre à jour les informations"
+            title='Mettre à jour les informations'
             onPress={this.updateUser}
           />
         </KeyboardAwareScrollView>
-        </ViewCustom>
+      </ViewCustom>
     )
   }
+
+
 
   changePassword = () => {
     this.setState({
@@ -138,6 +148,7 @@ export default class ModifyUserScreen extends React.Component {
   }
 
   updateUser = () => {
+    console.log('test')
     let body
     if (this.state.showChangePassword) {
 

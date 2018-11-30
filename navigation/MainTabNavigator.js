@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Platform, StatusBar } from 'react-native'
+import { Image, TouchableOpacity } from 'react-native'
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import AddScreen from '../screens/AddScreen'
 import CalendarScreen from '../screens/CalendarScreen'
@@ -43,7 +43,7 @@ const ProfilStack = createStackNavigator({
   ProfilUser: ProfilScreen,
   ModifyUser: ModifyUserScreen,
   ListRecette: ListRecetteScreen,
-  ListUsers: ListUsersScreen
+  ListUsers: ListUsersScreen,
 });
 
 ProfilStack.navigationOptions = {
