@@ -13,7 +13,7 @@ Les objectifs du projet sont :
     - Axios pour les requette http liés à notre api
     - Iniformiser le code sous la norme ES6.
 
-# Répartition du travail
+# Répartition du travail 
     Antoine :
         Pages : Profil, Modification du Profil, "Home" (Liste de toutes les recette), Login, SignUp
     Mouhsin : 
