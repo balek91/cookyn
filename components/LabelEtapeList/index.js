@@ -29,7 +29,7 @@ export default class LabelCustom extends React.Component {
     }
 
     render(){
-        const {text,fontsize, width, height,radius} = this.props;
+        const {text,fontsize, height,radius} = this.props;
         return(
             <StyledText height={height} fontsize={fontsize} radius={radius}>{text}</StyledText>
         );

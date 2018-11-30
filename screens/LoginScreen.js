@@ -15,6 +15,11 @@ import { connect } from 'react-redux'
 
 import allTheActions from '../actions'
 
+import styled from 'styled-components'
+
+
+const StyledView = styled(ViewContainer)`
+padding : 50px 0px 0px 0px;`
 
 class Login extends React.Component {
   state = {
@@ -31,8 +36,7 @@ class Login extends React.Component {
   
 	render(){
 		return(
-			<ViewContainer>
-        <HeaderContainer titleText={'Connexion'}/>
+			<StyledView>
         <ContentContainer>
           <KeyboardAwareScrollView behavior='padding' resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false} >
             <ViewContainer>
@@ -63,7 +67,7 @@ class Login extends React.Component {
             />      
             <Touchable
             text='Skip for dev'
-            onPressFunction={() =>  this.SignedIn()}
+            onPressFunction={() =>  this.signUpOk()}
             widthTouchable={300}
             backgroundColorTouchable='#E88110'
             colorText='#FFF'
@@ -76,11 +80,15 @@ class Login extends React.Component {
             </ViewContainer>
           </KeyboardAwareScrollView>
         </ContentContainer>
-  		</ViewContainer>
+  		</StyledView>
 			)
   }
   SignUp = () =>{
     this.props.navigation.push('SignUp');
+  }
+
+  signUpOk = () => {
+    this.props.navigation.navigate('SignUpOk');
   }
   
   SignedIn = () =>{

@@ -2,7 +2,17 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, View } from 'react-native'
 import OptionsMenu from 'react-native-options-menu'
+import styled from 'styled-components'
 
+
+const StyledImage = styled.Image
+	`
+  height : 150;
+  width : 300;
+  border-radius:20;
+  borderColor:black;
+  borderWidth:1;
+`
 
 export default class OptionPicker extends React.Component {
 
@@ -23,7 +33,7 @@ export default class OptionPicker extends React.Component {
                     options={option}
                     actions={action} />
                 {image &&
-                    <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                    <StyledImage source={{ uri: image }} style={{ width: 200, height: 200 }} />}
             </View>
         );
     }

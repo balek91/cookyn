@@ -1,10 +1,9 @@
 import { ImagePicker, Permissions, Camera } from 'expo'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ListItem } from 'react-native-elements'
-import { View, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import { View } from 'react-native'
 import Axios from 'axios'
 import ContentContainer from '../components/ContentContainer/index'
-import HeaderContainer from '../components/HeaderContainer/index'
 import InputText from '../components/TextInput/index'
 import InputTextNoRadius from '../components/TextInputNoRadius/index'
 import Label from '../components/LabelEtapeList/index'
@@ -17,9 +16,12 @@ import ViewAlignItemRow from '../components/ViewsAlignItemRow/index'
 import ViewCenter from '../components/ViewCenter/index'
 import ViewContainer from '../components/ViewContainer/index'
 import { connect } from 'react-redux';
+import styled from 'styled-components'
 import TouchablePlus from '../components/TouchablePlus'
 
 
+const StyledView = styled(ViewContainer)`
+padding : 20px 0px 0px 0px;`
 
 
 class AddScreen extends React.Component {
@@ -27,10 +29,7 @@ class AddScreen extends React.Component {
     header: null
   }
 
-  constructor(props) {
-    super(props)
-    this._addTextInputIngredients = this._addTextInputIngredients.bind(this)
-    this.state = {
+    state = {
       EtapesToSend: [],
       IngredientsToSend: [],
       IngredientsView: [],
@@ -61,45 +60,7 @@ class AddScreen extends React.Component {
       UnitésPicker: []
     }
 
-    let test = []
-    for (let i = 1; i <= 1000; i++) {
-      test.push(i.toString())
-    }
-    let QuatityPicker = []
-    for (let j = 0; j < 1000; j++) {
-      QuatityPicker.push({ key: test[j], label: test[j] })
-    }
-    //  console.log(QuatityPicker)
-
-    let IngredientsPicker = []
-    Axios.get('http://51.75.22.154:8080/Cookyn/ingredient/GetListAllIngredient').then((response) => {
-      response.data.map((item) => {
-        this.state.IngredientsPicker.push({
-          key: 'ingr' + item.idIngredient,
-          label: item.libelleIngredient
-        })
-      })
-    })
-
-    let UnitésPicker = []
-    Axios.get('http://51.75.22.154:8080/Cookyn/unite/GetListUnites').then((response) => {
-      response.data.map((item) => {
-        this.state.UnitésPicker.push({
-          key: 'unit' + item.idUnite,
-          label: item.libelleUnite
-        })
-      })
-    })
-
-
-    this.state.UniteRecu = UnitésPicker
-    this.state.IngredientsRecu = IngredientsPicker
-    this.state.dataPicker = [QuatityPicker, this.state.UnitésPicker, this.state.IngredientsPicker]
-    this.state.labelPicker = ['Quantité', 'Unités', 'Ingrédients']
-    //  console.log(this.state.dataPicker)
-  }
-
-  _addTextInputEtapes = () => {
+  addTextInputEtapes = () => {
 
     if (this.state.currentEtape != null) {
       if (this.state.currentEtape.length != 0) {
@@ -118,7 +79,7 @@ class AddScreen extends React.Component {
     }
   }
 
-  _addTextInputIngredients = () => {
+  addTextInputIngredients = () => {
 
     if (this.state.selectedIngredient != null) {
       if (this.state.selectedUnit != null) {
@@ -141,32 +102,65 @@ class AddScreen extends React.Component {
             selectedQuantity: null,
             IngredientsToSend: IngredientsToSend,
             IngredientsView: ingredientView,
-            phraseIngredient: "Cliquez pour chosir l'ingredient"
+            phraseIngredient: 'Cliquez pour chosir l\'ingredient'
           })
           // console.log(IngredientsToSend)
         } else {
-          alert("Veuillez choisir un ingrédient")
+          alert('Veuillez choisir un ingrédient')
         }
 
       } else {
-        alert("Veuillez choisir un ingrédient")
+        alert('Veuillez choisir un ingrédient')
       }
 
     } else {
-      alert("Veuillez choisir un ingrédient")
+      alert('Veuillez choisir un ingrédient')
     }
 
   }
 
-  async componentWillMount() {
+  componentWillMount() {
     console.log('User : ', this.props.user);
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
-    this.setState({ hasCameraRollPermission: status === 'granted' })
-    const { status2 } = await Permissions.askAsync(Permissions.CAMERA)
-    this.setState({ hasCameraPermission: status2 === 'granted' })
+    let test = []
+    for (let i = 1; i <= 1000; i++) {
+      test.push(i.toString())
+    }
+    let QuatityPicker = []
+    for (let j = 0; j < 1000; j++) {
+      QuatityPicker.push({ key: test[j], label: test[j] })
+    }
+    //  console.log(QuatityPicker)
+
+    let IngredientsPicker = []
+    Axios.get('http://51.75.22.154:8080/Cookyn/ingredient/GetListAllIngredient').then((response) => {
+      response.data.map((item) => {
+        this.state.IngredientsPicker.push({
+          key: `ingr${item.idIngredient}`,
+          label: item.libelleIngredient
+        })
+      })
+    })
+
+    let UnitésPicker = []
+    Axios.get('http://51.75.22.154:8080/Cookyn/unite/GetListUnites').then((response) => {
+      response.data.map((item) => {
+        this.state.UnitésPicker.push({
+          key: `unit${item.idUnite}`,
+          label: item.libelleUnite
+        })
+      })
+    })
+
+
+    this.state.UniteRecu = UnitésPicker
+    this.state.IngredientsRecu = IngredientsPicker
+    this.state.dataPicker = [QuatityPicker, this.state.UnitésPicker, this.state.IngredientsPicker]
+    this.state.labelPicker = ['Quantité', 'Unités', 'Ingrédients']
+    //  console.log(this.state.dataPicker)
+  
   }
 
-  _deleteInputIngredients = (key) => {
+  deleteInputIngredients = (key) => {
     let Ingredients = this.state.IngredientsView
     for (let i = key; i <= Ingredients.length; i++) {
       if (Ingredients[i + 1] != null) {
@@ -180,7 +174,7 @@ class AddScreen extends React.Component {
     })
   }
 
-  _deleteListEtape = (index) => {
+  deleteListEtape = (index) => {
     let tableau = this.state.EtapesToSend
     let nbEtape = this.state.nbEtape
     tableau.splice(index, 1)
@@ -195,7 +189,7 @@ class AddScreen extends React.Component {
     })
   }
 
-  _deleteListIngredient = (index) => {
+  deleteListIngredient = (index) => {
     let tableau = this.state.IngredientsToSend
     let tableauView = this.state.IngredientsView
     tableau.splice(index, 1)
@@ -206,7 +200,7 @@ class AddScreen extends React.Component {
     })
   }
 
-  _isVoyelle = (item) => {
+  isVoyelle = (item) => {
     let allVoyelle = ['a', 'e', 'i', 'o', 'u', 'y']
     let result = false
     allVoyelle.forEach(element => {
@@ -218,7 +212,9 @@ class AddScreen extends React.Component {
     return result
   }
 
-  _pickImage = async () => {
+  pickImage = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+    this.setState({ hasCameraRollPermission: status === 'granted' })
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -231,172 +227,13 @@ class AddScreen extends React.Component {
     }
   }
 
-  render() {
-    let { image } = this.state
-    const DissmissKeyboard = ({Children}) => (
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        {Children}
-      </TouchableWithoutFeedback>
-    )
-    return (
-      <ViewContainer>
-        <HeaderContainer titleText={'Ajout de recette'}></HeaderContainer>
-        <ContentContainer>
-          <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}  >
-
-            <OptionPicker
-              option={['Choisir une photo de la bibliothèque', 'Prendre une photo', 'Annuler']}
-              action={[this._pickImage, this._takePhoto, null]}
-              image={image}
-            />
-
-            <ViewCenter>
-
-              <InputText
-                placeholderText='Nom de la recette'
-                onChangeTextFunction={(val) => this.setState({ libelleRecette: val })}
-                multi={false}
-                width={300}
-              />
-
-              <InputText
-                placeholderText='Catégorie'
-                onChangeTextFunction={(val) => this.setState({ catRecette: val })}
-                multi={false}
-                width={300}
-
-              />
-              <InputText
-                placeholderText='Prix estimé (en €)'
-                onChangeTextFunction={(val) => this.setState({ prixRecette: val })}
-                keyboard='number-pad'
-                multi={false}
-                width={300}
-              />
-
-              <InputText
-                placeholderText='Temps de préparation (en min)'
-                onChangeTextFunction={(val) => this.setState({ tempPrepRecette: val })}
-                keyboard='number-pad'
-                multi={false}
-                width={300}
-              />
-            </ViewCenter>
-            
-            <ViewAlignItemRow>
-              <Touchable
-                text='Difficulté'
-                onPressFunction={this._selectDifficulty}
-                widthTouchable={100}
-                backgroundColorTouchable='#78C9DC'
-                colorText='#FFF'
-              />
-              <InputText
-                placeholderText='<-- Cliquez'
-                width={120}
-                value={this.state.selectedDiff}
-                editable={false} />
-            </ViewAlignItemRow>
-
-            <ViewAlignItemRow>
-              <InputTextNoRadius
-                reference='textInputEtape'
-                width={200}
-                height={100}
-                placeholderText='Étape'
-                value={this.state.currentEtape}
-                multi={true}
-                onChangeTextFunction={(value) => this.setState({
-                  currentEtape: value
-                })}
-              />
-                <TouchablePlus onPressFunction={this._addTextInputEtapes} />
-            </ViewAlignItemRow>
-            <View>
-
-              {
-                this.state.EtapesToSend
-                  .sort((itemA, itemB) => itemA.ordre > itemB.ordre)
-                  .map((item, index) => (
-                    <View key={'etape' + item.ordre}>
-                      <ViewAlignItemRow align={'flex-end'}>
-                        <Label text={'Étape '} width={50} height={40} fontSize={16} radius={0} />
-                        <InputText
-                          onChangeTextFunction={(val) => this._updateOrdre(index, val)}
-                          keyboard='number-pad'
-                          value={item.ordre.toString()}
-                          width={60}
-                        />
-                      </ViewAlignItemRow>
-                      <ListItem
-                        key={index}
-                        title={item.etape}
-                        rightIcon={{ name: 'delete' }}
-                        onPressRightIcon={() => this._deleteListEtape(index)}
-                        input={item.ordre}
-                      />
-                    </View>
-                  ))
-              }
-            </View>
-
-            <ViewAlignItemRow>
-
-              <Picker
-                gradStyle={{
-                  start: { x: 0, y: 0 },
-                  end: { x: 1, y: 1.0 },
-                  locations: [0, 0.5, 1],
-                  colors: ['#743e4e', '#fff', '#221d33']
-                }}
-                height={0.5}
-                data={this.state.dataPicker}
-                onChange={(option) => this._setInputTextIngredients(option)}
-                label={this.state.labelPicker}>
-                <Label width={260} height={40} radius={20} text={this.state.phraseIngredient} />
-              </Picker>
-              
-              <TouchablePlus onPressFunction={this._addTextInputIngredients} />
-
-            </ViewAlignItemRow>
-
-            <View>
-              {
-                this.state.IngredientsView.map((item, index) => (
-                  <ListItem
-                    key={index}
-                    title={this._isVoyelle(item.ingredients) ? item.quantite + ' ' + item.unite + ' d\'' + item.ingredients : item.quantite + ' ' + item.unite + ' de ' + item.ingredients}
-                    rightIcon={{ name: 'delete' }}
-                    onPressRightIcon={() => this._deleteListIngredient(index)}
-                  />
-                ))
-              }
-            </View>
-            <ViewCenter>
-              <Touchable
-                text='Ajouter'
-                onPressFunction={this._sendRecepie}
-                widthTouchable={100}
-                backgroundColorTouchable='#78C9DC'
-                colorText='#FFF'
-              />
-            </ViewCenter>
-          </KeyboardAwareScrollView>
-        </ContentContainer>
-      </ViewContainer>
-
-    )
-
-  }
-
   returnData = (photo) => {
     this.setState({
       image: photo
     })
   }
 
-  _selectDifficulty = () => {
-    Keyboard.dismiss()
+  selectDifficulty = () => {
     QuickPicker.open({
       items: ['Facile', 'Moyen', 'Difficile'],
       selectedValue: 'Facile',
@@ -407,13 +244,13 @@ class AddScreen extends React.Component {
     })
   }
 
-  _sendRecepie = () => {
+  sendRecepie = () => {
     let recette = {
       catRecette: this.state.catRecette,
       libelleRecette: this.state.libelleRecette,
       tempPrepRecette: parseInt(this.state.tempPrepRecette, 10),
       diffRecette: this.state.selectedDiff,
-      prix : this.state.prixRecette,
+      prix: this.state.prixRecette,
       user: {
         idUser: 1
       }
@@ -451,7 +288,7 @@ class AddScreen extends React.Component {
     })
   }
 
-  _setInputTextIngredients = (option) => {
+  setInputTextIngredients = (option) => {
     if (option != undefined) {
       if (option[0] != undefined) {
         this.setState({
@@ -463,16 +300,22 @@ class AddScreen extends React.Component {
           })
           if (option[2] != undefined) {
             idUnit = option[1].toString().substring(4)
-            idIngredient = option[2].toString().substring(4)
-            if (this._isVoyelle(this.state.IngredientsPicker[idIngredient - 1].label)) {
+            idIngredient = option[2].toString().substring(5)
+            
+
+            if (this.isVoyelle(this.state.IngredientsPicker[idIngredient - 1].label)) {
               this.setState({
-                selectedIngredient: option[2].toString().substring(4),
-                phraseIngredient: option[0] + ' ' + this.state.UnitésPicker[idUnit - 1].label + ' d\'' + this.state.IngredientsPicker[idIngredient - 1].label
+                selectedQuantity: option[0],
+                selectedUnit:parseInt(idUnit,10),    
+                selectedIngredient: parseInt(idIngredient,10),
+                phraseIngredient: `${option[0]} ${this.state.UnitésPicker[idUnit - 1].label} d'${this.state.IngredientsPicker[idIngredient - 1].label}`
               })
             } else {
               this.setState({
-                selectedIngredient: option[2].toString().substring(4),
-                phraseIngredient: option[0] + ' ' + this.state.UnitésPicker[idUnit - 1].label + ' de ' + this.state.IngredientsPicker[idIngredient - 1].label
+                selectedQuantity: option[0],
+                selectedUnit:parseInt(idUnit,10),    
+                selectedIngredient: parseInt(idIngredient,10),
+                phraseIngredient: `${option[0]} ${this.state.UnitésPicker[idUnit - 1].label} de ${this.state.IngredientsPicker[idIngredient - 1].label}`
               })
             }
           }
@@ -482,7 +325,7 @@ class AddScreen extends React.Component {
     }
   }
 
-  _setLibelle = (val) => {
+  setLibelle = (val) => {
     let text = this.state.libelleRecette
     text = val
     this.setState({
@@ -490,7 +333,9 @@ class AddScreen extends React.Component {
     })
   }
 
-  _takePhoto = async () => {
+  takePhoto = async () => {
+    const { status2 } = await Permissions.askAsync(Permissions.CAMERA)
+    this.setState({ hasCameraPermission: status2 === 'granted' })
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4, 3]
@@ -502,7 +347,7 @@ class AddScreen extends React.Component {
     console.log(result)
   }
 
-  _updateOrdre = (index, value) => {
+  updateOrdre = (index, value) => {
     let objetTableau = this.state.EtapesToSend
     objetTableau[index].ordre = value
     this.setState({
@@ -510,7 +355,7 @@ class AddScreen extends React.Component {
     })
   }
 
-  _urlToBlob = (url) => {
+  urlToBlob = (url) => {
     return new Promise((resolve, reject) => {
       var xhr = new XMLHttpRequest()
       xhr.onerror = reject
@@ -524,12 +369,165 @@ class AddScreen extends React.Component {
       xhr.send()
     })
   }
+
+  render() {
+    let { image } = this.state
+    return (
+      <StyledView>
+        <ContentContainer>
+          <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}  >
+
+            <OptionPicker
+              option={['Choisir une photo de la bibliothèque', 'Prendre une photo', 'Annuler']}
+              action={[this.pickImage, this.takePhoto, null]}
+              image={image}
+            />
+
+            <ViewCenter>
+
+              <InputText
+                placeholderText='Nom de la recette'
+                onChangeTextFunction={(val) => this.setState({ libelleRecette: val })}
+                multi={false}
+                width={300}
+              />
+
+              <InputText
+                placeholderText='Catégorie'
+                onChangeTextFunction={(val) => this.setState({ catRecette: val })}
+                multi={false}
+                width={300}
+
+              />
+              <InputText
+                placeholderText='Prix estimé (en €)'
+                onChangeTextFunction={(val) => this.setState({ prixRecette: val })}
+                keyboard='number-pad'
+                multi={false}
+                width={300}
+              />
+
+              <InputText
+                placeholderText='Temps de préparation (en min)'
+                onChangeTextFunction={(val) => this.setState({ tempPrepRecette: val })}
+                keyboard='number-pad'
+                multi={false}
+                width={300}
+              />
+            </ViewCenter>
+
+            <ViewAlignItemRow>
+              <Touchable
+                text='Difficulté'
+                onPressFunction={this.selectDifficulty}
+                widthTouchable={100}
+                backgroundColorTouchable='#78C9DC'
+                colorText='#FFF'
+              />
+              <InputText
+                placeholderText='<-- Cliquez'
+                width={120}
+                value={this.state.selectedDiff}
+                editable={false} />
+            </ViewAlignItemRow>
+
+            <ViewAlignItemRow>
+              <InputTextNoRadius
+                reference='textInputEtape'
+                width={200}
+                height={100}
+                placeholderText='Étape'
+                value={this.state.currentEtape}
+                multi={true}
+                onChangeTextFunction={(value) => this.setState({
+                  currentEtape: value
+                })}
+              />
+              <TouchablePlus onPressFunction={this.addTextInputEtapes} />
+            </ViewAlignItemRow>
+            <View>
+{/* On tri le tableau d'étape par ordre, puis on le parcourt et pour chaque item, nous affichons une mini vu contenant un label, un text imput pour modifier 
+l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l'étape.*/}
+              {
+                this.state.EtapesToSend
+                  .sort((itemA, itemB) => itemA.ordre > itemB.ordre)
+                  .map((item, index) => (
+                    <View key={`Etape ${item.ordre}`}>
+                      <ViewAlignItemRow align={'flex-end'}>
+                        <Label text={'Étape '} width={50} height={40} fontSize={16} radius={0} />
+                        <InputText
+                          onChangeTextFunction={(val) => this.updateOrdre(index, val)}
+                          keyboard='number-pad'
+                          value={item.ordre.toString()}
+                          width={60}
+                        />
+                      </ViewAlignItemRow>
+                      <ListItem
+                        key={index}
+                        title={item.etape}
+                        rightIcon={{ name: 'delete' }}
+                        onPressRightIcon={() => this.deleteListEtape(index)}
+                        input={item.ordre}
+                      />
+                    </View>
+                  ))
+              }
+            </View>
+
+            <ViewAlignItemRow>
+
+              <Picker
+                gradStyle={{
+                  start: { x: 0, y: 0 },
+                  end: { x: 1, y: 1.0 },
+                  locations: [0, 0.5, 1],
+                  colors: ['#743e4e', '#fff', '#221d33']
+                }}
+                height={0.5}
+                data={this.state.dataPicker}
+                onChange={(option) => this.setInputTextIngredients(option)}
+                label={this.state.labelPicker}>
+                <Label width={260} height={40} radius={20} text={this.state.phraseIngredient} />
+              </Picker>
+
+              <TouchablePlus onPressFunction={this.addTextInputIngredients} />
+
+            </ViewAlignItemRow>
+
+            <View>
+              {
+                this.state.IngredientsView.map((item, index) => (
+                  <ListItem
+                    key={index}
+                    title={this.isVoyelle(item.ingredients) ? `${item.quantite} ${item.unite} d'${item.ingredients}` : `${item.quantite} ${item.unite} de ${item.ingredients}`}
+                    rightIcon={{ name: 'delete' }}
+                    onPressRightIcon={() => this.deleteListIngredient(index)}
+                  />
+                ))
+              }
+            </View>
+            <ViewCenter>
+              <Touchable
+                text='Ajouter'
+                onPressFunction={this.sendRecepie}
+                widthTouchable={100}
+                backgroundColorTouchable='#78C9DC'
+                colorText='#FFF'
+              />
+            </ViewCenter>
+          </KeyboardAwareScrollView>
+        </ContentContainer>
+      </StyledView>
+
+    )
+
+  }
 }
 
 const mapStateToProps = state => {
   return {
     user: state.user
-   }
+  }
 }
 
 export default connect(mapStateToProps)(AddScreen)

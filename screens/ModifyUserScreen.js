@@ -21,7 +21,6 @@ export default class ModifyUserScreen extends React.Component {
         </TouchableOpacity>
     )
 })
-
   state = {
     id: '',
     nom: '',
@@ -42,7 +41,6 @@ export default class ModifyUserScreen extends React.Component {
   render() {
     return (
       <ViewCustom>
-
         <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} showsVerticalScrollIndicator={false}>
           <ViewCustom>
             <TextCustom fontsize={18} text={'Nom:'} />
