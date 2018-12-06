@@ -15,6 +15,8 @@
   "dependencies": {
     "@expo/samples": "2.1.1",
     "axios": "^0.18.0",
+    "b64-to-blob": "^1.2.19",
+    "base-64": "^0.1.0",
     "expo": "^30.0.1",
     "quick-picker": "^1.0.0",
     "react": "16.3.1",

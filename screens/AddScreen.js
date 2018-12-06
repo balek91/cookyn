@@ -1,7 +1,7 @@
 import { ImagePicker, Permissions, Camera } from 'expo'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ListItem } from 'react-native-elements'
-import { View } from 'react-native'
+import { View, Keyboard } from 'react-native'
 import { connect } from 'react-redux';
 import Axios from 'axios'
 import ContentContainer from '../components/ContentContainer/index'
@@ -18,6 +18,7 @@ import TouchablePlus from '../components/TouchablePlus'
 import ViewAlignItemRow from '../components/ViewsAlignItemRow/index'
 import ViewCenter from '../components/ViewCenter/index'
 import ViewContainer from '../components/ViewContainer/index'
+
 
 
 const StyledView = styled(ViewContainer)`
@@ -41,6 +42,7 @@ class AddScreen extends React.Component {
       HasCameraPermission: null,
       hasCameraRollPermission: null,
       image: null,
+      image64: null,
       IngredientsPicker: [],
       IngredientsToSend: [],
       IngredientsView: [],
@@ -211,11 +213,16 @@ class AddScreen extends React.Component {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
     this.setState({ hasCameraRollPermission: status === 'granted' })
     let result = await ImagePicker.launchImageLibraryAsync({
+      base64: true,
       allowsEditing: true,
       aspect: [4, 3],
     })
     if (!result.cancelled) {
-      this.setState({ image: result.uri })
+      console.log(result)
+      this.setState({ 
+        image: result.uri,
+        image64 : result.base64 
+      })
     }
   }
 
@@ -226,6 +233,7 @@ class AddScreen extends React.Component {
   }
 
   selectDifficulty = () => {
+    Keyboard.dismiss()
     QuickPicker.open({
       items: ['Facile', 'Moyen', 'Difficile'],
       selectedValue: 'Facile',
@@ -272,6 +280,7 @@ class AddScreen extends React.Component {
       ingredients: ingredients,
       recette: recette,
     }
+    
     Axios.post('http://51.75.22.154:8080/Cookyn/recette/AddRecette', json).then((response) => {
       if (response.status =='200'){
         alert('La recette a bien été ajoutée !')
@@ -361,19 +370,52 @@ class AddScreen extends React.Component {
     })
   }
 
-  urlToBlob = (url) => {
-    return new Promise((resolve, reject) => {
-      var xhr = new XMLHttpRequest()
-      xhr.onerror = reject
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          resolve(xhr.response)
-        }
+   b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+    
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+      
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
       }
-      xhr.open('GET', url)
-      xhr.responseType = 'blob' // convert type
-      xhr.send()
-    })
+      
+      const byteArray = new Uint8Array(byteNumbers);
+      
+      byteArrays.push(byteArray);
+    }
+    
+    const blob = new Blob(byteArrays, {type: contentType});
+    return blob;
+  }
+  
+
+  dataURItoBlob = (dataURI) => {
+    var base64 = require('base-64');
+
+    // convert base64 to raw binary data held in a string
+    // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+    var byteString = base64.encode(dataURI.split(',')[1])//(dataURI.split(',')[1]);
+    console.log(byteString)
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+ 
+    // write the bytes of the string to an ArrayBuffer
+    var ab = new ArrayBuffer(byteString.length);
+ 
+    // create a view into the buffer
+    var ia = new Uint8Array(ab);
+ 
+    // set the bytes of the buffer to the correct values
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+ 
+    // write the ArrayBuffer to a blob, and you're done
+    var blob = new Blob([ab], {type: mimeString});
+    return blob;
   }
 
   render() {
@@ -381,7 +423,7 @@ class AddScreen extends React.Component {
     return (
       <StyledView>
         <ContentContainer>
-          <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}  >
+          <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}  >
 
             <OptionPicker
               option={['Choisir une photo de la bibliothèque', 'Prendre une photo', 'Annuler']}
@@ -396,7 +438,7 @@ class AddScreen extends React.Component {
                 onChangeTextFunction={(val) => this.setState({ libelleRecette: val })}
                 multi={false}
                 value={this.state.libelleRecette}
-                width={300}
+                width={250}
               />
 
               <InputText
@@ -404,7 +446,7 @@ class AddScreen extends React.Component {
                 onChangeTextFunction={(val) => this.setState({ catRecette: val })}
                 multi={false}
                 value={this.state.catRecette}
-                width={300}
+                width={250}
 
               />
               <InputText
@@ -413,7 +455,7 @@ class AddScreen extends React.Component {
                 keyboard='number-pad'
                 multi={false}
                 value={this.state.prixRecette}
-                width={300}
+                width={250}
               />
 
               <InputText
@@ -422,7 +464,7 @@ class AddScreen extends React.Component {
                 keyboard='number-pad'
                 value={this.state.tempPrepRecette}
                 multi={false}
-                width={300}
+                width={250}
               />
             </ViewCenter>
 
@@ -497,7 +539,7 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
                 data={this.state.dataPicker}
                 onChange={(option) => this.setInputTextIngredients(option)}
                 label={this.state.labelPicker}>
-                <Label width={260} height={40} radius={20} text={this.state.phraseIngredient} />
+                <Label width={250} height={40} radius={20} text={this.state.phraseIngredient} />
               </Picker>
 
               <TouchablePlus onPressFunction={this.addTextInputIngredients} />
@@ -515,7 +557,8 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
                   />
                 ))
               }
-            </View>
+            </View>\
+          
             <ViewCenter>
               <Touchable
                 text='Ajouter'
