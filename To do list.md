@@ -1,28 +1,28 @@
-#Liste des fonctionnalités
+# Liste des fonctionnalités
 
-##Page de connexion 
+## Page de connexion 
 - section « Vous rentrez un problème » page de connexion
 
-##Page AddRecette
+## Page AddRecette
 - Photo
 - Faire disparaître le clavier 
 - Faire un custom picker pour les ingrédients (zoom)
 - Drag and drop liste étape
 
-##Page Home
+## Page Home
 - Ajouter un champs de recherche (ajouter tempo)
 - Choice picker / filtre 
 
-##Page détail recette 
+## Page détail recette 
 - Partage natif 
 
-##Page Profil
+## Page Profil
 - Ajouter  recette favoris et recette création
 - Régler Abonnement/Abonné (redux)
 
-##Page calendrier 
+## Page calendrier 
 - Trouver un style (git template de fonctionnalité gitHub)
 - Tout faire
 
-#REFONTE GRAPHIQUE
+# <p align="center"> REFONTE GRAPHIQUE  </p>
 
