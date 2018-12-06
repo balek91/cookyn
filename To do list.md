@@ -1,4 +1,4 @@
-# Liste des fonctionnalités
+# <p align="center">Liste des fonctionnalités</p>
 
 ## Page de connexion 
 - section « Vous rentrez un problème » page de connexion
