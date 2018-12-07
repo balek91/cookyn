@@ -15,6 +15,7 @@
 
 ## Page détail recette 
 - Partage natif 
+- bouton ajouter favoris/ ajouter au calandrier
 
 ## Page Profil
 - Ajouter  recette favoris et recette création
