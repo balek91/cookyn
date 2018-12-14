@@ -143,7 +143,7 @@ class DetailScreen extends React.Component {
 				<StyledView>
 					<Content>
 						<Header>
-							<StyledImage source={(data.photoRecette != null) ? data.photoRecette : PhotoRecette} />
+							<StyledImage source={(data.photoRecette != null) ? uri = data.photoRecette : PhotoRecette} />
 							<StyledTextBold>{data.recette.libelleRecette}</StyledTextBold>
 						</Header>
 						<AlignContentLeft>
@@ -169,7 +169,6 @@ class DetailScreen extends React.Component {
 						<StyledViewArray>
 							{ingredients.map((item, index) => {
 								return (<StyledTextArray key={`i${index}`}>{`${item.ingredient.libelleIngredient} ( ${item.quantite} ${item.unite.libelleUnite} )`}</StyledTextArray>)
-
 							})}
 						</StyledViewArray>
 						<AlignContentLeft>
