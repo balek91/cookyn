@@ -1,7 +1,7 @@
 import { ImagePicker, Permissions, Camera } from 'expo'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ListItem } from 'react-native-elements'
-import { View, Keyboard } from 'react-native'
+import { View, Keyboard, TouchableOpacity, Text } from 'react-native'
 import { connect } from 'react-redux';
 import Axios from 'axios'
 import ContentContainer from '../components/ContentContainer/index'
@@ -18,13 +18,37 @@ import TouchablePlus from '../components/TouchablePlus'
 import ViewAlignItemRow from '../components/ViewsAlignItemRow/index'
 import ViewCenter from '../components/ViewCenter/index'
 import ViewContainer from '../components/ViewContainer/index'
+import ButtonModify from '../components/ButtonModify'
 
 
 
 const StyledView = styled(ViewContainer)`
 padding : 20px 0px 0px 0px;`
 
+const StyledViewArray = styled.View`
+flex:1;
+justifyContent: center;
+alignItems: flex-start;
+backgroundColor: #F5FCFF;
+border-radius:10;
+border-width:0.5;
+margin: 0px 20px 20px 20px
+`
 
+const StyledTextArray = styled.Text
+`
+fontWeight: 300;
+fontSize: 16;
+margin:15px 0px 10px 25px;
+`
+
+const StyledHeader = styled.View`
+justifyContent: center;
+flex-direction: row;
+flex:1;
+borderBottomWidth:1;
+borderBottomColor:black;
+`
 class AddScreen extends React.Component {
   static navigationOptions = {
     header: null
@@ -70,8 +94,11 @@ class AddScreen extends React.Component {
         nombreEtape += 1
         let EtapesToSend = this.state.EtapesToSend
         EtapesToSend.push({
+          key: `item-${nombreEtape}`,
           etape: this.state.currentEtape,
-          ordre: nombreEtape
+          ordre: nombreEtape,
+          backgroundColor: `rgb(${Math.floor(Math.random() * 255)}, ${nombreEtape * 5}, ${132})`,
+
         })
         this.setState({ currentEtape: '', nbEtape: nombreEtape })
         /* let textInput = this.refs.textInputEtape
@@ -149,7 +176,6 @@ class AddScreen extends React.Component {
       })
     })
 
-
     this.state.UniteRecu = UnitésPicker
     this.state.IngredientsRecu = IngredientsPicker
     this.state.dataPicker = [QuatityPicker, this.state.UnitésPicker, this.state.IngredientsPicker]
@@ -197,6 +223,14 @@ class AddScreen extends React.Component {
     })
   }
 
+  draggableSteps = () => {
+    this.props.navigation.navigate('ModifySteps', {
+     allSteps : this.state.EtapesToSend,
+     onNavigationBack: this.retrieveData
+    
+    })
+  }
+
   isVoyelle = (item) => {
     let allVoyelle = ['a', 'e', 'i', 'o', 'u', 'y']
     let result = false
@@ -209,6 +243,17 @@ class AddScreen extends React.Component {
     return result
   }
 
+  retrieveData = async () => {
+    const { navigation } = this.props;
+    this.props.navigation.navigate('Add', {
+      allSteps: this.state.allSteps
+    })
+    this.setState({
+      EtapesToSend: navigation.getParam('allSteps'),
+    });
+
+	}
+
   pickImage = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
     this.setState({ hasCameraRollPermission: status === 'granted' })
@@ -218,12 +263,18 @@ class AddScreen extends React.Component {
       aspect: [4, 3],
     })
     if (!result.cancelled) {
-      console.log(result)
       this.setState({ 
         image: result.uri,
         image64 : result.base64 
       })
     }
+  }
+
+  convertDataURIToBinary = (dataURI) =>{
+    var base64js = require('base64-js')
+    let array = base64js.toByteArray(dataURI)
+    console.log(array)
+    return array;
   }
 
   returnData = (photo) => {
@@ -275,13 +326,15 @@ class AddScreen extends React.Component {
         indexEtape: parseInt(items.ordre, 10)
       })
     })
+    //let img = this.convertDataURIToBinary(this.state.image64)
     let json = {
       etapes: etapes,
       ingredients: ingredients,
       recette: recette,
+      imageRecette : this.state.image64
     }
-    
-    Axios.post('http://51.75.22.154:8080/Cookyn/recette/AddRecette', json).then((response) => {
+
+    Axios.post('http://51.75.22.154:8080/Cookyn2/recette/AddRecette', json).then((response) => {
       if (response.status =='200'){
         alert('La recette a bien été ajoutée !')
         this.setState({
@@ -300,8 +353,6 @@ class AddScreen extends React.Component {
       }
       
     })
-
-    
   }
 
   setInputTextIngredients = (option) => {
@@ -354,11 +405,16 @@ class AddScreen extends React.Component {
     this.setState({ hasCameraPermission: status2 === 'granted' })
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [4, 3]
+      aspect: [4, 3],
+      base64: true,
     })
 
     if (!result.cancelled) {
-      this.setState({ image: result.uri })
+      console.log(result.base64)
+      this.setState({ 
+        image: result.uri,
+        image64 : result.base64 
+      })
     }
   }
 
@@ -416,6 +472,27 @@ class AddScreen extends React.Component {
     // write the ArrayBuffer to a blob, and you're done
     var blob = new Blob([ab], {type: mimeString});
     return blob;
+  }
+
+  renderItem = ({ item, index, move, moveEnd, isActive }) => {
+    return (
+      <TouchableOpacity
+        style={{ 
+          height: 100, 
+          backgroundColor: isActive ? 'blue' : item.backgroundColor,
+          alignItems: 'center', 
+          justifyContent: 'center' 
+        }}
+        onLongPress={move}
+        onPressOut={moveEnd}
+      >
+        <Text style={{ 
+          fontWeight: '300', 
+          color: 'white',
+          fontSize: 20,
+        }}>{item.etape}</Text>
+      </TouchableOpacity>
+    )
   }
 
   render() {
@@ -500,7 +577,7 @@ class AddScreen extends React.Component {
             <View>
 {/* On tri le tableau d'étape par ordre, puis on le parcourt et pour chaque item, nous affichons une mini vu contenant un label, un text imput pour modifier 
 l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l'étape.*/}
-              {
+              {/* {
                 this.state.EtapesToSend
                   .sort((itemA, itemB) => itemA.ordre > itemB.ordre)
                   .map((item, index) => (
@@ -523,9 +600,31 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
                       />
                     </View>
                   ))
-              }
+              } 
+              
+               <DraggableFlatList
+          data={this.state.EtapesToSend}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) =>`draggable-item-${item.key}`}
+          scrollPercent={100}
+          onMoveEnd={({ data, to, from, row }) => {console.log("teeeeeeeeest",data, to, from, row)} }
+        />*/
+            
+            }
+
             </View>
 
+            <StyledViewArray>
+              <StyledHeader>
+                <View style={{flex:4, alignContent:"center", alignItems:"center"}}><Text style={{fontSize:18}}>{'Liste des étapes'}</Text></View>
+                <View style={{flex:1, paddingRight: 3}}><ButtonModify onPressFunction={this.draggableSteps} /></View>
+              </StyledHeader>
+            {this.state.EtapesToSend.map((item, index) => {
+								return (<StyledTextArray key={`e${index}`}>{`${item.ordre} - ${item.etape}`}</StyledTextArray>)
+							})}
+             
+            </StyledViewArray>
+                
             <ViewAlignItemRow>
 
               <Picker

@@ -4,7 +4,7 @@
 - section « Vous rentrez un problème » page de connexion
 
 ## Page AddRecette
-- Photo
+- <del>Photo<del>
 - Faire disparaître le clavier 
 - Faire un custom picker pour les ingrédients (zoom)
 - Drag and drop liste étape
@@ -22,7 +22,7 @@
 - Régler Abonnement/Abonné (redux)
 
 ## Page calendrier 
-- Trouver un style (git template de fonctionnalité gitHub)
+- Trouver un style (git template de fonctionnalité gitHub)  https://github.com/madhavanmalolan/awesome-reactnative-ui
 - Tout faire
 
 # <p align="center"> REFONTE GRAPHIQUE  </p>
