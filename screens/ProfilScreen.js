@@ -19,11 +19,12 @@ class ProfilScreen extends React.Component {
 
 	state = {
 		following: true,
-		showSuivre: false
+		user : null,
+		showSuivre: false,
 	}
 
 	render() {
-		const { following, showSuivre } = this.state
+		const { following, showSuivre, user } = this.state
 		const { userProfil } = this.props
 		return (
 			<ViewCustom>
@@ -37,14 +38,14 @@ class ProfilScreen extends React.Component {
 					<ViewCustom>
 						<TextCustom fontsize={18} text={'Informations Personnelles :'} />
 					</ViewCustom>
-					{userProfil ? (
+					{user ? (
 						<View>
 							<ViewCustom align={'flex-start'}>
-								<TextCustom text={`Username : ${userProfil.user.usernameUser}`} />
-								<TextCustom text={`Nom : ${userProfil.user.nomUser}`} />
-								<TextCustom text={`Prenom : ${userProfil.user.prenomUser}`} />
-								<TextCustom text={`Mail : ${userProfil.user.mailUser}`} />
-								<TextCustom text={`Ville : ${userProfil.user.villeUser}`} />
+								<TextCustom text={`Username : ${user.usernameUser}`} />
+								<TextCustom text={`Nom : ${user.nomUser}`} />
+								<TextCustom text={`Prenom : ${user.prenomUser}`} />
+								<TextCustom text={`Mail : ${user.mailUser}`} />
+								<TextCustom text={`Ville : ${user.villeUser}`} />
 							</ViewCustom>
 							<ViewCustom>
 								{showSuivre ?
@@ -55,11 +56,11 @@ class ProfilScreen extends React.Component {
 									:
 									(null)}
 								<Touchable
-									text={`${userProfil.user.nbAbonnement} Abonné(s)`}
+									text={`${user.nbAbonnement} Abonné(s)`}
 									onPressFunction={this.onPressButtonAbonnements}
 								/>
 								<Touchable
-									text={`${userProfil.user.nbAbonnee} Abonnement(s)`}
+									text={`${user.nbAbonnee} Abonnement(s)`}
 									onPressFunction={this.onPressButtonAbonnes}
 								/>
 								<Touchable
@@ -79,28 +80,52 @@ class ProfilScreen extends React.Component {
 	}
 
 	redirectModify = () => {
-		const { userProfil } = this.props
+		const { user } = this.state
 		this.props.navigation.navigate('ModifyUser', {
-			id: userProfil.user.idUser,
-			nom: userProfil.user.nomUser,
-			prenom: userProfil.user.prenomUser,
-			mail: userProfil.user.mailUser,
-			ville: userProfil.user.villeUser,
-			user: userProfil.user.usernameUser,
-			onNavigateBack: this.retrieveData
+			id: user.idUser,
+			nom: user.nomUser,
+			prenom: user.prenomUser,
+			mail: user.mailUser,
+			ville: user.villeUser,
+			user: user.usernameUser,
+			onNavigateBack: this.goBackUserConnect
 		});
 	}
 
 	retrieveData = async () => {
 		try {
-			const value = await AsyncStorage.getItem('idUser');
-			this.props.actions.user.getUserConnect(value)
-			this.props.navigation.navigate('Profil')
+		console.log('JESUIS LA ')
+		const value = await AsyncStorage.getItem('idUser')
+		Axios.get(`http://51.75.22.154:8080/Cookyn/user/GetUserById/${value}`).then(res =>{
+				this.setState({
+					user : res.data
+				})
+		})
+		} catch (error) {
+		}
+	}
+
+	goBackUserConnect = async () => {
+		try {
+			this.props.navigation.goBack(null)
+			// console.log('REPONDMOI')
+			// console.log(this.state.user.idUser,'   ', this.props.user)
+			Axios.get(`http://51.75.22.154:8080/Cookyn/user/GetUserById/${this.state.user.idUser}`).then(res =>{
+				this.setState({
+					user : res.data
+				})
+		})
+
 		} catch (error) {
 		}
 	}
 
 	loadUserConnect = async (idContact) => {
+		Axios.get(`http://51.75.22.154:8080/Cookyn/user/GetUserById/${idContact}`).then(res =>{
+				this.setState({
+					user : res.data
+				})
+		})
 		const { user } = this.props
 		if (idContact == user) {
 			this.setState({
@@ -115,29 +140,31 @@ class ProfilScreen extends React.Component {
 	}
 
 	onPressButtonFavoris = () => {
-		this.props.navigation.navigate('ListRecette');
+		this.props.navigation.push('ListRecette');
 	}
 
 	onPressButtonCreations = () => {
-		this.props.navigation.navigate('ListRecette');
+		this.props.navigation.push('ListRecette');
 	}
 
 	onPressButtonAbonnes = () => {
 
-		this.props.actions.user.getAbonnesByUser(this.props.userProfil.user.idUser)
-		this.props.navigation.navigate('ListUsers', {
+		this.props.actions.user.getAbonnesByUser(this.state.user.idUser)
+		this.props.navigation.push('ListUsers', {
 			namePage: 'Abonnements',
-			backToProfil: this.retrieveData,
+			backToProfil: this.goBackUserConnect,
+			userPage : this.state.user.idUser,
 			abonnementPage: false
 		})
 	}
 
 	onPressButtonAbonnements = () => {
-		this.props.actions.user.getAbonnementsByUser(this.props.userProfil.user.idUser)
-		this.props.navigation.navigate('ListUsers', {
+		this.props.actions.user.getAbonnementsByUser(this.state.user.idUser)
+		this.props.navigation.push('ListUsers', {
 			namePage: 'Abonnés',
-			backToProfil: this.retrieveData,
-			abonnementPage: true
+			backToProfil: this.goBackUserConnect,
+			abonnementPage: true,
+			userPage : this.state.user.idUser
 		})
 	}
 
@@ -147,19 +174,23 @@ class ProfilScreen extends React.Component {
 		if (following == true) {
 			Axios.get(`http://51.75.22.154:8080/Cookyn/relation/DeleteRelation/${userProfil.user.idUser}/${user}`).then(() => {
 				this.props.actions.user.getAbonnesByUser(user)
-				this.props.actions.user.getUserConnect(userProfil.user.idUser)
-				this.setState({
-					following: false
-				})
+				Axios.get(`http://51.75.22.154:8080/Cookyn/user/GetUserById/${userProfil.user.idUser}`).then(res =>{
+					this.setState({
+						user : res.data,
+						following: false
+					})
+					})
 			})
 		}
 		else {
 			Axios.get(`http://51.75.22.154:8080/Cookyn/relation/CreateRelation/${userProfil.user.idUser}/${user}`).then(() => {
 				this.props.actions.user.getUserConnect(userProfil.user.idUser)
-				this.props.actions.user.getAbonnesByUser(user)
-				this.setState({
-					following: true
-				})
+				Axios.get(`http://51.75.22.154:8080/Cookyn/user/GetUserById/${userProfil.user.idUser}`).then(res =>{
+					this.setState({
+						user : res.data,
+						following: true
+					})
+					})
 			}
 			)
 		}
