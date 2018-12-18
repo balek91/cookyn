@@ -16,7 +16,7 @@
 
 ## Page détail recette 
 - Partage natif 
-- bouton ajouter <del>favoris<del>/ ajouter au calandrier
+- bouton ajouter <del>favoris<del> / ajouter au calandrier
 
 ## Page Profil
 - Ajouter  recette favoris et recette création
