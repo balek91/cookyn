@@ -1,14 +1,14 @@
-export const GO = 'GO'
-export const BACK = 'BACK'
+export const ADD = 'ADD'
+export const UPDATE = 'UPDATE'
 
-export const go = (etapes) => ({
+export const Add = (etape) => ({
 
-    type: GO,
-    etapes
+    type: ADD,
+    etape
   })
   
-  export const back = (etapes) => ({
+  export const Update = (etape) => ({
   
-    type: BACK,
-    etapes
+    type: UPDATE,
+    etape
   })

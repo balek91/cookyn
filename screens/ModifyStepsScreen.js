@@ -6,8 +6,12 @@ import ViewCustom from '../components/ViewContainer'
 import BackButton from '../components/BackButton'
 
 
+import allTheActions from '../actions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-export default class ModifyStepsScreen extends React.Component {
+
+class ModifyStepsScreen extends React.Component {
     // static navigationOptions = {
     //     header: null
     //   }
@@ -25,13 +29,12 @@ export default class ModifyStepsScreen extends React.Component {
     }
 
     componentDidMount() {
-        const { navigation } = this.props;
-        this.setState({
-          allSteps: navigation.getParam('allSteps'),
+      const { navigation } = this.props
+      this.setState({
+          allSteps: navigation.getParam('AllStep')
         });
       }
 
-    
       returnAddScreen = () =>{
         this.props.navigation.goBack(null)
       }
@@ -51,7 +54,7 @@ export default class ModifyStepsScreen extends React.Component {
           >
             <Text style={{ 
               fontWeight: '300', 
-              color: 'white',
+              color: 'black',
               fontSize: 20,
             }}>{item.etape}</Text>
           </TouchableOpacity>
@@ -66,25 +69,27 @@ export default class ModifyStepsScreen extends React.Component {
           data={this.state.allSteps}
           renderItem={this.renderItem}
           keyExtractor={(item, index) =>`draggable-item-${item.key}`}
-          scrollPercent={100}
+          scrollPercent={5}
           onMoveEnd={({ data, to, from, row }) => {
               console.log("from : " +from + " to : "+ to + " row : ",row)
 
               if (from > to){
                 row.ordre = to+1
                 let tab = data
-                for (let i = to+1; i < tab.lenght ; i++){
+                for (let i = to+1; i < tab.length ; i++){
                      tab[i].ordre = i+1;
                 }
+                this.props.actions.etape.Update(tab)
                 this.setState({
                     allSteps : tab
                 })
               } else {
-                row.ordre = to-1
+                row.ordre = to+1
                 let tab = data
-                for (let i = to-1; i >0 ; i--){
-                     tab[i].ordre = i;
+                for (let i = to-1; i >=0 ; i--){
+                     tab[i].ordre = i+1;
                 }
+                this.props.actions.etape.Update(tab)
                 this.setState({
                     allSteps : tab
                 })
@@ -103,3 +108,18 @@ export default class ModifyStepsScreen extends React.Component {
         )
         }
 }
+
+const mapStateToProps = state => {
+	return {
+		listEtape: state.etape.data,
+		allState: state
+	}
+}
+
+const mapDispatchToProps = dispatch => ({
+	actions: {
+		etape: bindActionCreators(allTheActions.etape, dispatch)
+	}
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(ModifyStepsScreen)

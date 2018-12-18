@@ -1,4 +1,4 @@
-import { GO, BACK } from '../actions/etape'
+import { ADD, UPDATE } from '../actions/etape'
 
 
 const initialState = {
@@ -7,16 +7,18 @@ const initialState = {
 
 
 export default (state = initialState, action) => {
+  console.log("yftgbtb",action)
     switch (action.type) {
-      case GO:
+      case ADD:
         return {
           ...state,
        
-          data : action.etape.limite
+          data : [...state.data, action.etape],
         }
-        case BACK:
+        case UPDATE:
         return {
-            data : action.etape.limite
+          ...state,
+            data : action.etape
         }
       default:
         return state

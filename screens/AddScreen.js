@@ -2,7 +2,6 @@ import { ImagePicker, Permissions, Camera } from 'expo'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ListItem } from 'react-native-elements'
 import { View, Keyboard, TouchableOpacity, Text } from 'react-native'
-import { connect } from 'react-redux';
 import Axios from 'axios'
 import ContentContainer from '../components/ContentContainer/index'
 import InputText from '../components/TextInput/index'
@@ -21,6 +20,9 @@ import ViewContainer from '../components/ViewContainer/index'
 import ButtonModify from '../components/ButtonModify'
 
 
+import allTheActions from '../actions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 const StyledView = styled(ViewContainer)`
 padding : 20px 0px 0px 0px;`
@@ -46,8 +48,6 @@ const StyledHeader = styled.View`
 justifyContent: center;
 flex-direction: row;
 flex:1;
-borderBottomWidth:1;
-borderBottomColor:black;
 `
 class AddScreen extends React.Component {
   static navigationOptions = {
@@ -87,7 +87,8 @@ class AddScreen extends React.Component {
     }
 
   addTextInputEtapes = () => {
-
+    Keyboard.dismiss()
+    console.log("AAAASIUHQIUDGAIZEQUHDLFIZUEGFLIYZDSBLFIUHZESLIUDFHED : ",this.props.listEtape)
     if (this.state.currentEtape != null) {
       if (this.state.currentEtape.length != 0) {
         let nombreEtape = this.state.nbEtape
@@ -97,9 +98,10 @@ class AddScreen extends React.Component {
           key: `item-${nombreEtape}`,
           etape: this.state.currentEtape,
           ordre: nombreEtape,
-          backgroundColor: `rgb(${Math.floor(Math.random() * 255)}, ${nombreEtape * 5}, ${132})`,
-
+          //backgroundColor: `rgb(${Math.floor(Math.random() * 255)}, ${nombreEtape * 5}, ${132})`,
+          backgroundColor: '#FFF'
         })
+        this.props.actions.etape.Add(EtapesToSend)
         this.setState({ currentEtape: '', nbEtape: nombreEtape })
         /* let textInput = this.refs.textInputEtape
           textInput.setNativeProps({ text: ' ' })
@@ -109,7 +111,6 @@ class AddScreen extends React.Component {
   }
 
   addTextInputIngredients = () => {
-
     if (this.state.selectedIngredient != null) {
       if (this.state.selectedUnit != null) {
         if (this.state.selectedQuantity != null) {
@@ -180,6 +181,7 @@ class AddScreen extends React.Component {
     this.state.IngredientsRecu = IngredientsPicker
     this.state.dataPicker = [QuatityPicker, this.state.UnitésPicker, this.state.IngredientsPicker]
     this.state.labelPicker = ['Quantité', 'Unités', 'Ingrédients']
+    
   
   }
 
@@ -225,7 +227,7 @@ class AddScreen extends React.Component {
 
   draggableSteps = () => {
     this.props.navigation.navigate('ModifySteps', {
-     allSteps : this.state.EtapesToSend,
+      AllStep : this.state.EtapesToSend,
      onNavigationBack: this.retrieveData
     
     })
@@ -244,13 +246,18 @@ class AddScreen extends React.Component {
   }
 
   retrieveData = async () => {
+    console.log("jsuis dedans avec ",this.props.listEtape[0])
     const { navigation } = this.props;
     this.props.navigation.navigate('Add', {
       allSteps: this.state.allSteps
     })
+    let tableau = []
+    tableau.push(this.props.listEtape[0])
     this.setState({
-      EtapesToSend: navigation.getParam('allSteps'),
+      EtapesToSend: this.props.listEtape,
     });
+
+    console.log('NEEEEEEW ETAPE ', this.state.EtapesToSend)
 
 	}
 
@@ -299,7 +306,7 @@ class AddScreen extends React.Component {
     let recette = {
       catRecette: this.state.catRecette,
       libelleRecette: this.state.libelleRecette,
-      tempPrepRecette: parseInt(this.state.tempPrepRecette, 10),
+      tempPrepaRecette: this.state.tempPrepRecette,
       diffRecette: this.state.selectedDiff,
       prix: this.state.prixRecette,
       user: {
@@ -348,7 +355,6 @@ class AddScreen extends React.Component {
           prixRecette:'',
           selectedDiff:'',
           tempPrepRecette:'',
-    
         })
       }
       
@@ -356,6 +362,7 @@ class AddScreen extends React.Component {
   }
 
   setInputTextIngredients = (option) => {
+    Keyboard.dismiss()
     if (option != undefined) {
       if (option[0] != undefined) {
         this.setState({
@@ -616,10 +623,12 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
 
             <StyledViewArray>
               <StyledHeader>
-                <View style={{flex:4, alignContent:"center", alignItems:"center"}}><Text style={{fontSize:18}}>{'Liste des étapes'}</Text></View>
+                <View style={{flex:4, alignContent:"center", alignItems:"center", paddingTop:30}}><Text style={{fontSize:18}}>{'Liste des étapes'}</Text></View>
                 <View style={{flex:1, paddingRight: 3}}><ButtonModify onPressFunction={this.draggableSteps} /></View>
               </StyledHeader>
-            {this.state.EtapesToSend.map((item, index) => {
+            {this.state.EtapesToSend
+            .sort((itemA, itemB) => itemA.ordre > itemB.ordre)
+            .map((item, index) => {
 								return (<StyledTextArray key={`e${index}`}>{`${item.ordre} - ${item.etape}`}</StyledTextArray>)
 							})}
              
@@ -632,7 +641,7 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
                   start: { x: 0, y: 0 },
                   end: { x: 1, y: 1.0 },
                   locations: [0, 0.5, 1],
-                  colors: ['#743e4e', '#fff', '#221d33']
+                  colors: ['#743e4e', '#fff', '#221d33'] // jsasis pas - couleur du text- couleur de la selection
                 }}
                 height={0.5}
                 data={this.state.dataPicker}
@@ -675,11 +684,17 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
 
   }
 }
-
 const mapStateToProps = state => {
-  return {
-    user: state.user
-  }
+	return {
+		listEtape: state.etape.data,
+		allState: state
+	}
 }
 
-export default connect(mapStateToProps)(AddScreen)
+const mapDispatchToProps = dispatch => ({
+	actions: {
+		etape: bindActionCreators(allTheActions.etape, dispatch)
+	}
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(AddScreen)

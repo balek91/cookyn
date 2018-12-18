@@ -50,7 +50,7 @@ margin: 0px 20px 20px 20px
 
 const StyledImage = styled.Image
 	`
-  height : 150;
+  height : 300;
   width : 300;
   border-radius:20;
   borderColor:black;
@@ -115,10 +115,12 @@ class DetailScreen extends React.Component {
 	}
 
 	addFavorite =(idRecette) => {
-		Axios.post(`http://51.75.22.154:8080/Cookyn/Favoris/AddFavoris/${idRecette}/${this.props.user.user}`)
-		.then((response) => {console.log(response.data)})
-	
-
+		Axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/AddFavoris/${idRecette}/${this.props.user.user}`)
+		.then((response) => {
+			if (response.status == 200){
+				alert('La recette à été ajouté')
+			}
+		})
 	}
 
 	render() {
@@ -143,7 +145,7 @@ class DetailScreen extends React.Component {
 				<StyledView>
 					<Content>
 						<Header>
-							<StyledImage source={(data.photoRecette != null) ? uri = data.photoRecette : PhotoRecette} />
+							<StyledImage source={(data.recette.photoRecette) ? {uri:data.recette.photoRecette} : PhotoRecette} />
 							<StyledTextBold>{data.recette.libelleRecette}</StyledTextBold>
 						</Header>
 						<AlignContentLeft>
@@ -190,7 +192,7 @@ class DetailScreen extends React.Component {
 							/>
 
 							<Touchable
-								text='Ajouter à mon calandrier'
+								text='Ajouter à mon calendrier'
 								onPressFunction={() =>console.log('lol2')}
 								widthTouchable={200}
 								backgroundColorTouchable='#78C9DC'
