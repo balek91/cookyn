@@ -7,7 +7,8 @@
 - <del>Photo<del>
 - <del>Faire disparaître le clavier<del>
 - Faire un custom picker pour les ingrédients (zoom)
-- Drag and drop liste étape
+- <del>Drag and drop liste étape<del>
+- Revoir design draggable view
 
 ## Page Home
 - Ajouter un champs de recherche (ajouter tempo)
