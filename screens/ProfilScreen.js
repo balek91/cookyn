@@ -25,7 +25,6 @@ class ProfilScreen extends React.Component {
 
 	render() {
 		const { following, showSuivre, user } = this.state
-		const { userProfil } = this.props
 		return (
 			<ViewCustom>
 				<ScrollViewCustom>
@@ -63,12 +62,13 @@ class ProfilScreen extends React.Component {
 									text={`${user.nbAbonnee} Abonnement(s)`}
 									onPressFunction={this.onPressButtonAbonnes}
 								/>
+								nbRecetteFavoris
 								<Touchable
-									text={'Favoris'}
+									text={`${user.nbRecetteFav} Favori(s)`}
 									onPressFunction={this.onPressButtonFavoris}
 								/>
 								<Touchable
-									text={'Créations'}
+									text={`${user.nbRecetteCreate} Creation(s)`}
 									onPressFunction={this.onPressButtonCreations}
 								/>
 							</ViewCustom>
@@ -94,7 +94,6 @@ class ProfilScreen extends React.Component {
 
 	retrieveData = async () => {
 		try {
-		console.log('JESUIS LA ')
 		const value = await AsyncStorage.getItem('idUser')
 		Axios.get(`http://51.75.22.154:8080/Cookyn/user/GetUserById/${value}`).then(res =>{
 				this.setState({
@@ -108,8 +107,6 @@ class ProfilScreen extends React.Component {
 	goBackUserConnect = async () => {
 		try {
 			this.props.navigation.goBack(null)
-			// console.log('REPONDMOI')
-			// console.log(this.state.user.idUser,'   ', this.props.user)
 			Axios.get(`http://51.75.22.154:8080/Cookyn/user/GetUserById/${this.state.user.idUser}`).then(res =>{
 				this.setState({
 					user : res.data
@@ -140,11 +137,15 @@ class ProfilScreen extends React.Component {
 	}
 
 	onPressButtonFavoris = () => {
-		this.props.navigation.push('ListRecette');
+		this.props.navigation.push('ListRecetteFavori',{
+			idUser  : this.state.user.idUser,
+		})
 	}
 
 	onPressButtonCreations = () => {
-		this.props.navigation.push('ListRecette');
+		this.props.navigation.push('ListRecetteCreation', {
+			idUser : this.state.user.idUser,
+		})
 	}
 
 	onPressButtonAbonnes = () => {

@@ -83,11 +83,11 @@ class Login extends React.Component {
     )
   }
   SignUp = () => {
-    this.props.navigation.push('SignUp');
+    this.props.navigation.push('SignUp')
   }
 
   signUpOk = () => {
-    this.props.navigation.navigate('SignUpOk');
+    this.props.navigation.navigate('SignUpOk')
   }
 
   SignedIn = () => {

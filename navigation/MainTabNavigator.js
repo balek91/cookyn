@@ -1,10 +1,11 @@
 import React from 'react'
-import { Image, TouchableOpacity } from 'react-native'
+import { Image } from 'react-native'
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import AddScreen from '../screens/AddScreen'
 import CalendarScreen from '../screens/CalendarScreen'
 import HomeScreen from '../screens/HomeScreen'
-import ListRecetteScreen from '../screens/ListRecetteScreen'
+import ListRecetteFavoriScreen from '../screens/ListRecetteFavoriScreen'
+import ListRecetteCreationScreen from '../screens/ListRecetteCreationScreen'
 import ListUsersScreen from '../screens/ListUsersScreen'
 import ModifyUserScreen from '../screens/ModifyUserScreen'
 import ProfilScreen from '../screens/ProfilScreen'
@@ -42,8 +43,10 @@ const ProfilStack = createStackNavigator({
   Profil: ProfilScreen,
   ProfilUser: ProfilScreen,
   ModifyUser: ModifyUserScreen,
-  ListRecette: ListRecetteScreen,
+  ListRecetteFavori: ListRecetteFavoriScreen,
   ListUsers: ListUsersScreen,
+  DetailRecette : DetailRecetteScreen,
+  ListRecetteCreation : ListRecetteCreationScreen
 });
 
 ProfilStack.navigationOptions = {
