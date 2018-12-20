@@ -12,7 +12,7 @@
 
 ## Page Home
 - Ajouter un champs de recherche (ajouter tempo)
-- Choice picker / filtre 
+- Choice picker / filtre  https://github.com/jmurzy/react-router-native
 
 ## Page détail recette 
 - Partage natif 

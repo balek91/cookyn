@@ -141,7 +141,7 @@ class DetailScreen extends React.Component {
 
 	render() {
 		const { data } = this.state
-		const PhotoRecette = require('../assets/icons/photoRecette.jpg')
+		const PhotoRecette = require('../assets/icons/generique.png')
 		const IconCourse = require('../assets/icons/liste_de_courses.png')
 		const IconFb = require('../assets/icons/reseaux_sociales/facebook.png')
 		const IconMail = require('../assets/icons/reseaux_sociales/mail.png')
