@@ -6,7 +6,9 @@ import ViewCenter from '../components/ViewCenter'
 import Touchable from '../components/Touchable'
 import TouchableLink from '../components/TouchableLink'
 import Axios from 'axios'
+import DatePicker from 'react-native-datepicker'
 
+import {Alert} from 'react-native';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -117,7 +119,8 @@ class DetailScreen extends React.Component {
 	state = {
 		idRecette: this.props.navigation.getParam('recette').idRecette,
 		data: PropTypes.array,
-		user: null
+		user: null,
+		currentDate: new Date(),
 	}
 
 	addFavorite =(idRecette) => {
@@ -143,10 +146,7 @@ class DetailScreen extends React.Component {
 		const { data } = this.state
 		const PhotoRecette = require('../assets/icons/generique.png')
 		const IconCourse = require('../assets/icons/liste_de_courses.png')
-		const IconFb = require('../assets/icons/reseaux_sociales/facebook.png')
-		const IconMail = require('../assets/icons/reseaux_sociales/mail.png')
-		const IconTwitter = require('../assets/icons/reseaux_sociales/twitter.png')
-		const IconWA = require('../assets/icons/reseaux_sociales/whatsapp.png')
+		
 
 		if (data.etapes == undefined) {
 			return (
@@ -216,23 +216,41 @@ class DetailScreen extends React.Component {
 								backgroundColorTouchable='#78C9DC'
 								colorText='#FFF'
 							/>
+							
+							 <DatePicker
+								style={{width: 200}}
+								locale={'fr'}
+								date={this.state.currentDate}
+								mode="date"
+								placeholder="select date"
+								format="DD-MM-YYYY"
+								minDate={this.state.currentDate}
+								maxDate="2050-06-01"
+								confirmBtnText="Ok"
+								cancelBtnText="Annuler"
+								customStyles={{
+								dateIcon: {
+									position: 'absolute',
+									left: 0,
+									top: 4,
+									marginLeft: 0
+								},
+								dateInput: {
+									marginLeft: 36
+								}
+								// ... You can check the source to find the other keys.
+								}}
+								onDateChange={(date) => {this.setState({currentDate: date})}}
+							/>
+
 							<Touchable
 								text='Ajouter à mon calendrier'
-								onPressFunction={() =>console.log('lol2')}
+								onPressFunction={this.addCalandarConfirm}
 								widthTouchable={200}
 								backgroundColorTouchable='#78C9DC'
 								colorText='#FFF'
 							/>
 						</ViewCenter>
-						<Footer>
-							<StyledTextBold>{'Partagez cette recette'}</StyledTextBold>
-							<AlignContentLeft>
-								<StyledIcon source={IconFb} />
-								<StyledIcon source={IconMail} />
-								<StyledIcon source={IconTwitter} />
-								<StyledIcon source={IconWA} />
-							</AlignContentLeft>
-						</Footer>
 					</Content>
 
 
@@ -255,6 +273,45 @@ class DetailScreen extends React.Component {
 				})
 			})
 	}
+
+
+
+	addCalandar = () => {
+		let user = {
+			idUser : this.state.user,
+		}
+		let recette = {
+			idRecette : this.state.data.recette.idRecette,
+		}
+
+		let json = {
+			user : user,
+			recette: recette,
+			datePlanning: this.state.currentDate
+		}
+
+		axios.post('http://51.75.22.154:8080/Cookyn2/Planning/AddPlanning',json).then((response) => {
+      	if (response.status =='200'){
+			alert('La recette a bien été ajoutée à votre calendrier!')
+			this.setState({
+				currentDate : new Date()
+			})
+    		}
+		})
+	}
+
+
+	addCalandarConfirm =() => {
+		Alert.alert(
+			'Confirmation',
+			`La recette "${this.state.data.recette.libelleRecette}" va être ajoutée pour le ${this.state.currentDate.toLocaleDateString('fr-FR')}`,
+			[
+			  {text: 'Annuler', onPress: () => console.warn('NO Pressed'), style: 'cancel'},
+			  {text: 'Confirmer', onPress: () => this.addCalandar()},
+			]
+		  )
+}
+
 
 	retrieveData = async () => {
 		const value = await AsyncStorage.getItem('idUser')

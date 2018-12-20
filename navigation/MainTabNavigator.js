@@ -11,6 +11,7 @@ import ModifyUserScreen from '../screens/ModifyUserScreen'
 import ProfilScreen from '../screens/ProfilScreen'
 import DetailRecetteScreen from '../screens/DetailRecetteScreen'
 import ModifyStepsScreen from '../screens/ModifyStepsScreen'
+import ShoppingListScrenn from '../screens/ShoppingListScreen'
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -76,9 +77,23 @@ CalendarStack.navigationOptions = {
     />),
 };
 
+
+const ShoppingListStack = createStackNavigator({
+  Shopping: ShoppingListScrenn,
+});
+
+ShoppingListStack.navigationOptions = {
+  tabBarLabel: 'Shopping',
+  tabBarIcon: (
+    <Image style={{ height: 26, width: 26 }}
+      source={require('../assets/icons/liste_de_courses.png')}
+    />),
+};
+
 export default createBottomTabNavigator({
   AddStack,
   HomeStack,
   ProfilStack,
   CalendarStack,
+  ShoppingListStack
 });

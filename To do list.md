@@ -16,8 +16,9 @@
 
 ## Page détail recette 
 - Partage natif 
-- bouton ajouter <del>favoris<del> / ajouter au calandrier
+- <del>bouton ajouter favoris / ajouter au calandrier<del>
 - créer une page de modification de recette
+- Ajouter un champs permettant de savoir combien de fois a été ajoutée une recette 
 
 ## Page Profil
 - <del>Ajouter  recette favoris et recette création<del>
