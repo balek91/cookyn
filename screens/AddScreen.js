@@ -29,19 +29,20 @@ padding : 20px 0px 0px 0px;`
 
 const StyledViewArray = styled.View`
 flex:1;
+width:100%;
 justifyContent: center;
 alignItems: flex-start;
 backgroundColor: #F5FCFF;
 border-radius:10;
 border-width:0.5;
-margin: 0px 20px 20px 20px
+max-width:320
 `
 
 const StyledTextArray = styled.Text
 `
 fontWeight: 300;
 fontSize: 16;
-margin:15px 0px 10px 25px;
+margin:15px 15px 10px 25px;
 `
 
 const StyledHeader = styled.View`

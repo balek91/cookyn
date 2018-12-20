@@ -17,9 +17,10 @@
 ## Page détail recette 
 - Partage natif 
 - bouton ajouter <del>favoris<del> / ajouter au calandrier
+- créer une page de modification de recette
 
 ## Page Profil
-- Ajouter  recette favoris et recette création
+- <del>Ajouter  recette favoris et recette création<del>
 - <del>Régler Abonnement/Abonné (redux)<del>
 - ajouter bouton se déconnecter.
 
