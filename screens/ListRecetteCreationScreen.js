@@ -4,6 +4,8 @@ import axios from 'axios'
 
 import ListItemElement from '../components/FlatListElement'
 import ViewCustom from '../components/ViewContainer'
+import BackButton from '../components/BackButton'
+
 
 const StyledFlatList = styled.FlatList`
 flex: 1;
@@ -11,9 +13,14 @@ width: 100%;
 `
 
 export default class ListRecetteCreationScreen extends React.Component {
-	static navigationOptions = {
-		title: 'Creations',
-  }  
+  static navigationOptions = ({ navigation }) => {
+    return {
+        title: 'Créations',
+        headerLeft: (
+            <BackButton onPress={() => navigation.state.params.backToProfil()} />
+        )
+    }
+}
   state = {
     idUser: null,
     offset: 0,
@@ -43,7 +50,7 @@ export default class ListRecetteCreationScreen extends React.Component {
   keyExtractor = item => item.idRecette.toString()
 
   navigateToDetail = (recette) => {
-    this.props.navigation.navigate('DetailRecette', { recette: recette })
+    this.props.navigation.push('DetailRecette', { recette: recette })
   }
 
   loadMoreContentAsync = async () => {

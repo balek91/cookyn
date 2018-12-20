@@ -32,7 +32,8 @@ class ModifyStepsScreen extends React.Component {
     componentDidMount() {
       const { navigation } = this.props
       let array =this.props.listEtape
-      console.log(" mais wtfff zdsfpisdhgdfpsjgdfvgx",array)
+      console.log("refesdfjjsbdfglsnfdùgonbdfsmogbdsmfogmsfbdgmosnfgmovbslgbùdlsngùosfndmgofsi ", array)
+
       this.setState({
           allSteps: array
         });

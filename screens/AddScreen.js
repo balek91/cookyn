@@ -72,6 +72,7 @@ class AddScreen extends React.Component {
       IngredientsView: [],
       labelPicker: [],
       libelleRecette: '',
+      goback : false,
       nbEtape: 0,
       nbEtapeEcrite:0,
       Photo: false,
@@ -111,7 +112,10 @@ class AddScreen extends React.Component {
           //backgroundColor: `rgb(${Math.floor(Math.random() * 255)}, ${nombreEtape * 5}, ${132})`,
           backgroundColor: '#FFF'
         }
-        this.props.actions.etape.Add(etape)
+        console.log("je suis passééééé emkdsngvlsfgf,sdghdfghdfhvdx")
+        if (this.state.goback == false) {
+          this.props.actions.etape.Add(etape)
+        }
         this.setState({ currentEtape: '', nbEtape: nombreEtape, nbEtapeEcrite :nombreEtapeEcrite })
         /* let textInput = this.refs.textInputEtape
           textInput.setNativeProps({ text: ' ' })
@@ -236,8 +240,7 @@ class AddScreen extends React.Component {
   }
 
   draggableSteps = () => {
-    this.props.navigation.navigate('ModifySteps', {
-      AllStep : this.state.EtapesToSend,
+    this.props.navigation.push('ModifySteps', {
      onNavigationBack: this.retrieveData
     
     })
@@ -258,7 +261,7 @@ class AddScreen extends React.Component {
   retrieveData = async () => {
     console.log("jsuis dedans avec ",this.props.listEtape)
     const { navigation } = this.props;
-    this.props.navigation.navigate('Add')
+    this.props.navigation.goBack(null)
     let tableau = this.props.listEtape
     console.log("jsuis dedans avec " + tableau.length )
 
@@ -267,7 +270,8 @@ class AddScreen extends React.Component {
     }
     this.setState({
       EtapesToSend: tableau,
-      nbEtape : tableau.length
+      nbEtape : tableau.length,
+      goback : true
     });
 
 

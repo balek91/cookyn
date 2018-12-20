@@ -4,15 +4,22 @@ import axios from 'axios'
 
 import ListItemElement from '../components/FlatListElement'
 import ViewCustom from '../components/ViewContainer'
+import BackButton from '../components/BackButton'
+
 
 const StyledFlatList = styled.FlatList`
 flex: 1;
 width: 100%;
 `
 export default class ListRecetteFavoriScreen extends React.Component {
-	static navigationOptions = {
-		title: 'Favoris',
-	}
+  static navigationOptions = ({ navigation }) => {
+    return {
+        title:'Favoris',
+        headerLeft: (
+            <BackButton onPress={() => navigation.state.params.backToProfil()} />
+        )
+    }
+}
 
   state = {
     idUser: null,
@@ -43,7 +50,7 @@ export default class ListRecetteFavoriScreen extends React.Component {
   keyExtractor = item => item.idFavoris.toString()
 
   navigateToDetail = (recette) => {
-    this.props.navigation.navigate('DetailRecette', { recette: recette })
+    this.props.navigation.push('DetailRecette', { recette: recette })
   }
 
   loadMoreContentAsync = async () => {

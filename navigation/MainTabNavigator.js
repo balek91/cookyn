@@ -17,8 +17,10 @@ const HomeStack = createStackNavigator({
   DetailRecette : DetailRecetteScreen,
   ProfilUser: ProfilScreen,
   ModifyUser: ModifyUserScreen,
-  ListRecette: ListRecetteScreen,
+  ListRecetteFavori: ListRecetteFavoriScreen,
   ListUsers: ListUsersScreen,
+  DetailRecette : DetailRecetteScreen,
+  ListRecetteCreation : ListRecetteCreationScreen
 });
 
 

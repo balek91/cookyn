@@ -139,12 +139,14 @@ class ProfilScreen extends React.Component {
 	onPressButtonFavoris = () => {
 		this.props.navigation.push('ListRecetteFavori',{
 			idUser  : this.state.user.idUser,
+			backToProfil: this.goBackUserConnect,
 		})
 	}
 
 	onPressButtonCreations = () => {
 		this.props.navigation.push('ListRecetteCreation', {
 			idUser : this.state.user.idUser,
+			backToProfil: this.goBackUserConnect,
 		})
 	}
 

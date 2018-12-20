@@ -11,6 +11,7 @@ import Axios from 'axios'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import allTheActions from '../actions'
+import { AsyncStorage } from 'react-native';
 
 
 
@@ -116,10 +117,12 @@ class DetailScreen extends React.Component {
 	state = {
 		idRecette: this.props.navigation.getParam('recette').idRecette,
 		data: PropTypes.array,
+		user: null
 	}
 
 	addFavorite =(idRecette) => {
-		Axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/AddFavoris/${idRecette}/${this.props.user.user}`)
+		console.log(`http://51.75.22.154:8080/Cookyn2/favoris/AddFavoris/${idRecette}/${this.state.user}`)
+		Axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/AddFavoris/${idRecette}/${this.state.user}`)
 		.then((response) => {
 			if (response.status == 200){
 				alert('La recette à été ajouté')
@@ -158,7 +161,7 @@ class DetailScreen extends React.Component {
 				<StyledView>
 					<Content>
 						<Header>
-							<StyledImage source={(data.recette.photoRecette) ? {uri:data.recette.photoRecette} : PhotoRecette} />
+							<StyledImage source={(data.recette.urlRecette) ? {uri:data.recette.urlRecette} : PhotoRecette} />
 							<StyledTextBold>{data.recette.libelleRecette}</StyledTextBold>
 						</Header>
 						<AlignContentLeft>
@@ -210,7 +213,8 @@ class DetailScreen extends React.Component {
 								text='Ajouter à mes Favoris'
 								onPressFunction={() => this.addFavorite(this.state.idRecette)}
 								widthTouchable={200}
-								backgroundColorTouchable='#FFF'
+								backgroundColorTouchable='#78C9DC'
+								colorText='#FFF'
 							/>
 							<Touchable
 								text='Ajouter à mon calendrier'
@@ -242,13 +246,21 @@ class DetailScreen extends React.Component {
 		this.setState({
 			idRecette: navigation.getParam('recette').idRecette
 		})
+		this.retrieveData()
 		axios.get(`http://51.75.22.154:8080/Cookyn2/recette/GetRecetteById/${this.state.idRecette}`)
 			.then(res => {
 				console.log(res.data)
 				this.setState({
-					data: res.data
+					data: res.data,
 				})
 			})
+	}
+
+	retrieveData = async () => {
+		const value = await AsyncStorage.getItem('idUser')
+		this.setState({
+			user: value
+		})
 	}
 }
 
