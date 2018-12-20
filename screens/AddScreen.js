@@ -73,6 +73,7 @@ class AddScreen extends React.Component {
       labelPicker: [],
       libelleRecette: '',
       nbEtape: 0,
+      nbEtapeEcrite:0,
       Photo: false,
       photoCamera: null,
       phraseIngredient: 'Cliquez pour choisir l\'ingredient',
@@ -91,8 +92,10 @@ class AddScreen extends React.Component {
     console.log("AAAASIUHQIUDGAIZEQUHDLFIZUEGFLIYZDSBLFIUHZESLIUDFHED : ",this.props.listEtape)
     if (this.state.currentEtape != null) {
       if (this.state.currentEtape.length != 0) {
+        let nombreEtapeEcrite = this.state.nbEtapeEcrite
         let nombreEtape = this.state.nbEtape
         nombreEtape += 1
+        nombreEtapeEcrite+=1
         let EtapesToSend = this.state.EtapesToSend
         EtapesToSend.push({
           key: `item-${nombreEtape}`,
@@ -101,8 +104,15 @@ class AddScreen extends React.Component {
           //backgroundColor: `rgb(${Math.floor(Math.random() * 255)}, ${nombreEtape * 5}, ${132})`,
           backgroundColor: '#FFF'
         })
-        this.props.actions.etape.Add(EtapesToSend)
-        this.setState({ currentEtape: '', nbEtape: nombreEtape })
+        let etape = {
+          key: `item-${nombreEtapeEcrite}`,
+          etape: this.state.currentEtape,
+          ordre: nombreEtape,
+          //backgroundColor: `rgb(${Math.floor(Math.random() * 255)}, ${nombreEtape * 5}, ${132})`,
+          backgroundColor: '#FFF'
+        }
+        this.props.actions.etape.Add(etape)
+        this.setState({ currentEtape: '', nbEtape: nombreEtape, nbEtapeEcrite :nombreEtapeEcrite })
         /* let textInput = this.refs.textInputEtape
           textInput.setNativeProps({ text: ' ' })
           setTimeout(() => {  textInput.setNativeProps({ text: '' }) }, 5) */
@@ -246,18 +256,23 @@ class AddScreen extends React.Component {
   }
 
   retrieveData = async () => {
-    console.log("jsuis dedans avec ",this.props.listEtape[0])
+    console.log("jsuis dedans avec ",this.props.listEtape)
     const { navigation } = this.props;
-    this.props.navigation.navigate('Add', {
-      allSteps: this.state.allSteps
-    })
-    let tableau = []
-    tableau.push(this.props.listEtape[0])
+    this.props.navigation.navigate('Add')
+    let tableau = this.props.listEtape
+    console.log("jsuis dedans avec " + tableau.length )
+
+    if (tableau.length > 1){
+      tableau.sort((itemA, itemB) => itemA.ordre > itemB.ordre)
+    }
     this.setState({
-      EtapesToSend: this.props.listEtape,
+      EtapesToSend: tableau,
+      nbEtape : tableau.length
     });
 
+
     console.log('NEEEEEEW ETAPE ', this.state.EtapesToSend)
+    console.log("qfnsdjnfsjngs",tableau)
 
 	}
 
@@ -627,11 +642,9 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
                 <View style={{flex:1, paddingRight: 3}}><ButtonModify onPressFunction={this.draggableSteps} /></View>
               </StyledHeader>
             {this.state.EtapesToSend
-            .sort((itemA, itemB) => itemA.ordre > itemB.ordre)
             .map((item, index) => {
 								return (<StyledTextArray key={`e${index}`}>{`${item.ordre} - ${item.etape}`}</StyledTextArray>)
 							})}
-             
             </StyledViewArray>
                 
             <ViewAlignItemRow>

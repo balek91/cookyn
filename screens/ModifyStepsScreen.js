@@ -1,8 +1,9 @@
 import React from 'react'
-import {TouchableOpacity, Text} from 'react-native'
+import {TouchableOpacity, Text, TextInput, Image} from 'react-native'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 import Touchable from '../components/Touchable/index'
 import ViewCustom from '../components/ViewContainer'
+import ViewRow from '../components/ViewsAlignItemRow'
 import BackButton from '../components/BackButton'
 
 
@@ -30,34 +31,62 @@ class ModifyStepsScreen extends React.Component {
 
     componentDidMount() {
       const { navigation } = this.props
+      let array =this.props.listEtape
+      console.log(" mais wtfff zdsfpisdhgdfpsjgdfvgx",array)
       this.setState({
-          allSteps: navigation.getParam('AllStep')
+          allSteps: array
         });
       }
 
-      returnAddScreen = () =>{
-        this.props.navigation.goBack(null)
-      }
-
-
       renderItem = ({ item, index, move, moveEnd, isActive }) => {
-        return (
+        return (<ViewRow>
           <TouchableOpacity
             style={{ 
               height: 100, 
-              backgroundColor: isActive ? 'blue' : item.backgroundColor,
+              backgroundColor: isActive ? 'white' : item.backgroundColor,
               alignItems: 'center', 
               justifyContent: 'center' 
             }}
             onLongPress={move}
             onPressOut={moveEnd}
           >
-            <Text style={{ 
-              fontWeight: '300', 
-              color: 'black',
-              fontSize: 20,
-            }}>{item.etape}</Text>
+           <Image source={require('../assets/icons/dragg.png')}/>
           </TouchableOpacity>
+          <TextInput style={{height: 40, width:200, borderColor: 'black', borderWidth: 1, margin:20}} value={item.etape} onChangeText={(value) =>{
+            let tableau = this.state.allSteps
+            tableau[index].etape = value
+            this.setState({
+              allSteps : tableau
+            })
+            this.props.actions.etape.Update(tableau)
+          }}>
+          </TextInput>
+          <TouchableOpacity 
+            style={{ 
+              height: 100, 
+              backgroundColor: isActive ? 'white' : item.backgroundColor,
+              alignItems: 'center', 
+              justifyContent: 'center' 
+            }}
+            onPress={() => {
+              let tableau = this.state.allSteps
+              if (index != tableau.length){
+                tableau.splice(index, 1)
+                for (let i = index; i < tableau.length; i++){
+                  tableau[i].ordre = i+1
+                }
+              } else {
+                tableau.splice(index-1,1)
+              }
+              this.setState({
+                allSteps : tableau
+              })
+              this.props.actions.etape.Update(tableau)
+            }}>
+              <Image source={require('../assets/icons/garbage.png')} style={{height:30, width:30}}/>
+            </TouchableOpacity>
+        </ViewRow>
+          
         )
       }
     

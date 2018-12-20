@@ -13,8 +13,11 @@ import ModifyStepsScreen from '../screens/ModifyStepsScreen'
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
-  DetailRecette : DetailRecetteScreen
-  
+  DetailRecette : DetailRecetteScreen,
+  ProfilUser: ProfilScreen,
+  ModifyUser: ModifyUserScreen,
+  ListRecette: ListRecetteScreen,
+  ListUsers: ListUsersScreen,
 });
 
 

@@ -4,10 +4,14 @@ import React from 'react'
 import styled from 'styled-components/native'
 import ViewCenter from '../components/ViewCenter'
 import Touchable from '../components/Touchable'
+import TouchableLink from '../components/TouchableLink'
 import Axios from 'axios'
 
 
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import allTheActions from '../actions'
+
 
 
 const Content = styled.ScrollView`
@@ -123,6 +127,15 @@ class DetailScreen extends React.Component {
 		})
 	}
 
+
+	goProfilPage = (idUser) => {
+		this.props.actions.user.getUserConnect(idUser)
+		const {navigation} = this.props
+		navigation.push('ProfilUser',{
+			contact : idUser
+		} )
+	}
+
 	render() {
 		const { data } = this.state
 		const PhotoRecette = require('../assets/icons/photoRecette.jpg')
@@ -165,6 +178,16 @@ class DetailScreen extends React.Component {
 							<LabelRight>{`${data.recette.tempPrepaRecette} min`}</LabelRight>
 						</AlignContentLeft>
 						<AlignContentLeft>
+							<LabelLeft>{'Recette crée par :'}</LabelLeft>
+							<TouchableLink
+								text={data.recette.user.usernameUser}
+								onPressFunction={()=> this.goProfilPage(data.recette.user.idUser)}
+								widthTouchable={200}
+								backgroundColorTouchable='#78C9DC'
+								colorText='#000'
+							/>
+						</AlignContentLeft>
+						<AlignContentLeft>
 							<StyledIcon source={IconCourse} />
 							<StyledText>{'INGRÉDIENTS'}</StyledText>
 						</AlignContentLeft>
@@ -187,10 +210,8 @@ class DetailScreen extends React.Component {
 								text='Ajouter à mes Favoris'
 								onPressFunction={() => this.addFavorite(this.state.idRecette)}
 								widthTouchable={200}
-								backgroundColorTouchable='#78C9DC'
-								colorText='#FFF'
+								backgroundColorTouchable='#FFF'
 							/>
-
 							<Touchable
 								text='Ajouter à mon calendrier'
 								onPressFunction={() =>console.log('lol2')}
@@ -232,9 +253,20 @@ class DetailScreen extends React.Component {
 }
 
 const mapStateToProps = state => {
-	return {
-	  user: state.user
-	}
-  }
-  
-  export default connect(mapStateToProps)(DetailScreen)
+    return {
+        abonnementList: state.user.abonnementList,
+        abonneList: state.user.abonneList,
+        allState: state
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    actions: {
+        user: bindActionCreators(allTheActions.user, dispatch)
+    }
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DetailScreen)
