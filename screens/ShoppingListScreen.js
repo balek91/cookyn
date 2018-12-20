@@ -73,7 +73,7 @@ export default class ShoppingListScreen extends React.Component {
 								dateInput: {
 									marginLeft: 36
 								}
-								// ... You can check the source to find the other keys.
+								// ... You can check the source to find the other keys
 								}}
 								onDateChange={(date) => {this.setState({secondDate: date})}}
 							/>
