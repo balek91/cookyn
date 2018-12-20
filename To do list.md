@@ -1,13 +1,14 @@
 # <p align="center">Liste des fonctionnalités</p>
 
 ## Page de connexion 
-- section « Vous rentrez un problème » page de connexion
+- section « Vous rencontrez un problème » page de connexion
 
 ## Page AddRecette
-- Photo
-- Faire disparaître le clavier 
+- <del>Photo<del>
+- <del>Faire disparaître le clavier<del>
 - Faire un custom picker pour les ingrédients (zoom)
-- Drag and drop liste étape
+- <del>Drag and drop liste étape<del>
+- Revoir design draggable view
 
 ## Page Home
 - Ajouter un champs de recherche (ajouter tempo)
@@ -15,14 +16,15 @@
 
 ## Page détail recette 
 - Partage natif 
-- bouton ajouter favoris/ ajouter au calandrier
+- bouton ajouter <del>favoris<del> / ajouter au calandrier
 
 ## Page Profil
 - Ajouter  recette favoris et recette création
-- Régler Abonnement/Abonné (redux)
+- <del>Régler Abonnement/Abonné (redux)<del>
+- ajouter bouton se déconnecter.
 
 ## Page calendrier 
-- Trouver un style (git template de fonctionnalité gitHub)
+- Trouver un style (git template de fonctionnalité gitHub)  https://github.com/madhavanmalolan/awesome-reactnative-ui
 - Tout faire
 
 # <p align="center"> REFONTE GRAPHIQUE  </p>

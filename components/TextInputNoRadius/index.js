@@ -59,6 +59,7 @@ export default class InputTextNoRadius extends React.Component {
                 placeholderTextColor='#707070'
                 ref={reference ? reference : null}
                 keyboardType={keyboard ? keyboard : 'default'}
+                returnKeyType="done"
                 multiline={multi ? multi : false}
                 secureTextEntry={isPassword ? isPassword : false}
                 onChangeText={onChangeTextFunction ? onChangeTextFunction : null}

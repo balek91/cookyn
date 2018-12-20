@@ -10,11 +10,15 @@ import ListUsersScreen from '../screens/ListUsersScreen'
 import ModifyUserScreen from '../screens/ModifyUserScreen'
 import ProfilScreen from '../screens/ProfilScreen'
 import DetailRecetteScreen from '../screens/DetailRecetteScreen'
+import ModifyStepsScreen from '../screens/ModifyStepsScreen'
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
-  DetailRecette : DetailRecetteScreen
-  
+  DetailRecette : DetailRecetteScreen,
+  ProfilUser: ProfilScreen,
+  ModifyUser: ModifyUserScreen,
+  ListRecette: ListRecetteScreen,
+  ListUsers: ListUsersScreen,
 });
 
 
@@ -29,6 +33,7 @@ HomeStack.navigationOptions = {
 
 const AddStack = createStackNavigator({
   Add: AddScreen,
+  ModifySteps: ModifyStepsScreen
 });
 
 AddStack.navigationOptions = {
