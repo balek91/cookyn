@@ -5,8 +5,8 @@ import styled from 'styled-components/native'
 import ViewCenter from '../components/ViewCenter'
 import Touchable from '../components/Touchable'
 import TouchableLink from '../components/TouchableLink'
-import Axios from 'axios'
 import DatePicker from 'react-native-datepicker'
+import compare from '../utils/CompareDate'
 
 import {Alert} from 'react-native';
 
@@ -121,12 +121,13 @@ class DetailScreen extends React.Component {
 		data: PropTypes.array,
 		user: null,
 		currentDate: new Date(),
-		isFavori: false
+		isFavori: false,
+		changeDate : null
 	}
 
 	addFavorite =(idRecette) => {
 		console.log(`http://51.75.22.154:8080/Cookyn2/favoris/AddFavoris/${idRecette}/${this.state.user}`)
-		Axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/AddFavoris/${idRecette}/${this.state.user}`)
+		axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/AddFavoris/${idRecette}/${this.state.user}`)
 		.then((response) => {
 			if (response.status == 200){
 				alert('La recette à été ajouté')
@@ -138,7 +139,7 @@ class DetailScreen extends React.Component {
 	}
 
 	deleteFavorite =(idRecette) => {
-		Axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/RemoveFavoris/${this.state.user}/${idRecette}`)
+		axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/RemoveFavoris/${this.state.user}/${idRecette}`)
 		.then((response) => {
 			if (response.status == 200){
 				alert('La recette à été supprimé des favoris')
@@ -239,8 +240,6 @@ class DetailScreen extends React.Component {
 								backgroundColorTouchable='#78C9DC'
 								colorText='#FFF'
 							/>
-
-							
 							}
 							
 							 <DatePicker
@@ -266,7 +265,7 @@ class DetailScreen extends React.Component {
 								}
 								// ... You can check the source to find the other keys.
 								}}
-								onDateChange={(date) => {this.setState({currentDate: date})}}
+								onDateChange={(date) => {this.setState({currentDate: date, changeDate : true})}}
 							/>
 
 							<Touchable
@@ -276,6 +275,7 @@ class DetailScreen extends React.Component {
 								backgroundColorTouchable='#78C9DC'
 								colorText='#FFF'
 							/>
+
 						</ViewCenter>
 					</Content>
 
@@ -309,13 +309,17 @@ class DetailScreen extends React.Component {
 		let recette = {
 			idRecette : this.state.data.recette.idRecette,
 		}
+		let newDate = this.state.currentDate
+		if (this.state.changeDate) {
+			newDate= compare.stringToDate(this.state.currentDate,"dd-mm-yyyy","-")
+		}
 		let json = {
 			user : user,
 			recette: recette,
-			datePlanning: this.state.currentDate
+			datePlanning:newDate
 		}
 
-		axios.post('http://51.75.22.154:8080/Cookyn2/Planning/AddPlanning',json).then((response) => {
+		axios.post('http://51.75.22.154:8080/Cookyn2/planning/AddPlanning',json).then((response) => {
       	if (response.status =='200'){
 			alert('La recette a bien été ajoutée à votre calendrier!')
 			this.setState({
@@ -327,9 +331,15 @@ class DetailScreen extends React.Component {
 
 
 	addCalandarConfirm =() => {
+		let newDate =this.state.currentDate
+		if (this.state.changeDate){
+			newDate = compare.stringToDate(this.state.currentDate,"dd-mm-yyyy","-")
+		} 
+			
+
 		Alert.alert(
 			'Confirmation',
-			`La recette "${this.state.data.recette.libelleRecette}" va être ajoutée pour le ${this.state.currentDate.toLocaleDateString('fr-FR')}`,
+			`La recette "${this.state.data.recette.libelleRecette}" va être ajoutée au calendrier ${newDate.toLocaleDateString('fr')}`,
 			[
 			  {text: 'Annuler', onPress: () => console.log('NO Pressed'), style: 'cancel'},
 			  {text: 'Confirmer', onPress: () => this.addCalandar()},

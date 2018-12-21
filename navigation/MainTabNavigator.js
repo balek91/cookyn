@@ -12,8 +12,10 @@ import ProfilScreen from '../screens/ProfilScreen'
 import DetailRecetteScreen from '../screens/DetailRecetteScreen'
 import ModifyStepsScreen from '../screens/ModifyStepsScreen'
 import ShoppingListScrenn from '../screens/ShoppingListScreen'
+import NewsScreen from '../screens/NewsScreen'
 
 const HomeStack = createStackNavigator({
+  News : NewsScreen,
   Home: HomeScreen,
   DetailRecette : DetailRecetteScreen,
   ProfilUser: ProfilScreen,
@@ -21,7 +23,7 @@ const HomeStack = createStackNavigator({
   ListRecetteFavori: ListRecetteFavoriScreen,
   ListUsers: ListUsersScreen,
   DetailRecette : DetailRecetteScreen,
-  ListRecetteCreation : ListRecetteCreationScreen
+  ListRecetteCreation : ListRecetteCreationScreen,
 });
 
 
