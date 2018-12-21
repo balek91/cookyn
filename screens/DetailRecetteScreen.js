@@ -121,6 +121,7 @@ class DetailScreen extends React.Component {
 		data: PropTypes.array,
 		user: null,
 		currentDate: new Date(),
+		isFavori: false
 	}
 
 	addFavorite =(idRecette) => {
@@ -129,10 +130,24 @@ class DetailScreen extends React.Component {
 		.then((response) => {
 			if (response.status == 200){
 				alert('La recette à été ajouté')
+				this.setState({
+					isFavori: true
+				})
 			}
 		})
 	}
 
+	deleteFavorite =(idRecette) => {
+		Axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/RemoveFavoris/${this.state.user}/${idRecette}`)
+		.then((response) => {
+			if (response.status == 200){
+				alert('La recette à été supprimé des favoris')
+				this.setState({
+					isFavori: false
+				})
+			}
+		})
+	}
 
 	goProfilPage = (idUser) => {
 		this.props.actions.user.getUserConnect(idUser)
@@ -209,6 +224,14 @@ class DetailScreen extends React.Component {
 							})}
 						</StyledViewArray>
 						<ViewCenter>
+						{this.state.isFavori ? 
+							<Touchable
+								text='Supprimer de mes Favoris'
+								onPressFunction={() => this.deleteFavorite(this.state.idRecette)}
+								widthTouchable={200}
+								backgroundColorTouchable='#78C9DC'
+								colorText='#FFF'
+							/> :
 							<Touchable
 								text='Ajouter à mes Favoris'
 								onPressFunction={() => this.addFavorite(this.state.idRecette)}
@@ -216,6 +239,9 @@ class DetailScreen extends React.Component {
 								backgroundColorTouchable='#78C9DC'
 								colorText='#FFF'
 							/>
+
+							
+							}
 							
 							 <DatePicker
 								style={{width: 200}}
@@ -283,7 +309,6 @@ class DetailScreen extends React.Component {
 		let recette = {
 			idRecette : this.state.data.recette.idRecette,
 		}
-
 		let json = {
 			user : user,
 			recette: recette,
@@ -306,7 +331,7 @@ class DetailScreen extends React.Component {
 			'Confirmation',
 			`La recette "${this.state.data.recette.libelleRecette}" va être ajoutée pour le ${this.state.currentDate.toLocaleDateString('fr-FR')}`,
 			[
-			  {text: 'Annuler', onPress: () => console.warn('NO Pressed'), style: 'cancel'},
+			  {text: 'Annuler', onPress: () => console.log('NO Pressed'), style: 'cancel'},
 			  {text: 'Confirmer', onPress: () => this.addCalandar()},
 			]
 		  )
@@ -318,6 +343,13 @@ class DetailScreen extends React.Component {
 		this.setState({
 			user: value
 		})
+		axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/ExistFavoris/${value}/${this.state.idRecette}`)
+		.then(res => {
+			this.setState({
+				isFavori: res,
+			})
+		})
+	 
 	}
 }
 

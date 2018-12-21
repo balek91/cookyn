@@ -105,6 +105,7 @@ class ModifyStepsScreen extends React.Component {
 
               if (from > to){
                 row.ordre = to+1
+                
                 let tab = data
                 for (let i = to+1; i < tab.length ; i++){
                      tab[i].ordre = i+1;
