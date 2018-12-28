@@ -1,11 +1,13 @@
-import React from 'react';
+import React from 'react'
 import axios from 'axios'
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Text } from 'react-native'
+import DatePicker from 'react-native-datepicker'
 
+import compare from '../utils/CompareDate'
 
 import Touchable from '../components/Touchable/index'
 import ViewCustom from '../components/ViewContainer'
-import DatePicker from 'react-native-datepicker'
+import ListCourse from '../components/ListCourse'
 
 
 
@@ -21,22 +23,33 @@ export default class ShoppingListScreen extends React.Component {
     firstDate : null,
 		secondDate : null,
 		user: null,
+		changeFirstDate : false,
+		changeSecondDate : false, 
+		listCourse : null
 	} 
 	
 	componentDidMount =() => {
 		this.retrieveUser()
 	}
 
-	 retrieveUser =async () => {
+	retrieveUser =async () => {
 		const value = await AsyncStorage.getItem('idUser')
 		this.setState({
 			user : value
 		})
 	}
 	generateShoppingList = () => {
+		let firstDate = this.state.currentDate
+		if (this.state.changeFirstDate) {
+			firstDate= compare.stringToDate(this.state.currentDate,"dd-mm-yyyy","-")
+		}
+		let secondDate = this.state.currentDateOneWeekLater
+		if (this.state.changeSecondDate) {
+			newDate= compare.stringToDate(this.state.currentDateOneWeekLater,"dd-mm-yyyy","-")
+		}
 		let json = {
-			dateDebut : this.state.currentDate,
-			dateFin: this.state.currentDateOneWeekLater,
+			dateDebut : firstDate,
+			dateFin: secondDate,
 			idUser : this.state.user
 		}
 		
@@ -44,16 +57,19 @@ export default class ShoppingListScreen extends React.Component {
 		.then((response) => {
 			if (response.status == 200){
 				alert('la liste a bien été reçue')
-				console.log(response.data)
+				console.log('responseeeeee',response.data.listeCourse)
+				this.setState({
+					listCourse : response.data.listeCourse
+				})
 			}
 		})
 	}
 
   render() {
-	
+	const {listCourse} = this.state
     return (
       <ViewCustom>
-         <DatePicker
+        <DatePicker
 								style={{width: 200}}
 								locale={'fr'}
 								date={this.state.currentDate}
@@ -74,12 +90,11 @@ export default class ShoppingListScreen extends React.Component {
 								dateInput: {
 									marginLeft: 36
 								}
-								// ... You can check the source to find the other keys.
 								}}
-								onDateChange={(date) => {this.setState({currentDate: date,})}}
+								onDateChange={(date) => {this.setState({currentDate: date, changeFirstDate : true})}}
 							/>
 
-               <DatePicker
+              <DatePicker
 								style={{width: 200}}
 								locale={'fr'}
 								date={this.state.currentDateOneWeekLater}
@@ -100,9 +115,8 @@ export default class ShoppingListScreen extends React.Component {
 								dateInput: {
 									marginLeft: 36
 								}
-								// ... You can check the source to find the other keys
 								}}
-								onDateChange={(date) => {this.setState({currentDateOneWeekLater: date})}}
+								onDateChange={(date) => {this.setState({currentDateOneWeekLater: date, changeSecondDate : true})}}
 							/>
               <Touchable
 								text='Générer la liste de course'
@@ -110,6 +124,12 @@ export default class ShoppingListScreen extends React.Component {
 								widthTouchable={200}
 								backgroundColorTouchable='#78C9DC'
 								colorText='#FFF'/>
+								{ 
+									listCourse ? 
+									<ListCourse categorie={listCourse} />
+									:
+									null
+								}
       </ViewCustom>
     )
   }
