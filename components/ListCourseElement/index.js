@@ -1,12 +1,18 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components/native'
-import {Text, View} from 'react-native'
+import styled from 'styled-components'
+import {View} from 'react-native'
+
+import ListCourseUniteElement from '../ListCourseUniteElement'
 
 const CustomFlatList = styled.FlatList`
-flex: 1;
-width: 100%;
+width : 100%;
 `
+const StyledText = styled.Text`
+margin-left : 5px;
+font-size : 18;
+`
+
 
 
 class ListCourseElement extends React.Component {
@@ -20,18 +26,18 @@ class ListCourseElement extends React.Component {
         const {listCourseDto} = this.props
             return(
                 <View >
-                    {listCourseDto ? (
-                        <View>
-                            <Text>Ingredient</Text>
+                    {listCourseDto ? (                        
                             <CustomFlatList
                             data={listCourseDto}
                             keyExtractor={this.keyExtractor}
+                            ListEmptyComponent={<View><StyledText>Aucun ingrédient dans cette catégorie</StyledText></View>}
                             renderItem={({ item }) => (
-                               <Text>{item.libelleIngredient}</Text>
-                                
-                            )} />
-                        </View>
-                            ) : (<Text>Pas d'ingredient</Text>)} 
+                                <View>
+                                    <StyledText>{`- ${item.libelleIngredient.toUpperCase()}`}</StyledText> 
+                                    <ListCourseUniteElement lstRelationUniteDto={item.lstRelationUniteDto}/>
+                                </View>
+                            )} /> 
+                            ) : (<StyledText>Pas d'ingredient</StyledText>)} 
                 </View>
             )
     }

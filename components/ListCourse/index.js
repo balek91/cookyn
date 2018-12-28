@@ -10,6 +10,20 @@ flex: 1;
 width: 100%;
 `
 
+const StyledView = styled.View `
+background-color : #78C9DC;
+border-radius : 20;
+width : 100%;
+border: 1px solid black;
+padding : 10px;
+margin-bottom : 5px;`
+
+const StyledText = styled.Text`
+text-align : center;
+font-weight: bold;
+font-size: 20;`
+
+
 
 class ListCourse extends React.Component {
 
@@ -27,10 +41,10 @@ class ListCourse extends React.Component {
                             data={categorie}
                             keyExtractor={this.keyExtractor}
                             renderItem={({ item }) => (
-                                <View>
-                                    <Text>{`La catégorie est ${item.categorie}`}</Text>
+                                <StyledView>
+                                    <StyledText>{item.categorie.toUpperCase()}</StyledText>
                                     <ListCourseElement listCourseDto ={item.listCourseDto} />
-                                </View> 
+                                </StyledView> 
                             )} />) : (null)}
                 </View>
             )
