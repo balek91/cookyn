@@ -41,11 +41,13 @@ export default class ShoppingListScreen extends React.Component {
 	generateShoppingList = () => {
 		let firstDate = this.state.currentDate
 		if (this.state.changeFirstDate) {
+			console.log('la1')
 			firstDate= compare.stringToDate(this.state.currentDate,"dd-mm-yyyy","-")
 		}
 		let secondDate = this.state.currentDateOneWeekLater
 		if (this.state.changeSecondDate) {
-			newDate= compare.stringToDate(this.state.currentDateOneWeekLater,"dd-mm-yyyy","-")
+			console.log('la')
+			secondDate= compare.stringToDate(this.state.currentDateOneWeekLater,"dd-mm-yyyy","-")
 		}
 		let json = {
 			dateDebut : firstDate,
