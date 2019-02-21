@@ -53,7 +53,7 @@ class ModifyStepsScreen extends React.Component {
           >
            <Image source={require('../assets/icons/dragg.png')}/>
           </TouchableOpacity>
-          <TextInput style={{height: 40, width:200, borderColor: 'black', borderWidth: 1, margin:20}} value={item.etape} onChangeText={(value) =>{
+          <TextInput style={{height: 40, width:200, borderColor: 'black', borderWidth: 1, margin:20}} multiline={true} value={item.etape} onChangeText={(value) =>{
             let tableau = this.state.allSteps
             tableau[index].etape = value
             this.setState({
@@ -98,7 +98,7 @@ class ModifyStepsScreen extends React.Component {
                 <DraggableFlatList
           data={this.state.allSteps}
           renderItem={this.renderItem}
-          keyExtractor={(item, index) =>`draggable-item-${item.key}`}
+          keyExtractor={(item, index) =>`draggable-item-${index}`}
           scrollPercent={5}
           onMoveEnd={({ data, to, from, row }) => {
               console.log("from : " +from + " to : "+ to + " row : ",row)

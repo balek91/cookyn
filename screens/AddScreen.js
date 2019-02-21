@@ -278,7 +278,6 @@ class AddScreen extends React.Component {
 
     console.log('NEEEEEEW ETAPE ', this.state.EtapesToSend)
     console.log("qfnsdjnfsjngs",tableau)
-
 	}
 
   pickImage = async () => {

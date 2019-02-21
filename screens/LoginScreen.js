@@ -37,10 +37,10 @@ class Login extends React.Component {
     return (
       <StyledView>
         <ContentContainer>
-          <KeyboardAwareScrollView behavior='padding' resetScrollToCoords={{ x: 0, y: 0 }} showsVerticalScrollIndicator={false} >
-            <ViewContainer>
+        <KeyboardAwareScrollView behavior='padding' resetScrollToCoords={{ x: 0, y: 0 }} showsVerticalScrollIndicator={false} >
+            <StyledView>
               <Image source={require('../assets/images/logo.png')} />
-            </ViewContainer>
+            </StyledView>
             <TextCustom text={'\n'} />
             <InputText
               reference={(input) => this.login = input}

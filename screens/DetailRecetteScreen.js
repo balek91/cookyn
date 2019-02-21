@@ -241,7 +241,6 @@ class DetailScreen extends React.Component {
 								colorText='#FFF'
 							/>
 							}
-							
 							 <DatePicker
 								style={{width: 200}}
 								locale={'fr'}
@@ -283,7 +282,7 @@ class DetailScreen extends React.Component {
 				</StyledView>
 			)
 		}
-	}
+	}f
 
 	componentWillMount() {
 		const { navigation } = this.props
