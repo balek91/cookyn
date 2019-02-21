@@ -40,6 +40,7 @@ export default class ListRecetteCreationScreen extends React.Component {
             data={creationList}
             onEndReached={() => this.loadMoreContentAsync()}
             onEndReachedThreshold={0}
+            initialNumToRender={7}
             keyExtractor={this.keyExtractor}
             renderItem={({ item }) => (
               <ListItemElement textPrincipal={item.libelleRecette} textDetail={`Categorie : ${item.catRecette} / temps de prépartation : ${item.tempPrepaRecette}`} onPressFunction={() => { this.navigateToDetail(item) }} />
@@ -50,6 +51,7 @@ export default class ListRecetteCreationScreen extends React.Component {
   keyExtractor = item => item.idRecette.toString()
 
   navigateToDetail = (recette) => {
+    console.log('navigateToRecette')
     this.props.navigation.push('DetailRecette', { recette: recette })
   }
 
