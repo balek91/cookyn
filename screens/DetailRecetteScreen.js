@@ -241,7 +241,6 @@ class DetailScreen extends React.Component {
 								colorText='#FFF'
 							/>
 							}
-							
 							 <DatePicker
 								style={{width: 200}}
 								locale={'fr'}
