@@ -282,7 +282,7 @@ class DetailScreen extends React.Component {
 				</StyledView>
 			)
 		}
-	}f
+	}
 
 	componentWillMount() {
 		const { navigation } = this.props
