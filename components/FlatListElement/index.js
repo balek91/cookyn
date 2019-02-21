@@ -40,7 +40,7 @@ line-height: 24;
 
 
 
-export default class Touchable extends React.Component {
+export default class Touchable extends React.PureComponent {
 
     static propTypes = {
         textPrincipal: PropTypes.string,
