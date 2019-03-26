@@ -55,7 +55,7 @@ export default class ListRecetteFavoriScreen extends React.Component {
 
   loadMoreContentAsync = async () => {
     const { navigation } = this.props
-    axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/GetlistFavorisByUser/${this.state.idUser}/${this.state.offset+this.state.limite}`)
+    axios.get(`http://51.75.22.154:8080/Cookyn/favoris/GetlistFavorisByUser/${this.state.idUser}/${this.state.offset+this.state.limite}`)
         .then(res => {
             this.setState({
               favoriList: [...this.state.favoriList , ...res.data.listFavoris],
@@ -71,7 +71,7 @@ export default class ListRecetteFavoriScreen extends React.Component {
     this.setState({
       idUser : navigation.getParam('idUser')
     })
-    axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/GetlistFavorisByUser/${navigation.getParam('idUser')}/${this.state.offset}`)
+    axios.get(`http://51.75.22.154:8080/Cookyn/favoris/GetlistFavorisByUser/${navigation.getParam('idUser')}/${this.state.offset}`)
     .then(res => {
         this.setState({
             favoriList: res.data.listFavoris,

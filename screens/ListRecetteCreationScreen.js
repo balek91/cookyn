@@ -56,7 +56,7 @@ export default class ListRecetteCreationScreen extends React.Component {
   }
 
   loadMoreContentAsync = async () => {
-    axios.get(`http://51.75.22.154:8080/Cookyn2/recette/GetListRecetteCreatedByUser/${this.state.idUser}/${this.state.offset+this.state.limite}`)
+    axios.get(`http://51.75.22.154:8080/Cookyn/recette/GetListRecetteCreatedByUser/${this.state.idUser}/${this.state.offset+this.state.limite}`)
         .then(res => {
             this.setState({
               creationList: [...this.state.creationList , ...res.data.listRecette],
@@ -72,7 +72,7 @@ export default class ListRecetteCreationScreen extends React.Component {
     this.setState({
       idUser : navigation.getParam('idUser')
     })
-    axios.get(`http://51.75.22.154:8080/Cookyn2/recette/GetListRecetteCreatedByUser/${navigation.getParam('idUser')}/${this.state.offset}`)
+    axios.get(`http://51.75.22.154:8080/Cookyn/recette/GetListRecetteCreatedByUser/${navigation.getParam('idUser')}/${this.state.offset}`)
     .then(res => {
         this.setState({
           creationList: res.data.listRecette,

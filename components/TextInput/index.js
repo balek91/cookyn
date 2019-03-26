@@ -5,8 +5,7 @@ import styled from 'styled-components'
 const StyledTextInput = styled.TextInput`
   width: ${props => props.width ? props.width : 300};
   height: 40;
-  background-color: #fff;
-  border-radius: ${props => props.width ? props.width/2 : 300/2};
+  background-color: #D0D0D0;
   padding-horizontal: 16;
   font-size: 16;
   color: #000;
@@ -31,7 +30,7 @@ export default class InputText extends React.Component {
     autoCorrection : PropTypes.bool,
     placeholderTextColor : PropTypes.string,
     value : PropTypes.string,
-    bordercolor : PropTypes.string
+    bordercolor : PropTypes.string,
   }
 
   render() {
@@ -49,7 +48,7 @@ export default class InputText extends React.Component {
       bordercolor,
       autoCapitalize,
       autoCorrection,
-      editable = true
+      editable = true, 
     } = this.props;
 
     return (

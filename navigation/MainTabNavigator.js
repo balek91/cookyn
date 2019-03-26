@@ -29,12 +29,15 @@ const HomeStack = createStackNavigator({
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
-  tabBarIcon: (
+  tabBarIcon: ({focused}) => (
+    focused ?
     <Image style={{ height: 26, width: 26 }}
-      source={require('../assets/icons/home.png')}
-    />),
-
-};
+      source={require('../assets/icons/homeFocus.jpg')}
+    /> :
+    <Image style={{ height: 26, width: 26 }}
+      source={require('../assets/icons/home.jpg')}
+    />
+  )};
 
 const AddStack = createStackNavigator({
   Add: AddScreen,
@@ -43,11 +46,14 @@ const AddStack = createStackNavigator({
 
 AddStack.navigationOptions = {
   tabBarLabel: 'Add',
-  tabBarIcon: (
+  tabBarIcon : ({focused}) =>(
+    focused ?
     <Image style={{ height: 26, width: 26 }}
-      source={require('../assets/icons/addblue.png')}
-    />),
-};
+      source={require('../assets/icons/addFocus.png')}
+    /> :  <Image style={{ height: 26, width: 26 }}
+    source={require('../assets/icons/add.png')}
+  />
+    )};
 
 const ProfilStack = createStackNavigator({
   Profil: ProfilScreen,
@@ -61,10 +67,13 @@ const ProfilStack = createStackNavigator({
 
 ProfilStack.navigationOptions = {
   tabBarLabel: 'Profil',
-  tabBarIcon: (
+  tabBarIcon: ({focused}) =>(
+    focused ?
     <Image style={{ height: 26, width: 26 }}
-      source={require('../assets/icons/profil.png')}
-    />),
+      source={require('../assets/icons/profilFocus.jpg')}
+    /> :  <Image style={{ height: 26, width: 26 }}
+    source={require('../assets/icons/profil.jpg')}
+  />  )
 };
 
 const CalendarStack = createStackNavigator({
@@ -73,10 +82,13 @@ const CalendarStack = createStackNavigator({
 
 CalendarStack.navigationOptions = {
   tabBarLabel: 'Calendar',
-  tabBarIcon: (
+  tabBarIcon: ({focused}) =>(
+    focused ?
     <Image style={{ height: 26, width: 26 }}
-      source={require('../assets/icons/calendrier.png')}
-    />),
+      source={require('../assets/icons/calandarFocus.jpg')}
+    /> : <Image style={{ height: 26, width: 26 }}
+    source={require('../assets/icons/calandar.jpg')}
+  /> )
 };
 
 
@@ -86,10 +98,13 @@ const ShoppingListStack = createStackNavigator({
 
 ShoppingListStack.navigationOptions = {
   tabBarLabel: 'Shopping',
-  tabBarIcon: (
+  tabBarIcon: ({focused}) =>(
+    focused ?
     <Image style={{ height: 26, width: 26 }}
-      source={require('../assets/icons/liste_de_courses.png')}
-    />),
+      source={require('../assets/icons/shopFocus.jpg')}
+    /> :  <Image style={{ height: 26, width: 26 }}
+    source={require('../assets/icons/shop.jpg')}
+  />)
 };
 
 export default createBottomTabNavigator({

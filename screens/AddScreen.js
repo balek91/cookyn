@@ -68,6 +68,7 @@ class AddScreen extends React.Component {
       hasCameraRollPermission: null,
       image: null,
       image64: null,
+      hide : false,
       IngredientsPicker: [],
       IngredientsToSend: [],
       IngredientsView: [],
@@ -289,7 +290,7 @@ class AddScreen extends React.Component {
       aspect: [4, 3],
     })
     if (!result.cancelled) {
-      this.setState({ 
+      this.setState({  
         image: result.uri,
         image64 : result.base64 
       })
@@ -310,6 +311,7 @@ class AddScreen extends React.Component {
   }
 
   selectDifficulty = () => {
+    this.setState({hide : true})
     Keyboard.dismiss()
     QuickPicker.open({
       items: ['Facile', 'Moyen', 'Difficile'],
@@ -360,7 +362,7 @@ class AddScreen extends React.Component {
       imageRecette : this.state.image64
     }
 
-    Axios.post('http://51.75.22.154:8080/Cookyn2/recette/AddRecette', json).then((response) => {
+    Axios.post('http://51.75.22.154:8080/Cookyn/recette/AddRecette', json).then((response) => {
       if (response.status =='200'){
         alert('La recette a bien été ajoutée !')
         this.setState({
@@ -523,6 +525,7 @@ class AddScreen extends React.Component {
 
   render() {
     let { image } = this.state
+    const {hide} = this.state
     return (
       <StyledView>
         <ContentContainer>
@@ -579,11 +582,17 @@ class AddScreen extends React.Component {
                 backgroundColorTouchable='#78C9DC'
                 colorText='#FFF'
               />
-              <InputText
-                placeholderText='<-- Cliquez'
-                width={120}
-                value={this.state.selectedDiff}
-                editable={false} />
+
+              {
+                hide ?( <InputText
+                  placeholderText=''
+                  width={120}
+                  value={this.state.selectedDiff}
+                  editable={false} 
+  
+                />) :(null)
+              }
+             
             </ViewAlignItemRow>
 
             <ViewAlignItemRow>
