@@ -18,6 +18,8 @@ import ViewAlignItemRow from '../components/ViewsAlignItemRow/index'
 import ViewCenter from '../components/ViewCenter/index'
 import ViewContainer from '../components/ViewContainer/index'
 import ButtonModify from '../components/ButtonModify'
+import {ImageBackground} from 'react-native'
+
 
 
 import allTheActions from '../actions'
@@ -25,7 +27,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 const StyledView = styled(ViewContainer)`
-padding : 20px 0px 0px 0px;`
+padding : 20px 0px 0px 0px;
+backgroundColor: rgba(52, 52, 52, 0.1)`
 
 const StyledViewArray = styled.View`
 flex:1;
@@ -68,6 +71,7 @@ class AddScreen extends React.Component {
       hasCameraRollPermission: null,
       image: null,
       image64: null,
+      hide : false,
       IngredientsPicker: [],
       IngredientsToSend: [],
       IngredientsView: [],
@@ -289,7 +293,7 @@ class AddScreen extends React.Component {
       aspect: [4, 3],
     })
     if (!result.cancelled) {
-      this.setState({ 
+      this.setState({  
         image: result.uri,
         image64 : result.base64 
       })
@@ -310,6 +314,7 @@ class AddScreen extends React.Component {
   }
 
   selectDifficulty = () => {
+    this.setState({hide : true})
     Keyboard.dismiss()
     QuickPicker.open({
       items: ['Facile', 'Moyen', 'Difficile'],
@@ -360,7 +365,7 @@ class AddScreen extends React.Component {
       imageRecette : this.state.image64
     }
 
-    Axios.post('http://51.75.22.154:8080/Cookyn2/recette/AddRecette', json).then((response) => {
+    Axios.post('http://51.75.22.154:8080/Cookyn/recette/AddRecette', json).then((response) => {
       if (response.status =='200'){
         alert('La recette a bien été ajoutée !')
         this.setState({
@@ -523,10 +528,12 @@ class AddScreen extends React.Component {
 
   render() {
     let { image } = this.state
+    const {hide} = this.state
     return (
       <StyledView>
-        <ContentContainer>
-          <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}  >
+      <ImageBackground source={require('../assets/images/addBack.jpg')} style={{width: '100%', height: '100%'}}>
+      <ContentContainer>
+      <KeyboardAwareScrollView behavior='padding' resetScrollToCoords={{ x: 0, y: 0 }} keyboardShouldPersistTaps="handled"showsVerticalScrollIndicator={false} >
 
             <OptionPicker
               option={['Choisir une photo de la bibliothèque', 'Prendre une photo', 'Annuler']}
@@ -579,11 +586,17 @@ class AddScreen extends React.Component {
                 backgroundColorTouchable='#78C9DC'
                 colorText='#FFF'
               />
-              <InputText
-                placeholderText='<-- Cliquez'
-                width={120}
-                value={this.state.selectedDiff}
-                editable={false} />
+
+              {
+                hide ?( <InputText
+                  placeholderText=''
+                  width={120}
+                  value={this.state.selectedDiff}
+                  editable={false} 
+  
+                />) :(null)
+              }
+             
             </ViewAlignItemRow>
 
             <ViewAlignItemRow>
@@ -682,7 +695,7 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
                   />
                 ))
               }
-            </View>\
+            </View>
           
             <ViewCenter>
               <Touchable
@@ -695,6 +708,7 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
             </ViewCenter>
           </KeyboardAwareScrollView>
         </ContentContainer>
+        </ImageBackground>
       </StyledView>
 
     )

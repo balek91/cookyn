@@ -126,8 +126,8 @@ class DetailScreen extends React.Component {
 	}
 
 	addFavorite =(idRecette) => {
-		console.log(`http://51.75.22.154:8080/Cookyn2/favoris/AddFavoris/${idRecette}/${this.state.user}`)
-		axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/AddFavoris/${idRecette}/${this.state.user}`)
+		console.log(`http://51.75.22.154:8080/Cookyn/favoris/AddFavoris/${idRecette}/${this.state.user}`)
+		axios.get(`http://51.75.22.154:8080/Cookyn/favoris/AddFavoris/${idRecette}/${this.state.user}`)
 		.then((response) => {
 			if (response.status == 200){
 				alert('La recette à été ajouté')
@@ -139,7 +139,7 @@ class DetailScreen extends React.Component {
 	}
 
 	deleteFavorite =(idRecette) => {
-		axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/RemoveFavoris/${this.state.user}/${idRecette}`)
+		axios.get(`http://51.75.22.154:8080/Cookyn/favoris/RemoveFavoris/${this.state.user}/${idRecette}`)
 		.then((response) => {
 			if (response.status == 200){
 				alert('La recette à été supprimé des favoris')
@@ -290,7 +290,7 @@ class DetailScreen extends React.Component {
 			idRecette: navigation.getParam('recette').idRecette
 		})
 		this.retrieveData()
-		axios.get(`http://51.75.22.154:8080/Cookyn2/recette/GetRecetteById/${this.state.idRecette}`)
+		axios.get(`http://51.75.22.154:8080/Cookyn/recette/GetRecetteById/${this.state.idRecette}`)
 			.then(res => {
 				console.log(res.data)
 				this.setState({
@@ -317,8 +317,8 @@ class DetailScreen extends React.Component {
 			recette: recette,
 			datePlanning:newDate
 		}
-
-		axios.post('http://51.75.22.154:8080/Cookyn2/planning/AddPlanning',json).then((response) => {
+		console.log("DAAAAAATTTTEEE ",json )
+		axios.post('http://51.75.22.154:8080/Cookyn/planning/AddPlanning',json).then((response) => {
       	if (response.status =='200'){
 			alert('La recette a bien été ajoutée à votre calendrier!')
 			this.setState({
@@ -352,7 +352,7 @@ class DetailScreen extends React.Component {
 		this.setState({
 			user: value
 		})
-		axios.get(`http://51.75.22.154:8080/Cookyn2/favoris/ExistFavoris/${value}/${this.state.idRecette}`)
+		axios.get(`http://51.75.22.154:8080/Cookyn/favoris/ExistFavoris/${value}/${this.state.idRecette}`)
 		.then(res => {
 			this.setState({
 				isFavori: res,

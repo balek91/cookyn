@@ -6,7 +6,6 @@ const StyledTouchable = styled.TouchableOpacity
 `
 width:${props => props.widthTouchable ? props.widthTouchable : 300};
 background-color:${props => props.backgroundColorTouchable ? props.backgroundColorTouchable :'#78C9DC'};
-border-radius: ${props => props.widthTouchable ? props.widthTouchable : 150};
 margin-vertical: 10;
 padding-vertical: 13;
 `

@@ -9,12 +9,13 @@ height:${props => props.height ? props.height : 100};
 border-radius: ${props => props.radius ? props.radius : 0}
 border-width:${props => props.radius ? 0.5 : 0}
 color:#707070;
-background-color:#fff;
+backgroundColor: rgba(255, 255, 255, 0.8)
 padding-horizontal:10;
 marginVertical: 10;
 fontWeight:bold;
 padding:2%;
 textAlign:center;
+overflow:hidden;
 alignSelf:flex-start;
 
 `

@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, KeyboardAvoidingView, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, ImageBackground, Image } from 'react-native';
 import Touchable from '../components/Touchable'
+import styled from 'styled-components'
+import ViewContainer from '../components/ViewContainer'
+import TextCustom from '../components/TextCustom'
+import ContentContainer from '../components/ContentContainer/index'
 
+const StyledView = styled(ViewContainer)`
+backgroundColor: rgba(52, 52, 52, 0.1)`
 
 export default class SignUpOk extends Component {
 
@@ -11,22 +17,23 @@ export default class SignUpOk extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
+      <StyledView>
+        <ImageBackground source={require('../assets/images/home.jpg')} style={{width: '100%', height: '100%'}}>
+        <ContentContainer>
         <ScrollView showsVerticalScrollIndicator={false} >
             <Image source={require('../assets/images/logo.png')} />
-            <View style={styles.viewSignUp}>
-              <Text>Inscription Complète !</Text>
-            </View>
+            <TextCustom color={'white'} text={'Inscription Complète !'} fontsize={17}  />
             <Touchable
-                text={'Retour à l\'acceuil'}
+                text={'RETOUR À L\'ACCEUIL'}
                 onPressFunction={this.goToLogin}
                 widthTouchable={200}
                 backgroundColorTouchable='#E88110'
                 colorText='#FFF'
               />
         </ScrollView>
-      </View>
-    )
+        </ContentContainer>
+        </ImageBackground>
+        </StyledView>    )
   }
 }
 
@@ -35,7 +42,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(52, 52, 52, 0.1)',
   },
 
   inputBox: {

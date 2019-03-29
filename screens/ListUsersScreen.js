@@ -41,7 +41,7 @@ class ListUsersScreen extends React.Component {
         })
         const { setParams } = this.props.navigation
         setParams({ title: navigation.getParam('namePage') })
-        Axios.get(`http://51.75.22.154:8080/Cookyn2/relation/GetListAbonnement/${navigation.getParam('userPage')}/${this.state.offset}`)
+        Axios.get(`http://51.75.22.154:8080/Cookyn/relation/GetListAbonnement/${navigation.getParam('userPage')}/${this.state.offset}`)
             .then(res => {
                 this.setState({
                     abonnementList: res.data.listRelation,
@@ -49,7 +49,7 @@ class ListUsersScreen extends React.Component {
                     offset : res.data.offset
                 })
             })
-        Axios.get(`http://51.75.22.154:8080/Cookyn2/relation/GetListAbonne/${navigation.getParam('userPage')}/${this.state.offset}`)
+        Axios.get(`http://51.75.22.154:8080/Cookyn/relation/GetListAbonne/${navigation.getParam('userPage')}/${this.state.offset}`)
             .then(res => {
                 this.setState({
                     abonneList: res.data.listRelation,
@@ -68,7 +68,7 @@ class ListUsersScreen extends React.Component {
 
     loadMoreContentAsyncAbonnement = async () => {
         const { navigation } = this.props
-        Axios.get(`http://51.75.22.154:8080/Cookyn2/relation/GetListAbonnement/${navigation.getParam('userPage')}/${this.state.offset+this.state.limite}`)
+        Axios.get(`http://51.75.22.154:8080/Cookyn/relation/GetListAbonnement/${navigation.getParam('userPage')}/${this.state.offset+this.state.limite}`)
             .then(res => {
                 this.setState({
                     abonnementList: [...this.state.abonnementList , ...res.data.listRelation],
@@ -80,8 +80,8 @@ class ListUsersScreen extends React.Component {
     loadMoreContentAsyncAbonne = async () => {
         const { navigation } = this.props
         console.log('NOOOOOOOOOOOOOOOOOOO')
-        console.log(`http://51.75.22.154:8080/Cookyn2/relation/GetListAbonne/${navigation.getParam('userPage')}/${this.state.offset+this.state.limite}`)
-            Axios.get(`http://51.75.22.154:8080/Cookyn2/relation/GetListAbonne/${navigation.getParam('userPage')}/${this.state.offset+this.state.limite}`)
+        console.log(`http://51.75.22.154:8080/Cookyn/relation/GetListAbonne/${navigation.getParam('userPage')}/${this.state.offset+this.state.limite}`)
+            Axios.get(`http://51.75.22.154:8080/Cookyn/relation/GetListAbonne/${navigation.getParam('userPage')}/${this.state.offset+this.state.limite}`)
             .then(res => {
                 this.setState({
                     abonneList: [...this.state.abonneList , ...res.data.listRelation],

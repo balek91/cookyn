@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import React from 'react'
-import { AsyncStorage, Image } from 'react-native'
+import { AsyncStorage, Image, ImageBackground } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { onSignIn } from '../components/Auth.js'
 import ContentContainer from '../components/ContentContainer/index'
@@ -16,9 +16,10 @@ import allTheActions from '../actions'
 
 import styled from 'styled-components'
 
-
+import img from '../assets/images/home.jpg'
 const StyledView = styled(ViewContainer)`
-padding : 50px 0px 0px 0px;`
+padding : 50px 0px 0px 0px;
+backgroundColor: rgba(52, 52, 52, 0.1)`
 
 class Login extends React.Component {
   state = {
@@ -36,6 +37,7 @@ class Login extends React.Component {
   render() {
     return (
       <StyledView>
+        <ImageBackground source={require('../assets/images/home.jpg')} style={{width: '100%', height: '100%'}}>
         <ContentContainer>
         <KeyboardAwareScrollView behavior='padding' resetScrollToCoords={{ x: 0, y: 0 }} showsVerticalScrollIndicator={false} >
             <StyledView>
@@ -72,13 +74,14 @@ class Login extends React.Component {
               colorText='#FFF'
             />
             <TextCustom text={'\n'} />
-            <ViewContainer >
-              <TextCustom text={'Vous n\'avez pas de compte ?'} />
-              <TextCustom text={'Inscrivez vous'} onPress={() => this.SignUp()} fontsize={17} fontweight={500} />
+            <ViewContainer style={{backgroundColor:'rgba(52, 52, 52, 0.1)' }} >
+              <TextCustom color={'white'} text={'Vous n\'avez pas de compte ?'} fontsize={17}  />
+              <TextCustom color={'white'} text={'Inscrivez vous'} onPress={() => this.SignUp()} fontsize={17} fontweight={800} />
               <TextCustom text={'\n'} />
             </ViewContainer>
           </KeyboardAwareScrollView>
         </ContentContainer>
+        </ImageBackground>
       </StyledView>
     )
   }
@@ -95,7 +98,7 @@ class Login extends React.Component {
     this.props.navigation.navigate('SignedIn')
   }
   Login = () => {
-    body = {
+    let body = {
       usernameUser: this.state.username,
       passwordUser: this.state.password
     }

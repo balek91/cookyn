@@ -1,4 +1,4 @@
-import { Image } from 'react-native'
+import { Image, ImageBackground} from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Axios from 'axios'
 import ContentContainer from '../components/ContentContainer'
@@ -11,7 +11,8 @@ import ViewContainer from '../components/ViewContainer'
 
 
 const StyledView = styled(ViewContainer)`
-padding : 20px 0px 0px 0px;`
+padding : 20px 0px 0px 0px;
+backgroundColor: rgba(52, 52, 52, 0.1)`
 
 
 
@@ -39,6 +40,7 @@ export default class SignUp extends React.Component {
  render(){
   return(
     <ViewContainer>
+  <ImageBackground source={require('../assets/images/home.jpg')} style={{width: '100%', height: '100%'}}>
       <ContentContainer>
         <KeyboardAwareScrollView resetScrollToCoords={{x:0,y:0}} showsVerticalScrollIndicator={false} >
           <StyledView>
@@ -50,6 +52,7 @@ export default class SignUp extends React.Component {
           placeholderText='Username'
           onSubmitEditingFunction={()=> this.nom.focus()}
           reference={(input)=> this.user = input}
+          radius={0}
           />
           <InputText
           onChangeTextFunction={(nom) => this.setState({nom})}
@@ -102,6 +105,7 @@ export default class SignUp extends React.Component {
           />
         </KeyboardAwareScrollView>
       </ContentContainer>
+      </ImageBackground>
     </ViewContainer>
     )
 }
@@ -182,18 +186,18 @@ verifPassword = (confirmPassword1) =>{
                 }else{
                   alert(response.data.errortxt)
                 }
-            }
+              }
             ) 
-            }else{
+            } else {
               alert('La confirmation du mot de passe n\'est pas bonne')
             }
-          }else{
+          } else {
             alert('Le mot de passe ne respecte pas les règles de sécurité')
           }
-        }else{
+        } else {
           alert('l\'adresse mail n\'est pas valide')
         }
-    }else{
+    } else {
       alert('Tous les champs doivent être remplis')
     }
   }

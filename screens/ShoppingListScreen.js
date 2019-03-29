@@ -55,7 +55,7 @@ export default class ShoppingListScreen extends React.Component {
 			idUser : this.state.user
 		}
 		
-		axios.post('http://51.75.22.154:8080/Cookyn2/course/GenerationCourse', json)
+		axios.post('http://51.75.22.154:8080/Cookyn/course/GenerationCourse', json)
 		.then((response) => {
 			if (response.status == 200){
 				alert('la liste a bien été reçue')

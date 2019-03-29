@@ -8,8 +8,7 @@ const StyledView = styled.View
 flex: 1;
 justifyContent: center;
 alignItems: center;
-backgroundColor: #FFFFFF;
-`
+backgroundColor: rgba(52, 52, 52, 0.1)`
 
 const StyledTextArray = styled.Text
 	`
@@ -47,7 +46,7 @@ class New extends React.Component {
             return(
                 <StyledView >
                     <StyledViewArray>
-                        <StyledTextArray>{`${who} a ajouté la recette ${what}`}</StyledTextArray>
+                        <StyledTextArray>{`${who} a ajouté la recette "${what}"`}</StyledTextArray>
                         <StyledTextArray>{compare.getDifference(date)}</StyledTextArray>
                     </StyledViewArray>
                 </StyledView>
@@ -56,7 +55,7 @@ class New extends React.Component {
             return(
                 <StyledView>
                     <StyledViewArray>
-                        <StyledTextArray>{`${who} a ajouté ${what} à ses favoris`}</StyledTextArray>
+                        <StyledTextArray>{`${who} a ajouté "${what}" à ses favoris`}</StyledTextArray>
                         <StyledTextArray>{compare.getDifference(date)} </StyledTextArray>
                     </StyledViewArray>
                 </StyledView>
