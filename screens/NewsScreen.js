@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import News from '../components/News'
-import { View } from 'react-native';
-import ViewCustom from '../components/ViewContainer'
-import ScrollView from '../components/ScrollViewContainer'
 import {ImageBackground} from 'react-native'
 import ContentContainer from '../components/ContentContainer/index'
 import styled from 'styled-components'

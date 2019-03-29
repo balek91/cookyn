@@ -317,7 +317,7 @@ class DetailScreen extends React.Component {
 			recette: recette,
 			datePlanning:newDate
 		}
-
+		console.log("DAAAAAATTTTEEE ",json )
 		axios.post('http://51.75.22.154:8080/Cookyn/planning/AddPlanning',json).then((response) => {
       	if (response.status =='200'){
 			alert('La recette a bien été ajoutée à votre calendrier!')

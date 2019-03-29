@@ -186,18 +186,18 @@ verifPassword = (confirmPassword1) =>{
                 }else{
                   alert(response.data.errortxt)
                 }
-            }
+              }
             ) 
-            }else{
+            } else {
               alert('La confirmation du mot de passe n\'est pas bonne')
             }
-          }else{
+          } else {
             alert('Le mot de passe ne respecte pas les règles de sécurité')
           }
-        }else{
+        } else {
           alert('l\'adresse mail n\'est pas valide')
         }
-    }else{
+    } else {
       alert('Tous les champs doivent être remplis')
     }
   }

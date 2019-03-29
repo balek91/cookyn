@@ -5,8 +5,9 @@ import {
   View,
   Text, TouchableOpacity, Image
 } from 'react-native';
-import Touchable from '../components/Touchable/index'
-import ViewCustom from '../components/ViewContainer'
+
+import compare from '../utils/CompareDate'
+
 import Calendar from 'react-native-calendar'
 import styled from 'styled-components'
 import ViewContainer from '../components/ViewContainer/index'
@@ -47,7 +48,7 @@ export default class CalendarScreen extends React.Component {
        prevButtonText={'Préc'}
        nextButtonText={'Suiv'}
        dayHeadings={['D','L','M','M','J','V','S']}
-       onDateSelect={(date) => this.setState({dateSelected : date})}
+       onDateSelect={(date) => this.setState({dateSelected : compare.stringToDate(date,"dd-mm-yyyy","-")})}
        monthNames={['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre']}
        />
        </View>

@@ -28,7 +28,7 @@ const HomeStack = createStackNavigator({
 
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: 'Accueil',
   tabBarIcon: ({focused}) => (
     focused ?
     <Image style={{ height: 26, width: 26 }}
@@ -45,7 +45,7 @@ const AddStack = createStackNavigator({
 });
 
 AddStack.navigationOptions = {
-  tabBarLabel: 'Add',
+  tabBarLabel: 'Ajouter',
   tabBarIcon : ({focused}) =>(
     focused ?
     <Image style={{ height: 26, width: 26 }}
@@ -78,10 +78,18 @@ ProfilStack.navigationOptions = {
 
 const CalendarStack = createStackNavigator({
   Calendar: CalendarScreen,
+  DetailRecette : DetailRecetteScreen,
+  Profil: ProfilScreen,
+  ProfilUser: ProfilScreen,
+  ModifyUser: ModifyUserScreen,
+  ListRecetteFavori: ListRecetteFavoriScreen,
+  ListUsers: ListUsersScreen,
+  DetailRecette : DetailRecetteScreen,
+  ListRecetteCreation : ListRecetteCreationScreen
 });
 
 CalendarStack.navigationOptions = {
-  tabBarLabel: 'Calendar',
+  tabBarLabel: 'Calendrier',
   tabBarIcon: ({focused}) =>(
     focused ?
     <Image style={{ height: 26, width: 26 }}
@@ -97,7 +105,7 @@ const ShoppingListStack = createStackNavigator({
 });
 
 ShoppingListStack.navigationOptions = {
-  tabBarLabel: 'Shopping',
+  tabBarLabel: 'Courses',
   tabBarIcon: ({focused}) =>(
     focused ?
     <Image style={{ height: 26, width: 26 }}
@@ -108,8 +116,9 @@ ShoppingListStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  AddStack,
+  
   HomeStack,
+  AddStack,
   ProfilStack,
   CalendarStack,
   ShoppingListStack

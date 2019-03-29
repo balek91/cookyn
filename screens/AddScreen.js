@@ -18,6 +18,8 @@ import ViewAlignItemRow from '../components/ViewsAlignItemRow/index'
 import ViewCenter from '../components/ViewCenter/index'
 import ViewContainer from '../components/ViewContainer/index'
 import ButtonModify from '../components/ButtonModify'
+import {ImageBackground} from 'react-native'
+
 
 
 import allTheActions from '../actions'
@@ -25,7 +27,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 const StyledView = styled(ViewContainer)`
-padding : 20px 0px 0px 0px;`
+padding : 20px 0px 0px 0px;
+backgroundColor: rgba(52, 52, 52, 0.1)`
 
 const StyledViewArray = styled.View`
 flex:1;
@@ -528,8 +531,9 @@ class AddScreen extends React.Component {
     const {hide} = this.state
     return (
       <StyledView>
-        <ContentContainer>
-          <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}  >
+      <ImageBackground source={require('../assets/images/addBack.jpg')} style={{width: '100%', height: '100%'}}>
+      <ContentContainer>
+      <KeyboardAwareScrollView behavior='padding' resetScrollToCoords={{ x: 0, y: 0 }} keyboardShouldPersistTaps="handled"showsVerticalScrollIndicator={false} >
 
             <OptionPicker
               option={['Choisir une photo de la bibliothèque', 'Prendre une photo', 'Annuler']}
@@ -691,7 +695,7 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
                   />
                 ))
               }
-            </View>\
+            </View>
           
             <ViewCenter>
               <Touchable
@@ -704,6 +708,7 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
             </ViewCenter>
           </KeyboardAwareScrollView>
         </ContentContainer>
+        </ImageBackground>
       </StyledView>
 
     )

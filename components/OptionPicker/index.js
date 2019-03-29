@@ -3,6 +3,7 @@ import React from 'react'
 import { Image, View } from 'react-native'
 import OptionsMenu from 'react-native-options-menu'
 import styled from 'styled-components'
+import { colors } from 'react-native-elements';
 
 
 const StyledImage = styled.Image
