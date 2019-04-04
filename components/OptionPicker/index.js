@@ -25,7 +25,7 @@ export default class OptionPicker extends React.Component {
 
     render() {
         const { action, option, image } = this.props;
-        const PhotoIcon = require('../../assets/icons/addPhoto.png')
+        const PhotoIcon = require('../../assets/icons/addphoto.png')
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <OptionsMenu

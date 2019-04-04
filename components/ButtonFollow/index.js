@@ -1,8 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Touchable from '../Touchable'
-import ViewCustom from '../ViewContainer'
+import {View} from 'react-native'
+import styled from 'styled-components'
 
+const Touchable = styled.TouchableOpacity`
+width : 150;
+backgroundColor : #E88110;
+margin-vertical: 10;
+padding-vertical: 13;
+margin-top : 10px;`
+
+const StyledText = styled.Text
+`
+font-size:16;
+font-weight:500;
+color:white;
+text-align:center;
+`
 export default class ButtonFollow extends React.Component {
 
     static propTypes = {
@@ -14,12 +28,13 @@ export default class ButtonFollow extends React.Component {
     render(){
         const {text, onPressFunction} = this.props;
         return(
-        <ViewCustom>
-            <Touchable
-                text={text}
-                onPressFunction={onPressFunction}
-            />
-        </ViewCustom>
+        <View>
+            <Touchable  onPress={onPressFunction} >
+                <StyledText>
+                    {text}
+                </StyledText>
+            </Touchable>
+        </View>
         );
     }
 }
