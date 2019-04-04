@@ -1,3 +1,5 @@
+import { TabBarIOS } from "react-native";
+
 getDifference = (date) => {
     console.log("dkaqbfkqfek " + date)
     let firstMs = new Date().getTime()
@@ -50,4 +52,19 @@ function stringToDate(_date,_format,_delimiter)
             return finalDate;
 }
 
-export default {getDifference, stringToDate}
+function  stringToDateCalandar(_date, _delimiter, _delimiter2) {
+    var tab = _date.split(_delimiter)
+    var year = tab[0]
+    var month = tab[1]
+    var tabDay = tab[2].split(_delimiter2)
+    var day = tabDay[0]
+    console.log(year)
+    console.log(month)
+    console.log(day)
+
+   var date = new Date(year, month, day)
+   
+   return date.getTime();
+}
+
+export default {getDifference, stringToDate, stringToDateCalandar}
