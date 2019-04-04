@@ -1,7 +1,7 @@
 import { ImagePicker, Permissions, Camera } from 'expo'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ListItem } from 'react-native-elements'
-import { View, Keyboard, TouchableOpacity, Text } from 'react-native'
+import { View, Keyboard, TouchableOpacity, Text, AsyncStorage } from 'react-native'
 import Axios from 'axios'
 import ContentContainer from '../components/ContentContainer/index'
 import InputText from '../components/TextInput/index'
@@ -27,7 +27,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 const StyledView = styled(ViewContainer)`
-padding : 20px 0px 0px 0px;
+
 backgroundColor: rgba(52, 52, 52, 0.1)`
 
 const StyledViewArray = styled.View`
@@ -40,6 +40,11 @@ border-radius:10;
 border-width:0.5;
 max-width:320
 `
+
+const StyledContentView = styled(ContentContainer)`
+padding-top: 200px;
+`
+
 
 const StyledTextArray = styled.Text
 `
@@ -326,7 +331,7 @@ class AddScreen extends React.Component {
     })
   }
 
-  sendRecepie = () => {
+  sendRecepie = async() => {
     let recette = {
       catRecette: this.state.catRecette,
       libelleRecette: this.state.libelleRecette,
@@ -334,7 +339,7 @@ class AddScreen extends React.Component {
       diffRecette: this.state.selectedDiff,
       prix: this.state.prixRecette,
       user: {
-        idUser: 1
+        idUser: await AsyncStorage.getItem('idUser')
       }
     }
     let ingredients = []
@@ -532,7 +537,7 @@ class AddScreen extends React.Component {
     return (
       <StyledView>
       <ImageBackground source={require('../assets/images/addBack.jpg')} style={{width: '100%', height: '100%'}}>
-      <ContentContainer>
+      <StyledContentView>
       <KeyboardAwareScrollView behavior='padding' resetScrollToCoords={{ x: 0, y: 0 }} keyboardShouldPersistTaps="handled"showsVerticalScrollIndicator={false} >
 
             <OptionPicker
@@ -707,7 +712,7 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
               />
             </ViewCenter>
           </KeyboardAwareScrollView>
-        </ContentContainer>
+        </StyledContentView>
         </ImageBackground>
       </StyledView>
 

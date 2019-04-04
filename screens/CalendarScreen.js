@@ -3,8 +3,10 @@ import {
   Platform,
   StyleSheet,
   View,
-  Text, TouchableOpacity, Image
+  Text, TouchableOpacity, Image, AsyncStorage, ScrollView
 } from 'react-native';
+import Axios from 'axios'
+
 
 import compare from '../utils/CompareDate'
 
@@ -25,18 +27,43 @@ export default class CalendarScreen extends React.Component {
     header: null,
   };
   state ={
-    dateSelected :new Date()
+    dateSelected :new Date(),
+    listRecette :[],
+    today:null
+  }
+
+  displayDate = (date) => {
+    var newDate= compare.stringToDateCalandar(date,"-","T")   
+    console.log(newDate)
+  }
+
+  getListRecette = async (date) => {
+     const idUser = await AsyncStorage.getItem('idUser');
+     var trueDate = date.split("T")[0]
+     let json = {
+       idUser : idUser,
+       date : trueDate
+     }
+     console.log(json)
+     Axios.post('http://51.75.22.154:8080/Cookyn/planning/GetListPlanningByUserAndDate', json).then((response) =>{
+       if (response.status == 200){
+         console.log(response.data)
+         this.setState({
+           listRecette : response.data.listPlanningUser
+         })
+         console.log(this.state.listRecette)
+       }
+     })
+     
+
+  }
+
+  navigateDetail =(recette) =>{
+    this.props.navigation.push('DetailRecette', { recette: recette })
   }
 
   render() {
-    const hotels = [
-      {name: "Hotel Nice Riviera", code: "#2980b9", latitude:43.700008, longitude :7.2695535 ,stars: 4,price:64, description:"Relaxed hotel offering warm rooms, minibars, plus free Wi-Fi, an indoor pool & a cafe bar."},
-      {name: "Hotel Vendome", code: "#2980b9", latitude:43.7009352, longitude :7.2713842 ,stars: 4, price:62,description:"Warm rooms with Wi-Fi included in 19th-century mansions offering cocktail bar & bright lounge."},
-      {name: "Hotel Radisson Blu", code: "#2980b9", latitude:43.6846665, longitude :7.23506193 ,stars: 4,price:121, description:"Modern residence with free Wi-Fi, breakfast, plenty of dining options, plus a pool & sauna."},
-      {name: "Hotel Alba", code: "#2980b9", latitude:43.7038916, longitude :7.2656768 ,stars: 4,price:76, description:"Sophisticated hotel in former palace offering restaurant and bar with sea views and terraces."},
-      {name: "Hotel Nice Exelsior", code: "#2980b9", latitude:43.7033392,longitude :7.2623368 ,stars: 4,price:58, description:"Colorful rooms with murals and free Wi-Fi in a 19th-century hotel offering a garden bar."},
-
-  ]
+    const {listRecette, today} = this.state
   
     return (
       <View style={{flex:1,paddingTop:20}}>
@@ -44,15 +71,17 @@ export default class CalendarScreen extends React.Component {
        <Calendar 
        customStyle={{padding:10,day: {fontSize: 15, textAlign: 'center'}}} 
        showEventIndicators={true}
+       selectedDate={new Date()}
        showControls={true}
        prevButtonText={'Préc'}
        nextButtonText={'Suiv'}
        dayHeadings={['D','L','M','M','J','V','S']}
-       onDateSelect={(date) => this.setState({dateSelected : compare.stringToDate(date,"dd-mm-yyyy","-")})}
+       onDateSelect={(date) => this.getListRecette(date)}
        monthNames={['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre']}
        />
        </View>
-       <View style={{flex:1}}>
+       <ScrollView style={{flex:1}}>
+       { listRecette.length >0 ?
           <SectionGrid
                         itemDimension={90}
                         // staticDimension={300}
@@ -60,23 +89,26 @@ export default class CalendarScreen extends React.Component {
                         // spacing={20}
                         sections={[
                             {
-                            title: 'Home/Hotels',
-                            data: hotels
+                            title: 'Les Recettes',
+                            data: listRecette
                             }
                         ]}
                         horizontal={true}
                         style={styles.gridView}
                         renderItem={({ item, section, index }) => (
-                            <TouchableOpacity onPress={ () => {this.navigateDetail(item)}}>
-                            <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
-                            <Image  />
-                            <Text style={styles.itemName}>{"Hotel"}</Text>
-                            <Text style={styles.itemCode}>{item.name}</Text>
+                            <TouchableOpacity  onPress={ () => {this.navigateDetail(item)}}>
+                            <View style={[styles.itemContainer, { backgroundColor: '#E88110' }]}>
+                            <Image source={{uri : item.urlRecette}} style={{height:100}}/>
+                            <Text style={styles.itemName}>{item.libelleRecette}</Text>
+                            <Text style={styles.itemCode}>{item.prix + " €"}</Text>
                             </View>
                             </TouchableOpacity>
                         )}
+                        
                     />
-       </View>
+                    : <Text style={{alignSelf: "center"}}> Aucune recette pour ce jour</Text>
+                        }
+       </ScrollView>
        </View>
     )
   }
