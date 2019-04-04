@@ -5,8 +5,7 @@ import styled from 'styled-components'
 const StyledText = styled.Text
 `
 font-size: ${props => props.fontsize ? props.fontsize : 15};
-padding-left: 20;
-color: ${props => props.color ? props.color : 'rgba(96,100,109, 1)'};
+color: ${props => props.color ? props.color : 'black'};
 line-height: 24;
 font-weight : ${props => props.fontweight ? props.fontweight : 400}
 `
