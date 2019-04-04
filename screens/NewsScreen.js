@@ -16,6 +16,8 @@ backgroundColor: rgba(52, 52, 52, 0.1)`
 
 class NewsScreen extends React.Component {
 
+
+    
     componentDidMount(){
         console.log(new Date())
     }
