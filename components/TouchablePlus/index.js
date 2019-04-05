@@ -25,7 +25,7 @@ export default class TouchablePlus extends Component {
         const {onPressFunction } = this.props;
         return (
             <StyledTouchable onPress={onPressFunction}>
-                 <StyledImage source={require('../../assets/icons/addblue.png')} />
+                 <StyledImage source={require('../../assets/icons/addOrange.png')} />
             </StyledTouchable>   
         );
     }

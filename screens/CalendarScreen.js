@@ -71,7 +71,7 @@ export default class CalendarScreen extends React.Component {
        <Calendar 
        customStyle={{padding:10,day: {fontSize: 15, textAlign: 'center'}}} 
        showEventIndicators={true}
-       selectedDate={new Date()}
+       
        showControls={true}
        prevButtonText={'Préc'}
        nextButtonText={'Suiv'}
@@ -80,7 +80,7 @@ export default class CalendarScreen extends React.Component {
        monthNames={['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre']}
        />
        </View>
-       <ScrollView style={{flex:1}}>
+       <View style={{flex:1}}>
        { listRecette.length >0 ?
           <SectionGrid
                         itemDimension={90}
@@ -108,7 +108,7 @@ export default class CalendarScreen extends React.Component {
                     />
                     : <Text style={{alignSelf: "center"}}> Aucune recette pour ce jour</Text>
                         }
-       </ScrollView>
+       </View>
        </View>
     )
   }
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemContainer: {
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     borderRadius: 5,
     padding: 5,
     height: 150,
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
     fontWeight: '600',
+    maxWidth: 50
   },
   itemCode: {
     fontWeight: '600',
