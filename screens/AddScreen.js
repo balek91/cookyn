@@ -297,6 +297,7 @@ class AddScreen extends React.Component {
       allowsEditing: true,
       aspect: [4, 3],
     })
+    
     if (!result.cancelled) {
       this.setState({  
         image: result.uri,
@@ -369,6 +370,7 @@ class AddScreen extends React.Component {
       recette: recette,
       imageRecette : this.state.image64
     }
+    console.log(json)
 
     Axios.post('http://51.75.22.154:8080/Cookyn/recette/AddRecette', json).then((response) => {
       if (response.status =='200'){
@@ -588,7 +590,7 @@ class AddScreen extends React.Component {
                 text='Difficulté'
                 onPressFunction={this.selectDifficulty}
                 widthTouchable={100}
-                backgroundColorTouchable='#78C9DC'
+                backgroundColorTouchable='#E88110'
                 colorText='#FFF'
               />
 
@@ -707,7 +709,7 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
                 text='Ajouter'
                 onPressFunction={this.sendRecepie}
                 widthTouchable={100}
-                backgroundColorTouchable='#78C9DC'
+                backgroundColorTouchable='#E88110'
                 colorText='#FFF'
               />
             </ViewCenter>
