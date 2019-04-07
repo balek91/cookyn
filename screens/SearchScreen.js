@@ -45,15 +45,21 @@ class SearchScreen extends React.Component {
   componentDidMount() {
     const {libelle,offset} = this.state
 
+
    this.props.actions.recetteRecherche.getRecettes(libelle,offset,true)
 }
 
 keyExtractor = item => item.idRecette.toString()
 
 
-  getRecetteByName =() =>{
+  getRecetteByName =(input) =>{
     const {libelleTest,offset} = this.state
-    this.props.actions.recetteRecherche.getRecettes(libelleTest,offset,true)
+    console.log(input)
+    this.setState({libelle : input})
+    clearTimeout(this.timer)
+    this.timer = setTimeout(()=>{
+      this.props.actions.recetteRecherche.getRecettes(input,offset,true)
+    }, 300)
   }
 
   refreshContentAsync = async () => {
@@ -62,12 +68,13 @@ keyExtractor = item => item.idRecette.toString()
 
   loadMoreContentAsyncRecette = async () => {
     const {libelle} = this.state
-    const {offset, limit} = this.props
+    const {offset, limite} = this.props
 
-console.log('tessst')
+const value = offset+limite
+console.log('tessst', value)
 
 
-    this.props.actions.recetteRecherche.getRecettes(libelle,offset+limit,false)
+    this.props.actions.recetteRecherche.getRecettes(libelle,value,false)
 
 }
 
@@ -92,7 +99,7 @@ onPress = (recette) => {
                         <StyledFlatList
                         data={list}
                         keyExtractor={this.keyExtractor}
-                        onEndReached={() => this.loadMoreContentAsyncRecette()}
+                        onEndReached={(input) => this.loadMoreContentAsyncRecette()}
                         onEndReachedThreshold={0}
                         renderItem={({ item }) => (
                             <ListItemElement textPrincipal={item.libelleRecette} textDetail={`Catégorie : ${item.catRecette}`} onPressFunction={() => { this.onPress(item) }} />
@@ -106,6 +113,7 @@ const mapStateToProps = state => {
   return {
       list: state.recette.list,
       offset : state.recette.offset,
+      limite : state.recette.limite,
       allState: state
   }
 }

@@ -66,9 +66,7 @@ class NewsScreen extends React.Component {
                         </View>
                     </HeaderView>
                     <KeyboardAwareScrollView behavior='padding' resetScrollToCoords={{ x: 0, y: 0 }} showsVerticalScrollIndicator={false} >
-                    {actualites.map(item, index )}=>{
-                        <News who={'Steve'} what={'Les cousins'} action={item.typeActualite} date={new Date('2018-12-20')}></News>
-                    }
+
 
             <News who={'Steve'} what={'Les cousins'} action={'Create'} date={new Date('2018-12-20')}></News>
             <News who={'Mouhsin'} what={'Steve'} action={'Follow'} date={new Date('2018-11-20')}></News>

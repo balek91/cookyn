@@ -16,8 +16,6 @@ export const refreshRecette = (recette) => ({
 })
 
 export const getRecettes = (libelle ='',offset = 0, refresh = false) => dispatch => {
-  console.log('sjfbvzibsgedfnbgdb',offset)
-  console.log(libelle)
 
   if(libelle==''){
     axios.get(`http://51.75.22.154:8080/Cookyn/recette/GetListRecetteByOffSet/${offset}`)
