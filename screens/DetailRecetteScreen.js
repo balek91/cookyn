@@ -1,6 +1,7 @@
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import React from 'react'
+import {ImageBackground} from 'react-native'
 import styled from 'styled-components/native'
 import ViewCenter from '../components/ViewCenter'
 import Touchable from '../components/Touchable'
@@ -20,7 +21,8 @@ import { AsyncStorage } from 'react-native';
 const Content = styled.ScrollView`
 flex: 3;
 backgroundColor: #FFFFFF;
-width:100%
+width:100%;
+backgroundColor: rgba(52, 52, 52, 0.1);
 `
 
 const StyledView = styled.View
@@ -28,13 +30,13 @@ const StyledView = styled.View
 flex: 1;
 justifyContent: center;
 alignItems: center;
-backgroundColor: #FFFFFF;
+backgroundColor: rgba(52, 52, 52, 0.1);
 `
 const Header = styled.View`
 flex: 1;
 justifyContent: center;
 alignItems: center;
-backgroundColor: #FFFFFF;
+backgroundColor:rgba(52, 52, 52, 0.1);
 `
 
 const Footer = styled.View`
@@ -57,11 +59,9 @@ margin: 0px 20px 20px 20px
 
 const StyledImage = styled.Image
 	`
-  height : 300;
+  height : 200;
   width : 300;
   border-radius:20;
-  borderColor:black;
-  borderWidth:1;
 `
 
 const StyledIcon = styled.Image
@@ -101,7 +101,7 @@ margin:15px 0px 10px 25px;
 
 const LabelLeft = styled.Text
 	`
-fontWeight: 300;
+fontWeight: bold;
 fontSize: 16;
 margin:15px 0px 10px 25px;
 `
@@ -161,7 +161,7 @@ class DetailScreen extends React.Component {
 	render() {
 		const { data } = this.state
 		const PhotoRecette = require('../assets/icons/generique.png')
-		const IconCourse = require('../assets/icons/liste_de_courses.png')
+		const IconCourse = require('../assets/icons/shop.jpg')
 		
 
 		if (data.etapes == undefined) {
@@ -175,6 +175,8 @@ class DetailScreen extends React.Component {
 			const etapes = data.etapes
 			return (
 				<StyledView>
+				<ImageBackground source={require('../assets/images/detailBack.jpg')} style={{width: '100%', height: '100%'}}>
+
 					<Content>
 						<Header>
 							<StyledImage source={(data.recette.urlRecette) ? {uri:data.recette.urlRecette} : PhotoRecette} />
@@ -225,6 +227,7 @@ class DetailScreen extends React.Component {
 							})}
 						</StyledViewArray>
 						<ViewCenter>
+
 						{this.state.isFavori ? 
 							<Touchable
 								text='Supprimer de mes Favoris'
@@ -257,7 +260,7 @@ class DetailScreen extends React.Component {
 									position: 'absolute',
 									left: 0,
 									top: 4,
-									marginLeft: 0
+									marginLeft: 0,
 								},
 								dateInput: {
 									marginLeft: 36
@@ -277,7 +280,7 @@ class DetailScreen extends React.Component {
 
 						</ViewCenter>
 					</Content>
-
+								</ImageBackground>
 
 				</StyledView>
 			)

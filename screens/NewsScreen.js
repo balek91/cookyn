@@ -56,11 +56,9 @@ class NewsScreen extends React.Component {
      } 
     
     componentDidMount =async ()=>{
-        console.log(new Date())
         var user = await AsyncStorage.getItem('idUser')
         Axios.get(`http://51.75.22.154:8080/Cookyn/actualite/GetActualiteByUser/${user}/0`)
         .then((response) => {
-            console.log(response)
             this.setState({
                 actualites : response.data.listActulalites
             })

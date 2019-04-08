@@ -5,10 +5,10 @@ import styled from 'styled-components'
 const StyledTextInput = styled.TextInput`
   width: ${props => props.width ? props.width : 300};
   height: 40;
-  background-color: #D0D0D0;
+  background-color: ${props => props.backgroundcolor ? props.backgroundcolor : '#D0D0D0'};
   padding-horizontal: 16;
   font-size: 16;
-  color: #000;
+  color: ${props => props.fontcolor ? props.fontcolor : '#000'};
   border-color : ${props => props.bordercolor ? props.bordercolor : 'gray'};
   margin-vertical: 10;
   text-align: center;
@@ -31,6 +31,8 @@ export default class InputText extends React.Component {
     placeholderTextColor : PropTypes.string,
     value : PropTypes.string,
     bordercolor : PropTypes.string,
+    backgroundcolor : PropTypes.string,
+    fontcolor : PropTypes.string
   }
 
   render() {
@@ -48,7 +50,9 @@ export default class InputText extends React.Component {
       bordercolor,
       autoCapitalize,
       autoCorrection,
-      editable = true, 
+      editable = true,
+      backgroundcolor,
+      fontcolor
     } = this.props;
 
     return (
@@ -68,6 +72,8 @@ export default class InputText extends React.Component {
         secureTextEntry={isPassword ? isPassword : false}
         onChangeText={onChangeTextFunction ? onChangeTextFunction : null}
         onSubmitEditing={ onSubmitEditingFunction ? onSubmitEditingFunction : null}
+        backgroundcolor = {backgroundcolor}
+        fontcolor = {fontcolor}
       />
     )
   }

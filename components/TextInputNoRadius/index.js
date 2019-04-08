@@ -7,7 +7,7 @@ const StyledTextInput = styled.TextInput`
 
 width: ${props => props.width ? props.width : 300};
 height:${props => props.height ? props.height : 100};
-background-color: #D0D0D0;
+background-color: #F5FCFF;
 paddingHorizontal:16;
 fontSize:16;
 color:#000;

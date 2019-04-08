@@ -556,6 +556,7 @@ class AddScreen extends React.Component {
                 multi={false}
                 value={this.state.libelleRecette}
                 width={250}
+                backgroundcolor={"#F5FCFF"}
               />
 
               <InputText
@@ -564,6 +565,7 @@ class AddScreen extends React.Component {
                 multi={false}
                 value={this.state.catRecette}
                 width={250}
+                backgroundcolor={"#F5FCFF"}
 
               />
               <InputText
@@ -573,6 +575,7 @@ class AddScreen extends React.Component {
                 multi={false}
                 value={this.state.prixRecette}
                 width={250}
+                backgroundcolor={"#F5FCFF"}
               />
 
               <InputText
@@ -582,6 +585,7 @@ class AddScreen extends React.Component {
                 value={this.state.tempPrepRecette}
                 multi={false}
                 width={250}
+                backgroundcolor={"#F5FCFF"}
               />
             </ViewCenter>
 
@@ -697,6 +701,7 @@ l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l
                   <ListItem
                     key={index}
                     title={this.isVoyelle(item.ingredients) ? `${item.quantite} ${item.unite} d'${item.ingredients}` : `${item.quantite} ${item.unite} de ${item.ingredients}`}
+                    titleStyle={{color:'white', fontSize:14, fontWeight:'bold'}}
                     rightIcon={{ name: 'delete' }}
                     onPressRightIcon={() => this.deleteListIngredient(index)}
                   />
