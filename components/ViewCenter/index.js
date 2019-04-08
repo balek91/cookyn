@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 
 const StyledView = styled.View`
-justifyContent: center;
+justifyContent: flex-start;
 alignItems: center;
 `
 

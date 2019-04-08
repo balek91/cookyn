@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const StyledTouchable = styled.TouchableOpacity
 `
-background-color:#FFF;
+background-color:rgba(52, 52, 52, 0.1);
 margin-vertical: 10;
 padding-vertical: 13;
 padding-left:5;

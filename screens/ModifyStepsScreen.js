@@ -1,16 +1,28 @@
 import React from 'react'
-import {TouchableOpacity, Text, TextInput, Image} from 'react-native'
+import {TouchableOpacity, Text, TextInput, Image, ImageBackground} from 'react-native'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 import Touchable from '../components/Touchable/index'
 import ViewCustom from '../components/ViewContainer'
 import ViewRow from '../components/ViewsAlignItemRow'
 import BackButton from '../components/BackButton'
+import styled from 'styled-components/native'
+
 
 
 import allTheActions from '../actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+
+const StyledViewRow = styled.View`
+justifyContent: center;
+alignItems:  ${props => props.align ? props.align : 'center'};
+flexDirection:row;
+flex-grow: 1;
+backgroundColor:rgba(255, 255, 255, 0.6);
+borderWidth:1;
+marginBottom:10;
+`
 
 class ModifyStepsScreen extends React.Component {
     // static navigationOptions = {
@@ -38,18 +50,18 @@ class ModifyStepsScreen extends React.Component {
       }
 
       renderItem = ({ item, index, move, moveEnd, isActive }) => {
-        return (<ViewRow>
+        return (<StyledViewRow>
           <TouchableOpacity
             style={{ 
               height: 100, 
-              backgroundColor: isActive ? 'white' : item.backgroundColor,
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
               alignItems: 'center', 
-              justifyContent: 'center' 
+              justifyContent: 'center',
             }}
             onLongPress={move}
             onPressOut={moveEnd}
           >
-           <Image source={require('../assets/icons/dragg.png')}/>
+           <Image source={require('../assets/icons/menu.png')}  style={{height:30, width:30}}/>
           </TouchableOpacity>
           <TextInput style={{height: 40, width:200, borderColor: 'black', borderWidth: 1, margin:20}} multiline={true} value={item.etape} onChangeText={(value) =>{
             let tableau = this.state.allSteps
@@ -58,12 +70,12 @@ class ModifyStepsScreen extends React.Component {
               allSteps : tableau
             })
             this.props.actions.etape.Update(tableau)
-          }}>
+          }}>+
           </TextInput>
           <TouchableOpacity 
             style={{ 
               height: 100, 
-              backgroundColor: isActive ? 'white' : item.backgroundColor,
+              backgroundColor:'rgba(255, 255, 255, 0.1)',
               alignItems: 'center', 
               justifyContent: 'center' 
             }}
@@ -84,7 +96,7 @@ class ModifyStepsScreen extends React.Component {
             }}>
               <Image source={require('../assets/icons/garbage.png')} style={{height:30, width:30}}/>
             </TouchableOpacity>
-        </ViewRow>
+        </StyledViewRow>
           
         )
       }
@@ -93,6 +105,7 @@ class ModifyStepsScreen extends React.Component {
 
         return(
             <ViewCustom>
+               <ImageBackground source={require('../assets/images/addBack.jpg')} style={{width: '100%', height: '100%'}}>
                 <DraggableFlatList
           data={this.state.allSteps}
           renderItem={this.renderItem}
@@ -133,6 +146,7 @@ class ModifyStepsScreen extends React.Component {
                 backgroundColorTouchable='#78C9DC'
                 colorText='#FFF'
               /> */}
+              </ImageBackground>
             </ViewCustom>
         )
         }

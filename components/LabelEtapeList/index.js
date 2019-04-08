@@ -8,8 +8,8 @@ font-size: ${props => props.fontsize ? props.fontsize : 15};
 height:${props => props.height ? props.height : 100};
 border-radius: ${props => props.radius ? props.radius : 0}
 border-width:${props => props.radius ? 0.5 : 0}
-color:#707070;
-backgroundColor: rgba(255, 255, 255, 0.8)
+color:#FFF;
+backgroundColor: rgba(255, 255, 255, 0.1)
 padding-horizontal:10;
 marginVertical: 10;
 fontWeight:bold;
