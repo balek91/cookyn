@@ -25,7 +25,7 @@ const HomeStack = createStackNavigator({
   ListUsers: ListUsersScreen,
   DetailRecette : DetailRecetteScreen,
   ListRecetteCreation : ListRecetteCreationScreen,
-  Search : SearchScreen
+  Search : SearchScreen,
 });
 
 
@@ -95,9 +95,9 @@ CalendarStack.navigationOptions = {
   tabBarIcon: ({focused}) =>(
     focused ?
     <Image style={{ height: 26, width: 26 }}
-      source={require('../assets/icons/calandarFocus.jpg')}
+      source={require('../assets/icons/calendarFocus.png')}
     /> : <Image style={{ height: 26, width: 26 }}
-    source={require('../assets/icons/calandar.jpg')}
+    source={require('../assets/icons/calendar.png')}
   /> )
 };
 
@@ -111,9 +111,9 @@ ShoppingListStack.navigationOptions = {
   tabBarIcon: ({focused}) =>(
     focused ?
     <Image style={{ height: 26, width: 26 }}
-      source={require('../assets/icons/shopFocus.jpg')}
+      source={require('../assets/icons/panierorange.png')}
     /> :  <Image style={{ height: 26, width: 26 }}
-    source={require('../assets/icons/shop.jpg')}
+    source={require('../assets/icons/panier.png')}
   />)
 };
 

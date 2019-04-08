@@ -31,7 +31,7 @@ class ListCourseUniteElement extends React.Component {
                             data={lstRelationUniteDto}
                             keyExtractor={this.keyExtractor}
                             renderItem={({ item }) => (
-                            <StyledText>{`* ${item.quantite} ${item.unite.libelleUnite}`}</StyledText>
+                            <StyledText>{`- ${item.quantite} ${item.unite.libelleUnite}`}</StyledText>
 
                             )} /> 
                             ) : (<StyledText>Pas d'unité</StyledText>)} 

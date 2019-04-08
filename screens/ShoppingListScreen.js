@@ -1,20 +1,30 @@
 import React from 'react'
 import axios from 'axios'
-import { AsyncStorage, Text } from 'react-native'
+import { AsyncStorage, ImageBackground } from 'react-native'
 import DatePicker from 'react-native-datepicker'
 
 import compare from '../utils/CompareDate'
-
-import Touchable from '../components/Touchable/index'
+import styled from 'styled-components'
+import Touchable from '../components/TouchableCourse'
 import ViewCustom from '../components/ViewContainer'
 import ListCourse from '../components/ListCourse'
 
+const GlobalView = styled.View`
 
+`
 
+const ContentView = styled.View`
+align-items: center;
+margin-top : 10px;
+`
+
+const PickerView = styled.View`
+margin-top : 10px; 
+`
 
 export default class ShoppingListScreen extends React.Component {
   static navigationOptions = {
-    title: 'Liste de course',
+    header : null
   };
 
   state = {
@@ -70,7 +80,10 @@ export default class ShoppingListScreen extends React.Component {
   render() {
 	const {listCourse} = this.state
     return (
-      <ViewCustom>
+      <GlobalView>
+			<ImageBackground source={require('../assets/images/CoursePage.jpeg')} style={{width: '100%', height: '100%'}}>
+			<ContentView>
+				<PickerView>
         <DatePicker
 								style={{width: 200}}
 								locale={'fr'}
@@ -82,6 +95,7 @@ export default class ShoppingListScreen extends React.Component {
 								maxDate="2050-06-01"
 								confirmBtnText="Ok"
 								cancelBtnText="Annuler"
+								iconSource={require('../assets/icons/calendar.png')} 
 								customStyles={{
 								dateIcon: {
 									position: 'absolute',
@@ -90,11 +104,19 @@ export default class ShoppingListScreen extends React.Component {
 									marginLeft: 0
 								},
 								dateInput: {
-									marginLeft: 36
+									marginLeft: 36,
+									backgroundColor : 'white',
+									borderColor : 'black',
+									height : 30
+								},
+								dateText : {
+									fontSize : 18
 								}
 								}}
 								onDateChange={(date) => {this.setState({currentDate: date, changeFirstDate : true})}}
 							/>
+							</PickerView>
+							<PickerView>
 
               <DatePicker
 								style={{width: 200}}
@@ -107,24 +129,32 @@ export default class ShoppingListScreen extends React.Component {
 								maxDate="2050-06-01"
 								confirmBtnText="Ok"
 								cancelBtnText="Annuler"
+								iconSource={require('../assets/icons/calendar.png')} 
 								customStyles={{
 								dateIcon: {
 									position: 'absolute',
 									left: 0,
 									top: 4,
-									marginLeft: 0
+									marginLeft: 0,
 								},
 								dateInput: {
-									marginLeft: 36
+									marginLeft: 36,
+									backgroundColor : 'white',
+									borderColor : 'black',
+									height : 30
+								},
+								dateText : {
+									fontSize : 18
 								}
 								}}
 								onDateChange={(date) => {this.setState({currentDateOneWeekLater: date, changeSecondDate : true})}}
 							/>
+							</PickerView>
               <Touchable
-								text='Générer la liste de course'
+								text='Générer la liste'
 								onPressFunction={()=> this.generateShoppingList()}
-								widthTouchable={200}
-								backgroundColorTouchable='#78C9DC'
+								widthTouchable={150}
+								backgroundColorTouchable='#E88110'
 								colorText='#FFF'/>
 								{ 
 									listCourse ? 
@@ -132,7 +162,9 @@ export default class ShoppingListScreen extends React.Component {
 									:
 									null
 								}
-      </ViewCustom>
+					</ContentView>
+				</ImageBackground>
+      </GlobalView>
     )
   }
 }

@@ -11,7 +11,8 @@ width: 100%;
 `
 
 const StyledView = styled.View `
-background-color : #78C9DC;
+background-color : white;
+opacity : 0.66;
 border-radius : 20;
 width : 100%;
 border: 1px solid black;

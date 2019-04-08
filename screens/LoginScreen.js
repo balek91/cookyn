@@ -10,18 +10,25 @@ import Touchable from '../components/Touchable/index'
 import ViewContainer from '../components/ViewContainer/index'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-
-
 import allTheActions from '../actions'
-
 import styled from 'styled-components'
-
 import img from '../assets/images/home.jpg'
+
 const StyledView = styled(ViewContainer)`
-padding : 50px 0px 0px 0px;
+padding : 0px 0px 0px 0px;
 backgroundColor: rgba(52, 52, 52, 0.1)`
 
+const ViewCustom = styled.View`
+padding-top : 25px;
+align-items : center;
+`
+
 class Login extends React.Component {
+
+  static navigationOptions = {
+    header : null
+}
+
   state = {
     login: false,
     password: '',
@@ -40,9 +47,9 @@ class Login extends React.Component {
         <ImageBackground source={require('../assets/images/home.jpg')} style={{width: '100%', height: '100%'}}>
         <ContentContainer>
         <KeyboardAwareScrollView behavior='padding' resetScrollToCoords={{ x: 0, y: 0 }} showsVerticalScrollIndicator={false} >
-            <StyledView>
+            <ViewCustom>
               <Image source={require('../assets/images/logo.png')} />
-            </StyledView>
+            </ViewCustom>
             <TextCustom text={'\n'} />
             <InputText
               reference={(input) => this.login = input}

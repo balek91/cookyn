@@ -20,9 +20,23 @@ backgroundColor: rgba(52, 52, 52, 0.1)`
 
 const HeaderView = styled.View`
 background-color : white;
-height:60;
+height:65;
 width:100%;
 margin-bottom : 5px;
+flex-direction : row;
+padding-top : 25px;
+`
+
+const HeaderLeftView = styled.View`
+flex:1;
+align-items: flex-start;
+margin-left:10;
+`
+
+const HeaderRightView = styled.View`
+flex:1;
+align-items: flex-end;
+margin-right:10;
 `
 
 class NewsScreen extends React.Component {
@@ -35,6 +49,10 @@ class NewsScreen extends React.Component {
     }
      navigateSearch =() => {
         this.props.navigation.push('Search')
+     } 
+
+     logout =() => {
+        console.log('ici la deconnexion')
      } 
     
     componentDidMount =async ()=>{
@@ -56,14 +74,18 @@ class NewsScreen extends React.Component {
                     <ContentContainer>
 
                     <HeaderView>
-                        <View style={{flex:1}}>
-                        </View>
-                        <View style={{flex:1, alignItems: "flex-end", marginRight:10}} >
-                            <TouchableOpacity onPress={this.navigateSearch}>
-                            <Image source={require('../assets/icons/loupe.png')} style={{height:20, width:20}} >
+                        <HeaderLeftView>
+                            <TouchableOpacity onPress={this.logout}>
+                            <Image source={require('../assets/icons/logout.png')} style={{height:25, width:25}} >
                             </Image>
                             </TouchableOpacity>
-                        </View>
+                        </HeaderLeftView>
+                        <HeaderRightView>
+                            <TouchableOpacity onPress={this.navigateSearch}>
+                            <Image source={require('../assets/icons/loupe.png')} style={{height:25, width:25}} >
+                            </Image>
+                            </TouchableOpacity>
+                        </HeaderRightView>
                     </HeaderView>
                     <KeyboardAwareScrollView behavior='padding' resetScrollToCoords={{ x: 0, y: 0 }} showsVerticalScrollIndicator={false} >
 
