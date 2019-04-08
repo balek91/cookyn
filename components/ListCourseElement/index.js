@@ -33,7 +33,7 @@ class ListCourseElement extends React.Component {
                             ListEmptyComponent={<View><StyledText>Aucun ingrédient dans cette catégorie</StyledText></View>}
                             renderItem={({ item }) => (
                                 <View>
-                                    <StyledText>{`- ${item.libelleIngredient.toUpperCase()}`}</StyledText> 
+                                    <StyledText>{`${item.libelleIngredient.toUpperCase()}`}</StyledText> 
                                     <ListCourseUniteElement lstRelationUniteDto={item.lstRelationUniteDto}/>
                                 </View>
                             )} /> 

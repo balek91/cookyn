@@ -79,9 +79,7 @@ class ListUsersScreen extends React.Component {
 
     loadMoreContentAsyncAbonne = async () => {
         const { navigation } = this.props
-        console.log('NOOOOOOOOOOOOOOOOOOO')
-        console.log(`http://51.75.22.154:8080/Cookyn/relation/GetListAbonne/${navigation.getParam('userPage')}/${this.state.offset+this.state.limite}`)
-            Axios.get(`http://51.75.22.154:8080/Cookyn/relation/GetListAbonne/${navigation.getParam('userPage')}/${this.state.offset+this.state.limite}`)
+       Axios.get(`http://51.75.22.154:8080/Cookyn/relation/GetListAbonne/${navigation.getParam('userPage')}/${this.state.offset+this.state.limite}`)
             .then(res => {
                 this.setState({
                     abonneList: [...this.state.abonneList , ...res.data.listRelation],

@@ -254,8 +254,6 @@ class ProfilScreen extends React.Component {
 	}
 
 	onPressButtonAbonnes = () => {
-
-		this.props.actions.user.getAbonnesByUser(this.state.user.idUser)
 		this.props.navigation.push('ListUsers', {
 			namePage: 'Abonnements',
 			backToProfil: this.goBackUserConnect,
@@ -265,7 +263,6 @@ class ProfilScreen extends React.Component {
 	}
 
 	onPressButtonAbonnements = () => {
-		this.props.actions.user.getAbonnementsByUser(this.state.user.idUser)
 		this.props.navigation.push('ListUsers', {
 			namePage: 'Abonnés',
 			backToProfil: this.goBackUserConnect,
@@ -279,7 +276,6 @@ class ProfilScreen extends React.Component {
 		const { user, userProfil } = this.props
 		if (following == true) {
 			Axios.get(`http://51.75.22.154:8080/Cookyn/relation/DeleteRelation/${userProfil.user.idUser}/${user}`).then(() => {
-				this.props.actions.user.getAbonnesByUser(user)
 				Axios.get(`http://51.75.22.154:8080/Cookyn/user/GetUserById/${userProfil.user.idUser}`).then(res =>{
 					this.setState({
 						user : res.data,
@@ -290,7 +286,6 @@ class ProfilScreen extends React.Component {
 		}
 		else {
 			Axios.get(`http://51.75.22.154:8080/Cookyn/relation/CreateRelation/${userProfil.user.idUser}/${user}`).then(() => {
-				this.props.actions.user.getUserConnect(userProfil.user.idUser)
 				Axios.get(`http://51.75.22.154:8080/Cookyn/user/GetUserById/${userProfil.user.idUser}`).then(res =>{
 					this.setState({
 						user : res.data,

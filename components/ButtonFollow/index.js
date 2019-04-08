@@ -7,7 +7,7 @@ const Touchable = styled.TouchableOpacity`
 width : 150;
 backgroundColor : #E88110;
 margin-vertical: 10;
-padding-vertical: 13;
+padding :5px 0px 5px 0px;
 margin-top : 10px;`
 
 const StyledText = styled.Text

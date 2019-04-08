@@ -354,8 +354,9 @@ class DetailScreen extends React.Component {
 		})
 		axios.get(`http://51.75.22.154:8080/Cookyn/favoris/ExistFavoris/${value}/${this.state.idRecette}`)
 		.then(res => {
+			console.log('RRREEEESSS',res)
 			this.setState({
-				isFavori: res,
+				isFavori: res.data,
 			})
 		})
 	 
