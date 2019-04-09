@@ -1,4 +1,4 @@
-import { GET_ALL, REFRESH } from '../actions/recetteRecherche'
+import { GET_ALL, REFRESH } from '../actions/userRecherche'
 
 
 const initialState = {
