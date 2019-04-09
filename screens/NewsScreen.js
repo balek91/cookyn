@@ -9,6 +9,12 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import SearchBar from 'react-native-searchbar'
 import Touchable from '../components/Touchable';
 import Axios from 'axios';
+import { onSignOut } from '../components/Auth.js'
+
+
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import allTheActions from '../actions'
 
 
 
@@ -53,8 +59,21 @@ class NewsScreen extends React.Component {
 
      logout =() => {
         console.log('ici la deconnexion')
+        this.removeData()
+        onSignOut().then(() => this.props.navigation.navigate('SignedOut'))
+
      } 
     
+     removeData = async () => {
+        try {
+            const { actions } = this.props
+            actions.user.deconnexion()
+          await AsyncStorage.removeItem('idUser')
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
     componentDidMount =async ()=>{
         var user = await AsyncStorage.getItem('idUser')
         Axios.get(`http://51.75.22.154:8080/Cookyn/actualite/GetActualiteByUser/${user}/0`)
@@ -100,5 +119,21 @@ class NewsScreen extends React.Component {
         )
     }
 }
-
-export default NewsScreen
+const mapStateToProps = state => {
+    return {
+      user: state.user,
+      allState: state
+    }
+  }
+  
+  const mapDispatchToProps = dispatch => ({
+    actions: {
+      user: bindActionCreators(allTheActions.user, dispatch)
+    }
+  })
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(NewsScreen)
+  

@@ -113,6 +113,8 @@ class Login extends React.Component {
       if (response.data.idUser != null) {
         this.storeData(response.data.idUser.toString())
         onSignIn().then(() => this.props.navigation.navigate('SignedIn'))
+      } else {
+        alert('Erreur dans l\'authentification')
       }
     }).catch(() => {
       alert('Erreur dans l\'authentification')

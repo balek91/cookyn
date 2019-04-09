@@ -50,8 +50,8 @@ const StyledViewArray = styled.View`
 justifyContent: center;
 alignItems: flex-start;
 backgroundColor: #F5FCFF;
-border-radius:10;
-border-width:0.5;
+border-width:2;
+borderColor:grey;
 margin: 0px 20px 20px 20px
 `
 //alignSelf:flex-start;
@@ -161,7 +161,7 @@ class DetailScreen extends React.Component {
 	render() {
 		const { data } = this.state
 		const PhotoRecette = require('../assets/icons/generique.png')
-		const IconCourse = require('../assets/icons/shop.jpg')
+		const IconCourse = require('../assets/icons/panier.png')
 		
 
 		if (data.etapes == undefined) {
@@ -233,14 +233,14 @@ class DetailScreen extends React.Component {
 								text='Supprimer de mes Favoris'
 								onPressFunction={() => this.deleteFavorite(this.state.idRecette)}
 								widthTouchable={200}
-								backgroundColorTouchable='#78C9DC'
+								backgroundColorTouchable='#E88110'
 								colorText='#FFF'
 							/> :
 							<Touchable
 								text='Ajouter à mes Favoris'
 								onPressFunction={() => this.addFavorite(this.state.idRecette)}
 								widthTouchable={200}
-								backgroundColorTouchable='#78C9DC'
+								backgroundColorTouchable='#E88110'
 								colorText='#FFF'
 							/>
 							}
@@ -274,7 +274,7 @@ class DetailScreen extends React.Component {
 								text='Ajouter à mon calendrier'
 								onPressFunction={this.addCalandarConfirm}
 								widthTouchable={200}
-								backgroundColorTouchable='#78C9DC'
+								backgroundColorTouchable='#E88110'
 								colorText='#FFF'
 							/>
 
