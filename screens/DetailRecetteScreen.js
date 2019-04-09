@@ -1,13 +1,15 @@
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import React from 'react'
-import {ImageBackground} from 'react-native'
+import {ImageBackground, TouchableOpacity} from 'react-native'
 import styled from 'styled-components/native'
 import ViewCenter from '../components/ViewCenter'
 import Touchable from '../components/Touchable'
 import TouchableLink from '../components/TouchableLink'
 import DatePicker from 'react-native-datepicker'
 import compare from '../utils/CompareDate'
+import DialogInput from '../components/DialogInput';
+
 
 import {Alert} from 'react-native';
 
@@ -70,11 +72,25 @@ const StyledIcon = styled.Image
   width : 50;
   margin:4%;
 `
+const StyledIconShare = styled.Image
+	`
+  height : 25;
+  width : 25;
+  marginLeft :20;
+`
 
 const AlignContentLeft = styled.View
 	`
 flex:1
 justifyContent: flex-start;
+alignItems: center;
+flexDirection:row;
+flex-grow: 1;
+`
+const AlignContentCenter = styled.View
+	`
+flex:1
+justifyContent: center;
 alignItems: center;
 flexDirection:row;
 flex-grow: 1;
@@ -122,7 +138,9 @@ class DetailScreen extends React.Component {
 		user: null,
 		currentDate: new Date(),
 		isFavori: false,
-		changeDate : null
+		changeDate : null,
+		isCreator : null,
+		isDialogVisible : false
 	}
 
 	addFavorite =(idRecette) => {
@@ -162,6 +180,7 @@ class DetailScreen extends React.Component {
 		const { data } = this.state
 		const PhotoRecette = require('../assets/icons/generique.png')
 		const IconCourse = require('../assets/icons/panier.png')
+		const IconeShare = require('../assets/icons/share.png')
 		
 
 		if (data.etapes == undefined) {
@@ -180,7 +199,12 @@ class DetailScreen extends React.Component {
 					<Content>
 						<Header>
 							<StyledImage source={(data.recette.urlRecette) ? {uri:data.recette.urlRecette} : PhotoRecette} />
+							<AlignContentCenter>
 							<StyledTextBold>{data.recette.libelleRecette}</StyledTextBold>
+							<TouchableOpacity onPress={()=> console.log("OKKKKKKKKKKKKKKKKKKKK")}>
+							<StyledIconShare source={IconeShare} />
+							</TouchableOpacity>
+							</AlignContentCenter>
 						</Header>
 						<AlignContentLeft>
 							<LabelLeft>{'Catégorie Recette :'}</LabelLeft>
@@ -196,9 +220,13 @@ class DetailScreen extends React.Component {
 						</AlignContentLeft>
 						<AlignContentLeft>
 							<LabelLeft>{'Temps de préparation :'}</LabelLeft>
-							<LabelRight>{`${data.recette.tempPrepaRecette} min`}</LabelRight>
+							<LabelRight>{`${data.recette.tempPrepaRecette} min`}</LabelRight>
 						</AlignContentLeft>
-						<AlignContentLeft>
+						{this.state.isCreator ?
+						
+							null
+					:
+					<AlignContentLeft>
 							<LabelLeft>{'Recette crée par :'}</LabelLeft>
 							<TouchableLink
 								text={data.recette.user.usernameUser}
@@ -208,6 +236,8 @@ class DetailScreen extends React.Component {
 								colorText='#000'
 							/>
 						</AlignContentLeft>
+					}
+						
 						<AlignContentLeft>
 							<StyledIcon source={IconCourse} />
 							<StyledText>{'INGRÉDIENTS'}</StyledText>
@@ -252,6 +282,7 @@ class DetailScreen extends React.Component {
 								placeholder="select date"
 								format="DD-MM-YYYY"
 								minDate={this.state.currentDate}
+								iconSource={require('../assets/icons/calendar.png')} 
 								maxDate="2050-06-01"
 								confirmBtnText="Ok"
 								cancelBtnText="Annuler"
@@ -278,7 +309,26 @@ class DetailScreen extends React.Component {
 								colorText='#FFF'
 							/>
 
+							{this.state.isCreator ?
+							<TouchableLink
+							text={'Supprimer ma recette'}
+							onPressFunction={()=> this.deleteHandle()}
+							widthTouchable={200}
+							backgroundColorTouchable='#78C9DC'
+							colorText='#000'
+						/>
+						
+						:
+						null
+						}
 						</ViewCenter>
+						<DialogInput isDialogVisible={this.state.isDialogVisible}
+            title={"Confirmation de la suppression"}
+            message={"Veuillez entrer votre mot de passe"}
+						hintInput ={"mot de passe"}
+            submitInput={ (inputText) => {this.sendInput(inputText)} }
+            closeDialog={ () => {this.setState({isDialogVisible : false})}}>
+</DialogInput>
 					</Content>
 								</ImageBackground>
 
@@ -299,9 +349,38 @@ class DetailScreen extends React.Component {
 				this.setState({
 					data: res.data,
 				})
+				this.userIsCreator(res.data)
 			})
+			
 	}
 
+	deleteHandle =() =>{
+		Alert.alert(
+			'Confirmation',
+			`La recette "${this.state.data.recette.libelleRecette}" va être supprimer définitivement`,
+			[
+			  {text: 'Annuler', onPress: () => console.log('NO Pressed'), style: 'cancel'},
+			  {text: 'Confirmer', onPress: () => this.setState({ isDialogVisible : true})},
+			]
+		  )
+	}
+
+
+
+	userIsCreator = async (data) =>{
+		
+		var idCreator = data.recette.user.idUser
+		var idConnected = await AsyncStorage.getItem('idUser')
+		if (idCreator == idConnected){
+			this.setState({
+				isCreator : true
+			})
+		} else {
+			this.setState({
+				isCreator : false
+			})
+		}
+	}
 
 
 	addCalandar = () => {
