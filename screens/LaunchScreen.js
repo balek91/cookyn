@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react'
+import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native'
 
 
 
@@ -16,11 +16,11 @@ class LaunchScreen extends Component {
                <Text style={styles.buttonText}>S'inscrire</Text>
              </TouchableOpacity>     
             </View>
-        );
+        )
     }
 }
 
-export default LaunchScreen;
+export default LaunchScreen
 
 
 const styles = StyleSheet.create({
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
       backgroundColor:'#E88110',
     }
     
-  });
+  })

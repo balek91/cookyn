@@ -179,7 +179,7 @@ class ProfilScreen extends React.Component {
 				</KeyboardAwareScrollView>
 				</ImageBackground>
 			</GlobalView>
-		);
+		)
 	}
 
 	redirectModify = () => {
@@ -192,7 +192,7 @@ class ProfilScreen extends React.Component {
 			ville: user.villeUser,
 			user: user.usernameUser,
 			onNavigateBack: this.goBackUserConnect
-		});
+		})
 	}
 
 	retrieveData = async () => {

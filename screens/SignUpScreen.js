@@ -12,7 +12,7 @@ import ViewContainer from '../components/ViewContainer'
 
 const StyledView = styled(ViewContainer)`
 padding : 20px 0px 0px 0px;
-backgroundColor: rgba(52, 52, 52, 0.1)`
+backgroundColor: rgba(52, 52, 52, 0.1);`
 
 
 
@@ -114,17 +114,17 @@ regexMail = (email) =>{
   this.setState({
     mail : email
   })
-  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
    if(re.test(email)){
     this.setState({
       borderColorEmail : 'green',
       statusEmail : true
-  });
+  })
    }else{
     this.setState({
       borderColorEmail : 'red',
       statusEmail: false
-  });
+  })
    }
 }
 
@@ -132,17 +132,17 @@ regexMail = (email) =>{
   this.setState({
     password : Pass
   })
-  var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+  var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
    if(re.test(Pass)){
     this.setState({
       borderColorPassword : 'green',
       statusPassword : true
-  });
+  })
    }else{
     this.setState({
       borderColorPassword : 'red',
       statusPassword : false
-  });
+  })
    }
 }
 
@@ -156,12 +156,12 @@ verifPassword = (confirmPassword1) =>{
     this.setState({
       borderColorConfirmPassword : 'green',
       statusConfirmPassword : true
-  });
+  })
   }else{
     this.setState({
       borderColorConfirmPassword : 'red',
       statusConfirmPassword : true
-  });
+  })
   }
 }
 
@@ -174,7 +174,7 @@ verifPassword = (confirmPassword1) =>{
       usernameUser : this.state.user,
       passwordUser : this.state.password
       }
-      console.log(body);
+      console.log(body)
       console.log(body.nomUser)
       if(this.state.nom != '' && this.state.prenomUser !='' && this.state.villeUser !='' && this.state.usernameUser !=''){
         if(this.state.statusEmail){

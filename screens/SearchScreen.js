@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 import {
   Platform,
   StyleSheet,
   View,
   Text, TouchableOpacity, Image, AsyncStorage, ScrollView,TextInput
-} from 'react-native';
+} from 'react-native'
 import Axios from 'axios'
 import ListItemElement from '../components/FlatListElement'
 
@@ -28,12 +28,12 @@ width: 100%;
 
 const StyledView = styled(ViewContainer)`
 padding : 50px 0px 0px 0px;
-backgroundColor: rgba(52, 52, 52, 0.1)`
+backgroundColor: rgba(52, 52, 52, 0.1);`
 
 class SearchScreen extends React.Component {
   static navigationOptions = {
-   title: "Recherche"
-  };
+   title: 'Recherche'
+  }
   state ={
     libelle:'', 
     libelleTest:'casca',

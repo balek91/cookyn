@@ -270,7 +270,7 @@ class AddScreen extends React.Component {
 
   retrieveData = async () => {
     console.log("jsuis dedans avec ",this.props.listEtape)
-    const { navigation } = this.props;
+    const { navigation } = this.props
     this.props.navigation.goBack(null)
     let tableau = this.props.listEtape
     console.log("jsuis dedans avec " + tableau.length )
@@ -282,7 +282,7 @@ class AddScreen extends React.Component {
       EtapesToSend: tableau,
       nbEtape : tableau.length,
       goback : true
-    });
+    })
 
 
     console.log('NEEEEEEW ETAPE ', this.state.EtapesToSend)
@@ -310,7 +310,7 @@ class AddScreen extends React.Component {
     var base64js = require('base64-js')
     let array = base64js.toByteArray(dataURI)
     console.log(array)
-    return array;
+    return array
   }
 
   returnData = (photo) => {
@@ -465,51 +465,51 @@ class AddScreen extends React.Component {
   }
 
    b64toBlob = (b64Data, contentType='', sliceSize=512) => {
-    const byteCharacters = atob(b64Data);
-    const byteArrays = [];
+    const byteCharacters = atob(b64Data)
+    const byteArrays = []
     
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize);
+      const slice = byteCharacters.slice(offset, offset + sliceSize)
       
-      const byteNumbers = new Array(slice.length);
+      const byteNumbers = new Array(slice.length)
       for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
+        byteNumbers[i] = slice.charCodeAt(i)
       }
       
-      const byteArray = new Uint8Array(byteNumbers);
+      const byteArray = new Uint8Array(byteNumbers)
       
-      byteArrays.push(byteArray);
+      byteArrays.push(byteArray)
     }
     
-    const blob = new Blob(byteArrays, {type: contentType});
-    return blob;
+    const blob = new Blob(byteArrays, {type: contentType})
+    return blob
   }
   
 
   dataURItoBlob = (dataURI) => {
-    var base64 = require('base-64');
+    var base64 = require('base-64')
 
     // convert base64 to raw binary data held in a string
     // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-    var byteString = base64.encode(dataURI.split(',')[1])//(dataURI.split(',')[1]);
+    var byteString = base64.encode(dataURI.split(',')[1])//(dataURI.split(',')[1])
     console.log(byteString)
     // separate out the mime component
     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
  
     // write the bytes of the string to an ArrayBuffer
-    var ab = new ArrayBuffer(byteString.length);
+    var ab = new ArrayBuffer(byteString.length)
  
     // create a view into the buffer
-    var ia = new Uint8Array(ab);
+    var ia = new Uint8Array(ab)
  
     // set the bytes of the buffer to the correct values
     for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
+        ia[i] = byteString.charCodeAt(i)
     }
  
     // write the ArrayBuffer to a blob, and you're done
-    var blob = new Blob([ab], {type: mimeString});
-    return blob;
+    var blob = new Blob([ab], {type: mimeString})
+    return blob
   }
 
   renderItem = ({ item, index, move, moveEnd, isActive }) => {
@@ -599,7 +599,7 @@ class AddScreen extends React.Component {
               />
 
               {
-                hide ?( <InputText
+                !!hide ?( <InputText
                   placeholderText=''
                   width={120}
                   value={this.state.selectedDiff}
@@ -625,42 +625,6 @@ class AddScreen extends React.Component {
               <TouchablePlus onPressFunction={this.addTextInputEtapes} />
             </ViewAlignItemRow>
             <View>
-{/* On tri le tableau d'étape par ordre, puis on le parcourt et pour chaque item, nous affichons une mini vu contenant un label, un text imput pour modifier 
-l'ordre d'une étape a tout moment et enfin une row contenant le descriptif de l'étape.*/}
-              {/* {
-                this.state.EtapesToSend
-                  .sort((itemA, itemB) => itemA.ordre > itemB.ordre)
-                  .map((item, index) => (
-                    <View key={`Etape ${item.ordre}`}>
-                      <ViewAlignItemRow align={'flex-end'}>
-                        <Label text={'Étape '} width={50} height={40} fontSize={16} radius={0} />
-                        <InputText
-                          onChangeTextFunction={(val) => this.updateOrdre(index, val)}
-                          keyboard='number-pad'
-                          value={item.ordre.toString()}
-                          width={60}
-                        />
-                      </ViewAlignItemRow>
-                      <ListItem
-                        key={index}
-                        title={item.etape}
-                        rightIcon={{ name: 'delete' }}
-                        onPressRightIcon={() => this.deleteListEtape(index)}
-                        input={item.ordre}
-                      />
-                    </View>
-                  ))
-              } 
-              
-               <DraggableFlatList
-          data={this.state.EtapesToSend}
-          renderItem={this.renderItem}
-          keyExtractor={(item, index) =>`draggable-item-${item.key}`}
-          scrollPercent={100}
-          onMoveEnd={({ data, to, from, row }) => {console.log("teeeeeeeeest",data, to, from, row)} }
-        />*/
-            
-            }
 
             </View>
 

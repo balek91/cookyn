@@ -28,7 +28,7 @@ export default class Touchable extends React.Component {
     }
 
     render(){
-        const {number, text, onPressFunction } = this.props;
+        const {number, text, onPressFunction } = this.props
         return (
             <StyledTouchable onPress={onPressFunction}>
                 <StyledTextNumber>
@@ -38,6 +38,6 @@ export default class Touchable extends React.Component {
                     {text}
                 </StyledText>
             </StyledTouchable>   
-        );
+        )
     }
 }

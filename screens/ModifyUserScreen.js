@@ -10,7 +10,7 @@ import ViewCustom from '../components/ViewContainer'
 export default class ModifyUserScreen extends React.Component {
   static navigationOptions = {
     title: 'Modifier Profil'
-  };
+  }
   state = {
     borderColorConfirmPassword: 'gray',
     borderColorNewPassword: 'gray',
@@ -26,7 +26,7 @@ export default class ModifyUserScreen extends React.Component {
     statusNewPassword: false,
     user: '',
     ville: '',
-  };
+  }
 
   render() {
     return (
@@ -102,52 +102,52 @@ export default class ModifyUserScreen extends React.Component {
           />
         </KeyboardAwareScrollView>
       </ViewCustom>
-    );
+    )
   }
 
   changePassword = () => {
     this.setState({
       showChangePassword: true
-    });
-  };
+    })
+  }
   verifNewPassword = confirmPassword1 => {
     this.setState({
       confirmPassword: confirmPassword1
-    });
+    })
     if (this.state.newPassword == confirmPassword1) {
       this.setState({
         borderColorConfirmPassword: 'green',
         statusConfirmPassword: true
-      });
+      })
     } else {
       this.setState({
         borderColorConfirmPassword: 'red',
         statusConfirmPassword: true
-      });
+      })
     }
-  };
+  }
 
   regexNewPassword = newPass => {
     this.setState({
       newPassword: newPass
-    });
-    var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    })
+    var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
     if (re.test(newPass)) {
       this.setState({
         borderColorNewPassword: 'green',
         statusNewPassword: true
-      });
+      })
     } else {
       this.setState({
         borderColorNewPassword: 'red',
         statusNewPassword: false
-      });
+      })
     }
-  };
+  }
 
   updateUser = () => {
-    console.log('test');
-    let body;
+    console.log('test')
+    let body
     if (this.state.showChangePassword) {
       body = {
         idUser: this.state.id,
@@ -158,21 +158,21 @@ export default class ModifyUserScreen extends React.Component {
         usernameUser: this.state.user,
         passwordUser: this.state.oldPassword,
         newPassword: this.state.newPassword
-      };
+      }
       if (this.state.statusNewPassword && this.state.statusConfirmPassword) {
         Axios.post(
           'http://51.75.22.154:8080/Cookyn/user/UpdateUser',
           body
         ).then(response => {
           if (response.data.idUser != null) {
-            this.props.navigation.state.params.onNavigateBack();
-            this.props.navigation.navigate('Profil');
+            this.props.navigation.state.params.onNavigateBack()
+            this.props.navigation.navigate('Profil')
           } else {
-            alert('probleme dans l\'ancien mot de passe');
+            alert('probleme dans l\'ancien mot de passe')
           }
-        });
+        })
       } else {
-        alert('probleme dans le nouveau mot de passe');
+        alert('probleme dans le nouveau mot de passe')
       }
     } else {
       body = {
@@ -182,21 +182,21 @@ export default class ModifyUserScreen extends React.Component {
         mailUser: this.state.mail,
         usernameUser: this.state.user,
         villeUser: this.state.ville
-      };
+      }
       Axios.post('http://51.75.22.154:8080/Cookyn/user/UpdateUser', body).then(
         response => {
           if (response.data.idUser != null) {
             this.props.navigation.state.params.onNavigateBack()
           } else {
-            alert('erreur');
+            alert('erreur')
           }
         }
-      );
+      )
     }
-  };
+  }
 
   componentDidMount() {
-    const { navigation } = this.props;
+    const { navigation } = this.props
     this.setState({
       id: navigation.getParam('id', 0),
       nom: navigation.getParam('nom', 'NO-NAME'),
@@ -204,6 +204,6 @@ export default class ModifyUserScreen extends React.Component {
       mail: navigation.getParam('mail', 'NO-MAIL'),
       ville: navigation.getParam('ville', 'NO-VILLE'),
       user: navigation.getParam('user', 'NO-USERNAME')
-    });
+    })
   }
 }

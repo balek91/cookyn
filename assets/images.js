@@ -1,1 +1,1 @@
-export const learnColour = require('./icons/home.png');
+export const learnColour = require('./icons/home.png')

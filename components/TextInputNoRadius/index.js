@@ -47,7 +47,7 @@ export default class InputTextNoRadius extends React.Component {
             value,
             isPassword,
             bordercolor
-        } = this.props;
+        } = this.props
         return (
             <StyledTextInput
                 width={width}

@@ -23,6 +23,6 @@ export default class Touchable extends React.Component {
             <StyledTouchable  onPress={onPressFunction}>
                 <StyledImage source={PhotoIcon}  />
             </StyledTouchable>   
-        );
+        )
     }
 }

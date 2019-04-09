@@ -14,6 +14,6 @@ export default class ViewCenter extends React.Component {
             <StyledView>
                 {this.props.children}
             </StyledView>
-        );
+        )
     }
 }

@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 import {
   Platform,
   StyleSheet,
   View,
   Text, TouchableOpacity, Image, AsyncStorage, ScrollView, ImageBackground
-} from 'react-native';
+} from 'react-native'
 import Axios from 'axios'
 
 
@@ -13,19 +13,19 @@ import compare from '../utils/CompareDate'
 import Calendar from 'react-native-calendar'
 import styled from 'styled-components'
 import ViewContainer from '../components/ViewContainer/index'
-import { FlatGrid } from 'react-native-super-grid';
-import { SectionGrid } from 'react-native-super-grid';
+import { FlatGrid } from 'react-native-super-grid'
+import { SectionGrid } from 'react-native-super-grid'
 
 
 
 const StyledView = styled(ViewContainer)`
 padding : 50px 0px 0px 0px;
-backgroundColor: rgba(52, 52, 52, 0.1)`
+backgroundColor: rgba(52, 52, 52, 0.1);`
 
 export default class CalendarScreen extends React.Component {
   static navigationOptions = {
     header: null,
-  };
+  }
   state ={
     dateSelected :new Date(),
     listRecette :[],
@@ -48,7 +48,7 @@ export default class CalendarScreen extends React.Component {
           actualMonth : month,
           actualYear : year
         })
-    const idUser = await AsyncStorage.getItem('idUser');
+    const idUser = await AsyncStorage.getItem('idUser')
     Axios.get(`http://51.75.22.154:8080/Cookyn/planning/GetListPlanningsByUserOffset/${idUser}/0`)
     .then((response) => {
       if (response.status == 200) {
@@ -73,7 +73,7 @@ export default class CalendarScreen extends React.Component {
   }
 
   getListRecette = async (date) => {
-     const idUser = await AsyncStorage.getItem('idUser');
+     const idUser = await AsyncStorage.getItem('idUser')
      var trueDate = date.split("T")[0]
      let json = {
        idUser : idUser,
@@ -120,9 +120,6 @@ export default class CalendarScreen extends React.Component {
        { listRecette.length >0 ?
           <SectionGrid
                         itemDimension={90}
-                        // staticDimension={300}
-                        // fixed
-                        // spacing={20}
                         sections={[
                             {
                             title: 'Les Recettes',
@@ -180,4 +177,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#636e72',
     color: 'white',
   },
-});
+})

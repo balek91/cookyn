@@ -1,14 +1,14 @@
-import React from 'react';
-import Animated from "react-native"
+import React from 'react'
+import Animated from 'react-native'
 
 export default class DynamicListRow extends React.Component {
-    // these values will need to be fixed either within the component or sent through props
-    _defaultHeightValue = 60;
-    _defaultTransition  = 500;
+
+    _defaultHeightValue = 60
+    _defaultTransition  = 500
     state = {
         _rowHeight  : new Animated.Value(this._defaultHeightValue),
         _rowOpacity : new Animated.Value(0)
-    };
+    }
     componentDidMount() {
         Animated.timing(this.state._rowOpacity, {
             toValue  : 1,
@@ -17,9 +17,8 @@ export default class DynamicListRow extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.remove) {
-            this.onRemoving(nextProps.onRemoving);
+            this.onRemoving(nextProps.onRemoving)
         } else {
- // we need this for iOS because iOS does not reset list row style properties
             this.resetHeight()
         }
     }
@@ -27,13 +26,13 @@ export default class DynamicListRow extends React.Component {
         Animated.timing(this.state._rowHeight, {
             toValue  : 0,
             duration : this._defaultTransition
-        }).start(callback);
+        }).start(callback)
     }
     resetHeight() {
         Animated.timing(this.state._rowHeight, {
             toValue  : this._defaultHeightValue,
             duration : 0
-        }).start();
+        }).start()
     }
     render() {
         return (

@@ -8,7 +8,7 @@ import { store } from './config/store'
 
 const StyledView = styled.View`
 flex :1;
-background-color: #fff`
+background-color: #fff;`
 
 export default class App extends React.Component {
   state = {
@@ -20,10 +20,10 @@ export default class App extends React.Component {
   componentDidMount() {
     isSignedIn()
       .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
-      .catch(err => console.log('An error occured ' + err));
+      .catch(err => console.log('An error occured ' + err))
   }
   render() {
-    const Layout = createRootNavigator(this.state.signedIn);
+    const Layout = createRootNavigator(this.state.signedIn)
     return (
       <Provider store={store}>
         <StyledView><Layout /> <QuickPicker /></StyledView></Provider>)

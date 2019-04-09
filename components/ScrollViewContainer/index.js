@@ -16,6 +16,6 @@ export default class ScrollViewContainer extends React.Component {
 				{this.props.children}
 			</StyledView>
 
-		);
+		)
 	}
 }

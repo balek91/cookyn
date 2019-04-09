@@ -49,7 +49,7 @@ export default class Touchable extends React.PureComponent {
     }
 
     render() {
-        const { textPrincipal, textDetail, onPressFunction } = this.props;
+        const { textPrincipal, textDetail, onPressFunction } = this.props
         return (
 
                 <StyledTouchable onPress={onPressFunction}>

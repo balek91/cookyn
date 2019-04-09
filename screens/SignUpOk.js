@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, ImageBackground, Image } from 'react-native';
+import React, { Component } from 'react'
+import { StyleSheet, Text, View, ScrollView, ImageBackground, Image } from 'react-native'
 import Touchable from '../components/Touchable'
 import styled from 'styled-components'
 import ViewContainer from '../components/ViewContainer'
@@ -13,7 +13,7 @@ export default class SignUpOk extends Component {
 
 
   goToLogin =() => {
-    this.props.navigation.navigate('Login');
+    this.props.navigation.navigate('Login')
   }
   render() {
     return (
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   }
 
-});
+})

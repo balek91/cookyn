@@ -26,7 +26,7 @@ export default class ButtonFollow extends React.Component {
     }
 
     render(){
-        const {text, onPressFunction} = this.props;
+        const {text, onPressFunction} = this.props
         return(
         <View>
             <Touchable  onPress={onPressFunction} >
@@ -35,6 +35,6 @@ export default class ButtonFollow extends React.Component {
                 </StyledText>
             </Touchable>
         </View>
-        );
+        )
     }
 }

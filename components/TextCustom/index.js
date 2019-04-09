@@ -7,7 +7,7 @@ const StyledText = styled.Text
 font-size: ${props => props.fontsize ? props.fontsize : 15};
 color: ${props => props.color ? props.color : 'black'};
 line-height: 24;
-font-weight : ${props => props.fontweight ? props.fontweight : 400}
+font-weight : ${props => props.fontweight ? props.fontweight : 400};
 `
 
 export default class TextCustom extends React.Component {
@@ -21,9 +21,9 @@ export default class TextCustom extends React.Component {
     }
 
     render(){
-        const {text,fontsize, onPress,color, fontweight} = this.props;
+        const {text,fontsize, onPress,color, fontweight} = this.props
         return(
             <StyledText fontsize={fontsize} fontweight={fontweight} color={color} onPress={onPress ? onPress : null}>{text}</StyledText>
-        );
+        )
     }
 }

@@ -22,12 +22,12 @@ export default class HeaderContainer extends React.Component {
     }
     
     render(){
-        const {titleText} = this.props;
+        const {titleText} = this.props
         return(
             <Header>
                 <StyledTextBold>{titleText}</StyledTextBold>
             </Header>
-        );
+        )
     }
 
 }

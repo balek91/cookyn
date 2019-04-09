@@ -22,7 +22,7 @@ padding : 20px 0px 0px 0px;`
 class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
-  };
+  }
   componentDidMount() {
     this.props.actions.recette.getRecettes()
 
@@ -58,7 +58,7 @@ class HomeScreen extends React.Component {
               <ListItemElement textPrincipal={item.libelleRecette} textDetail={`Categorie : ${item.catRecette} / temps de prépartation : ${item.tempPrepaRecette}`} onPressFunction={() => { this.navigateToDetail(item) }} />
             )} />) : (null)}
       </StyledView>
-    );
+    )
   }
 
 }

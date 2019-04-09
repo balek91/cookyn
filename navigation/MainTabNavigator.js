@@ -26,7 +26,7 @@ const HomeStack = createStackNavigator({
   DetailRecette : DetailRecetteScreen,
   ListRecetteCreation : ListRecetteCreationScreen,
   Search : SearchScreen,
-});
+})
 
 
 HomeStack.navigationOptions = {
@@ -39,12 +39,12 @@ HomeStack.navigationOptions = {
     <Image style={{ height: 26, width: 26 }}
       source={require('../assets/icons/home.jpg')}
     />
-  )};
+  )}
 
 const AddStack = createStackNavigator({
   Add: AddScreen,
   ModifySteps: ModifyStepsScreen
-});
+})
 
 AddStack.navigationOptions = {
   tabBarLabel: 'Ajouter',
@@ -55,7 +55,7 @@ AddStack.navigationOptions = {
     /> :  <Image style={{ height: 26, width: 26 }}
     source={require('../assets/icons/add.png')}
   />
-    )};
+    )}
 
 const ProfilStack = createStackNavigator({
   Profil: ProfilScreen,
@@ -65,7 +65,7 @@ const ProfilStack = createStackNavigator({
   ListUsers: ListUsersScreen,
   DetailRecette : DetailRecetteScreen,
   ListRecetteCreation : ListRecetteCreationScreen
-});
+})
 
 ProfilStack.navigationOptions = {
   tabBarLabel: 'Profil',
@@ -76,7 +76,7 @@ ProfilStack.navigationOptions = {
     /> :  <Image style={{ height: 26, width: 26 }}
     source={require('../assets/icons/profil.jpg')}
   />  )
-};
+}
 
 const CalendarStack = createStackNavigator({
   Calendar: CalendarScreen,
@@ -88,7 +88,7 @@ const CalendarStack = createStackNavigator({
   ListUsers: ListUsersScreen,
   DetailRecette : DetailRecetteScreen,
   ListRecetteCreation : ListRecetteCreationScreen
-});
+})
 
 CalendarStack.navigationOptions = {
   tabBarLabel: 'Calendrier',
@@ -99,12 +99,12 @@ CalendarStack.navigationOptions = {
     /> : <Image style={{ height: 26, width: 26 }}
     source={require('../assets/icons/calendar.png')}
   /> )
-};
+}
 
 
 const ShoppingListStack = createStackNavigator({
   Shopping: ShoppingListScrenn,
-});
+})
 
 ShoppingListStack.navigationOptions = {
   tabBarLabel: 'Courses',
@@ -115,13 +115,12 @@ ShoppingListStack.navigationOptions = {
     /> :  <Image style={{ height: 26, width: 26 }}
     source={require('../assets/icons/panier.png')}
   />)
-};
+}
 
 export default createBottomTabNavigator({
-  
   HomeStack,
   AddStack,
   ProfilStack,
   CalendarStack,
   ShoppingListStack
-});
+})

@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 const StyledText = styled.Text`
     width: ${props => (props.width ? props.width : 300)};
@@ -19,9 +19,9 @@ const StyledText = styled.Text`
 export default class TextRadius extends React.Component {
     static propTypes = {
         text: PropTypes.string
-    };
+    }
     render() {
-        const { text } = this.props;
-        return <StyledText>{text}</StyledText>;
+        const { text } = this.props
+        return <StyledText>{text}</StyledText>
     }
 }

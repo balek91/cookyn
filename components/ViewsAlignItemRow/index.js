@@ -15,6 +15,6 @@ export default class ViewAlignItemRow extends React.Component {
             <StyledView>
                 {this.props.children}
             </StyledView>
-        );
+        )
     }
 }

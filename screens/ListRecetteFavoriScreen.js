@@ -30,7 +30,7 @@ export default class ListRecetteFavoriScreen extends React.Component {
   
 
   render() {
-    const { favoriList } = this.state;
+    const { favoriList } = this.state
 
     
     return (
@@ -45,7 +45,7 @@ export default class ListRecetteFavoriScreen extends React.Component {
               <ListItemElement textPrincipal={item.recette.libelleRecette} textDetail={`Categorie : ${item.recette.catRecette} / temps de prépartation : ${item.recette.tempPrepaRecette}`} onPressFunction={() => { this.navigateToDetail(item.recette) }} />
             )} />) : (null)}
       </ViewCustom>
-    );
+    )
   }
   keyExtractor = item => item.idFavoris.toString()
 

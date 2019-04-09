@@ -13,7 +13,7 @@ const StyledTextInput = styled.TextInput`
   margin-vertical: 10;
   text-align: center;
   border-width: 0.5;
-`;
+`
 
 export default class InputText extends React.Component {
   static propTypes = {
@@ -53,7 +53,7 @@ export default class InputText extends React.Component {
       editable = true,
       backgroundcolor,
       fontcolor
-    } = this.props;
+    } = this.props
 
     return (
       <StyledTextInput

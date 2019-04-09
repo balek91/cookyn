@@ -1,7 +1,7 @@
-import { createSwitchNavigator } from 'react-navigation';
+import { createSwitchNavigator } from 'react-navigation'
 
-import Connected from './MainTabNavigator';
-import NotConnected from './SignedOutNavigator';
+import Connected from './MainTabNavigator'
+import NotConnected from './SignedOutNavigator'
 
 
 export const createRootNavigator = (signedIn = false) => {
@@ -14,8 +14,8 @@ export const createRootNavigator = (signedIn = false) => {
   SignedOut:{
     screen : NotConnected
   }},
-  {initialRouteName: signedIn ? "SignedIn" : "SignedOut"});
-};
+  {initialRouteName: signedIn ? "SignedIn" : "SignedOut"})
+}
 
 export default createSwitchNavigator({
   // You could add another route here for authentication.
@@ -28,4 +28,4 @@ export default createSwitchNavigator({
     screen : NotConnected
   } 
   
-});
+})

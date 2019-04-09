@@ -30,9 +30,8 @@ export default class ListRecetteCreationScreen extends React.Component {
   
 
   render() {
-    const { creationList } = this.state;
+    const { creationList } = this.state
 
-    
     return (
     <ViewCustom>
         {creationList ? (
@@ -46,7 +45,7 @@ export default class ListRecetteCreationScreen extends React.Component {
               <ListItemElement textPrincipal={item.libelleRecette} textDetail={`Categorie : ${item.catRecette} / temps de prépartation : ${item.tempPrepaRecette}`} onPressFunction={() => { this.navigateToDetail(item) }} />
             )} />) : (null)}
       </ViewCustom>
-    );
+    )
   }
   keyExtractor = item => item.idRecette.toString()
 

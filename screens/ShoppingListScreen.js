@@ -25,7 +25,7 @@ margin-top : 10px;
 export default class ShoppingListScreen extends React.Component {
   static navigationOptions = {
     header : null
-  };
+  }
 
   state = {
 		currentDate: new Date(),

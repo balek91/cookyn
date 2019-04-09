@@ -13,11 +13,11 @@ export default class ViewContainer extends React.Component {
 
 
     render(){
-        const {align} = this.props;
+        const {align} = this.props
         return(
             <StyledView align={align} style={this.props.style} >
                 {this.props.children}
             </StyledView>
-        );
+        )
     }
 }

@@ -4,14 +4,15 @@ import styled from 'styled-components'
 import {Image} from 'react-native'
 
 const StyledTouchable = styled.TouchableOpacity
-`margin-vertical: 10;
+`
+margin-vertical: 10;
 padding-vertical: 13;
 `
 
 const StyledImage = styled.Image
 `
 width: 30;
- height: 30;
+height: 30;
 `
 
 export default class TouchableModifier extends Component {
@@ -24,8 +25,8 @@ export default class TouchableModifier extends Component {
         const {onPressFunction } = this.props;
         return (
             <StyledTouchable onPress={onPressFunction}>
-                 <StyledImage source={require('../../assets/icons/Modifier.png')} />
+                <StyledImage source={require('../../assets/icons/Modifier.png')} />
             </StyledTouchable>   
-        );
+        )
     }
 }

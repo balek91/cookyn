@@ -9,12 +9,12 @@ import TouchableLink from '../components/TouchableLink'
 import DatePicker from 'react-native-datepicker'
 import compare from '../utils/CompareDate'
 
-import {Alert} from 'react-native';
+import {Alert} from 'react-native'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import allTheActions from '../actions'
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native'
 
 
 
@@ -54,8 +54,6 @@ border-width:2;
 borderColor:grey;
 margin: 0px 20px 20px 20px
 `
-//alignSelf:flex-start;
-
 
 const StyledImage = styled.Image
 	`
@@ -265,7 +263,6 @@ class DetailScreen extends React.Component {
 								dateInput: {
 									marginLeft: 36
 								}
-								// ... You can check the source to find the other keys.
 								}}
 								onDateChange={(date) => {this.setState({currentDate: date, changeDate : true})}}
 							/>
@@ -280,7 +277,7 @@ class DetailScreen extends React.Component {
 
 						</ViewCenter>
 					</Content>
-								</ImageBackground>
+					</ImageBackground>
 
 				</StyledView>
 			)

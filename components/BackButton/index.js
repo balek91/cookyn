@@ -14,8 +14,8 @@ margin-right : 8;
 const ViewFlex = styled.View`
 flex : 1;`
 const TextCustom = styled.Text`
-color : #007AFF
-font-size : 17`
+color : #007AFF;
+font-size : 17;`
 export default class BackButton extends React.Component {
 
     static propTypes = {
@@ -23,7 +23,7 @@ export default class BackButton extends React.Component {
     }
 
     render(){
-        const { onPress} = this.props;
+        const { onPress} = this.props
         return(
                 <Touchable onPress={onPress}>
                     <ViewFlex>
@@ -35,6 +35,6 @@ export default class BackButton extends React.Component {
                     <ViewFlex></ViewFlex>
                     </ViewFlex>
                 </Touchable>
-        );
+        )
     }
 }

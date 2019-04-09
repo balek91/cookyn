@@ -6,10 +6,10 @@ const StyledText = styled.Text
 `
 font-size: ${props => props.fontsize ? props.fontsize : 15};
 height:${props => props.height ? props.height : 100};
-border-radius: ${props => props.radius ? props.radius : 0}
+border-radius: ${props => props.radius ? props.radius : 0};
 border-width:${props => props.radius ? 0.5 : 0}
 color:#FFF;
-backgroundColor: rgba(255, 255, 255, 0.1)
+backgroundColor: rgba(255, 255, 255, 0.1);
 padding-horizontal:10;
 marginVertical: 10;
 fontWeight:bold;
@@ -30,9 +30,9 @@ export default class LabelCustom extends React.Component {
     }
 
     render(){
-        const {text,fontsize, height,radius} = this.props;
+        const {text,fontsize, height,radius} = this.props
         return(
             <StyledText height={height} fontsize={fontsize} radius={radius}>{text}</StyledText>
-        );
+        )
     }
 }

@@ -7,8 +7,8 @@ import styled from 'styled-components'
 import ViewContainer from '../components/ViewContainer/index'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SearchBar from 'react-native-searchbar'
-import Touchable from '../components/Touchable';
-import Axios from 'axios';
+import Touchable from '../components/Touchable'
+import Axios from 'axios'
 import { onSignOut } from '../components/Auth.js'
 
 

@@ -28,13 +28,13 @@ export default class TouchableLink extends React.Component {
     }
 
     render(){
-        const {text, onPressFunction, widthTouchable, backgroundColorTouchable,colorText } = this.props;
+        const {text, onPressFunction, widthTouchable, backgroundColorTouchable,colorText } = this.props
         return (
             <StyledTouchable widthTouchable={widthTouchable} colorText={colorText} backgroundColorTouchable={backgroundColorTouchable} onPress={onPressFunction}>
                 <StyledText>
                     {text}
                 </StyledText>
             </StyledTouchable>   
-        );
+        )
     }
 }

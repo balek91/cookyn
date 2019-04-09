@@ -3,7 +3,7 @@ import React from 'react'
 import { Image, View } from 'react-native'
 import OptionsMenu from 'react-native-options-menu'
 import styled from 'styled-components'
-import { colors } from 'react-native-elements';
+import { colors } from 'react-native-elements'
 
 
 const StyledImage = styled.Image
@@ -24,7 +24,7 @@ export default class OptionPicker extends React.Component {
     }
 
     render() {
-        const { action, option, image } = this.props;
+        const { action, option, image } = this.props
         const PhotoIcon = require('../../assets/icons/addphoto.png')
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -36,6 +36,6 @@ export default class OptionPicker extends React.Component {
                 {image &&
                     <StyledImage source={{ uri: image }} style={{ width: 200, height: 200 }} />}
             </View>
-        );
+        )
     }
 }

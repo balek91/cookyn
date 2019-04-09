@@ -40,7 +40,7 @@ export default class EtapeView extends React.Component {
 
 
     render() {
-        const { array, onChangeTextFunction, onPressRightIconFunction } = this.props;
+        const { array, onChangeTextFunction, onPressRightIconFunction } = this.props
         return (
             <View>
                 {

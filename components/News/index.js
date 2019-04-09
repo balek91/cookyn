@@ -8,7 +8,7 @@ const StyledView = styled.View
 flex: 1;
 justifyContent: center;
 alignItems: center;
-backgroundColor: rgba(52, 52, 52, 0.1)`
+backgroundColor: rgba(52, 52, 52, 0.1);`
 
 const StyledTextArray = styled.Text
 	`
@@ -24,7 +24,7 @@ alignItems: flex-start;
 backgroundColor: #F5FCFF;
 border-radius:10;
 border-width:0.5;
-margin: 0px 20px 10px 20px
+margin: 0px 20px 10px 20px;
 width:90%;
 `
 
@@ -40,7 +40,7 @@ class New extends React.Component {
 
 
     render(){
-        const {who, what, action, date} = this.props;
+        const {who, what, action, date} = this.props
 
         if (action == 'Create'){
             return(

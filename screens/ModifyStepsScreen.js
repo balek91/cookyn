@@ -46,7 +46,7 @@ class ModifyStepsScreen extends React.Component {
       let array =this.props.listEtape
       this.setState({
           allSteps: array
-        });
+        })
       }
 
       renderItem = ({ item, index, move, moveEnd, isActive }) => {
@@ -119,7 +119,7 @@ class ModifyStepsScreen extends React.Component {
                 
                 let tab = data
                 for (let i = to+1; i < tab.length ; i++){
-                     tab[i].ordre = i+1;
+                     tab[i].ordre = i+1
                 }
                 this.props.actions.etape.Update(tab)
                 this.setState({
@@ -129,7 +129,7 @@ class ModifyStepsScreen extends React.Component {
                 row.ordre = to+1
                 let tab = data
                 for (let i = to-1; i >=0 ; i--){
-                     tab[i].ordre = i+1;
+                     tab[i].ordre = i+1
                 }
                 this.props.actions.etape.Update(tab)
                 this.setState({
