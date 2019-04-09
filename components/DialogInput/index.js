@@ -42,7 +42,7 @@ class DialogInput extends React.Component{
                 <Text style={styles.title_modal}>{title}</Text>
                 <Text style={[this.props.message ? styles.message_modal : {height:0} ]}>{this.props.message}</Text>
                 <TextInput style={styles.input_container}
-                  autoCorrect={(textProps && textProps.autoCorrect==false)?false:true}
+                  autoCorrect={false}
                   autoCapitalize={(textProps && textProps.autoCapitalize)?textProps.autoCapitalize:'none'}
                   clearButtonMode={(textProps && textProps.clearButtonMode)?textProps.clearButtonMode:'never'}
                   clearTextOnFocus={(textProps && textProps.clearTextOnFocus==true)?textProps.clearTextOnFocus:false}
@@ -53,7 +53,7 @@ class DialogInput extends React.Component{
                   placeholder={hintInput}
                   onChangeText={(inputModal) => this.setState({inputModal})}
                   value={value}
-                  secureTextEntry={true}
+                  secureTextEntry={this.props.secureTextEntry ? this.props.secureTextEntry : false }
                   />
               </View>
               <View style={styles.btn_container}>

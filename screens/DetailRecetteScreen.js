@@ -8,7 +8,7 @@ import Touchable from '../components/Touchable'
 import TouchableLink from '../components/TouchableLink'
 import DatePicker from 'react-native-datepicker'
 import compare from '../utils/CompareDate'
-import DialogInput from '../components/DialogInput';
+import DialogInput from '../components/DialogInput'
 
 
 import {Alert} from 'react-native';
@@ -326,9 +326,12 @@ class DetailScreen extends React.Component {
             title={"Confirmation de la suppression"}
             message={"Veuillez entrer votre mot de passe"}
 						hintInput ={"mot de passe"}
+						cancelText = {'Annuler'}
+            submitText = {'Envoyer'}
+            secureTextEntry = {true}
             submitInput={ (inputText) => {this.sendInput(inputText)} }
             closeDialog={ () => {this.setState({isDialogVisible : false})}}>
-</DialogInput>
+						</DialogInput>
 					</Content>
 								</ImageBackground>
 

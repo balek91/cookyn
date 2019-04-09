@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import React from 'react'
-import { AsyncStorage, Image, ImageBackground } from 'react-native'
+import { AsyncStorage, Image, ImageBackground, Linking } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { onSignIn } from '../components/Auth.js'
 import ContentContainer from '../components/ContentContainer/index'
@@ -12,7 +12,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import allTheActions from '../actions'
 import styled from 'styled-components'
-import img from '../assets/images/home.jpg'
+import DialogInput from '../components/DialogInput'
+
 
 const StyledView = styled(ViewContainer)`
 padding : 0px 0px 0px 0px;
@@ -21,6 +22,15 @@ backgroundColor: rgba(52, 52, 52, 0.1)`
 const ViewCustom = styled.View`
 padding-top : 25px;
 align-items : center;
+`
+const ForgotPasswordText =  styled(TextCustom)`
+font-style : italic;
+`
+
+const ForgotPasswordView = styled.View
+`
+backgroundColor: rgba(52, 52, 52, 0.1)
+align-items: center;
 `
 
 class Login extends React.Component {
@@ -34,6 +44,8 @@ class Login extends React.Component {
     password: '',
     prenom: null,
     username: '',
+    isDialogVisible: false,
+
   }
 
   connexion = (id) => {
@@ -66,6 +78,10 @@ class Login extends React.Component {
               isPassword={true}
               onChangeTextFunction={(password) => this.setState({ password })}
             />
+            <ForgotPasswordView  >
+              <ForgotPasswordText color={'white'} text={`Mot de passe oublié ?`} 
+              fontStyle={'italic'} fontsize={17} onPress={() => this.setState({isDialogVisible : !this.state.isDialogVisible})}  />
+            </ForgotPasswordView>
             <Touchable
               text='Connexion'
               onPressFunction={() => this.Login()}
@@ -80,18 +96,37 @@ class Login extends React.Component {
               backgroundColorTouchable='#E88110'
               colorText='#FFF'
             />
-            <TextCustom text={'\n'} />
+
             <ViewContainer style={{backgroundColor:'rgba(52, 52, 52, 0.1)' }} >
+               <TextCustom text={'\n'} />
               <TextCustom color={'white'} text={'Vous n\'avez pas de compte ?'} fontsize={17}  />
               <TextCustom color={'white'} text={'Inscrivez vous'} onPress={() => this.SignUp()} fontsize={17} fontweight={800} />
               <TextCustom text={'\n'} />
+              <TextCustom color={'white'} text={'Nous contacter'} onPress={() => Linking.openURL('mailto:ycookyn@gmail.com')} fontsize={17} fontweight={800} />
+              <TextCustom text={'\n'} />
             </ViewContainer>
           </KeyboardAwareScrollView>
+          <DialogInput isDialogVisible={this.state.isDialogVisible}
+            title={'Mot de passe oublié'}
+            message={'Veuillez entrer votre adresse mail'}
+						hintInput ={'email'}
+            cancelText = {'Annuler'}
+            submitText = {'Envoyer'}
+            autoCorrect = {false}
+            submitInput={ (inputText) => {this.forgotPassword(inputText)} }
+            closeDialog={ () => {this.setState({isDialogVisible : false})}}>
+						</DialogInput>
         </ContentContainer>
         </ImageBackground>
       </StyledView>
     )
   }
+
+  forgotPassword = (email) => {
+    this.setState({isDialogVisible : false})
+    console.log('email', email)
+  }
+
   SignUp = () => {
     this.props.navigation.push('SignUp')
   }
