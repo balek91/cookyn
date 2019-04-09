@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { AsyncStorage, ImageBackground } from 'react-native'
 import DatePicker from 'react-native-datepicker'
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import compare from '../utils/CompareDate'
 import styled from 'styled-components'
 import Touchable from '../components/TouchableCourse'
@@ -82,6 +82,8 @@ export default class ShoppingListScreen extends React.Component {
     return (
       <GlobalView>
 			<ImageBackground source={require('../assets/images/CoursePage.jpeg')} style={{width: '100%', height: '100%'}}>
+			<KeyboardAwareScrollView behavior='padding' resetScrollToCoords={{ x: 0, y: 0 }} showsVerticalScrollIndicator={false} >
+
 			<ContentView>
 				<PickerView>
         <DatePicker
@@ -156,13 +158,16 @@ export default class ShoppingListScreen extends React.Component {
 								widthTouchable={150}
 								backgroundColorTouchable='#E88110'
 								colorText='#FFF'/>
+
 								{ 
 									listCourse ? 
 									<ListCourse categorie={listCourse} />
 									:
 									null
 								}
+								
 					</ContentView>
+					</KeyboardAwareScrollView>
 				</ImageBackground>
       </GlobalView>
     )
