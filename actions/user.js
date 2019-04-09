@@ -13,7 +13,7 @@ export const connexion = (id) => ({
     id
   })
   
-  export const decreasecounter =() => ({
+  export const deconnexion =() => ({
     type: DECONNEXION
   })
 
