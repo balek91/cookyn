@@ -4,7 +4,6 @@ import styled from 'styled-components/native'
 import compare from '../../utils/CompareDate'
 import TouchableLink from '../TouchableLink'
 import { AsyncStorage } from 'react-native';
-import {withNavigation} from 'react-navigation'
 
 const StyledView = styled.View
 	`
@@ -30,12 +29,8 @@ border-width:0.5;
 margin: 0px 20px 10px 20px
 width:90%;
 `
-const StyledTouchableLink = styled(TouchableLink)
-`
 
-`
-
-class New extends React.Component {
+export default class Actu extends React.Component {
 
     static propTypes = {
         who: PropTypes.string,
@@ -70,7 +65,7 @@ class New extends React.Component {
 								backgroundColorTouchable='rgba(245, 252, 255, 0.1)'
 								colorText='#000'
 							/>
-                        {"a ajouté la recette "}<TouchableLink
+                        {" a ajouté la recette "}<TouchableLink
 								text={what}
 								onPressFunction={()=> this.goRecettePage(navigation,idWhat)}
 								widthTouchable={200}
@@ -91,13 +86,13 @@ class New extends React.Component {
 								widthTouchable={200}
 								backgroundColorTouchable='rgba(245, 252, 255, 0.1)'
 								colorText='#000'
-							/>{"a ajouté "} <TouchableLink
+							/>{" a ajouté "} <TouchableLink
                             text={what}
                             onPressFunction={()=> this.goRecettePage(navigation,idWhat)}
                             widthTouchable={200}
                             backgroundColorTouchable='rgba(245, 252, 255, 0.1)'
                             colorText='#000'
-                        />{ " à ses favoris"}
+                        />{ " à ses favoris "}
                            </StyledTextArray>
                         <StyledTextArray>{compare.getDifference(date)} </StyledTextArray>
                     </StyledViewArray>
@@ -113,7 +108,7 @@ class New extends React.Component {
 								widthTouchable={200}
 								backgroundColorTouchable='rgba(245, 252, 255, 0.1)'
 								colorText='#000'
-							/>{"commencé à suivre"}<TouchableLink
+							/>{" à commencé à suivre "}<TouchableLink
                             text={what}
                             onPressFunction={()=> this.goProfilPage(navigation,idWhat)}
                             widthTouchable={200}
@@ -127,4 +122,4 @@ class New extends React.Component {
     }
 }
 
-export default withNavigation(New)
+ 

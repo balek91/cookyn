@@ -1,4 +1,4 @@
-import { GET_ALL_ACTUALITE, REFRESH_ACTUALITE } from '../actions/actualités'
+import { GET_ALL_ACTUALITE, REFRESH_ACTUALITE } from '../actions/actualites'
 
 
 const initialState = {

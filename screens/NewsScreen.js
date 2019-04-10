@@ -1,5 +1,5 @@
 import React from 'react'
-import News from '../components/News'
+import Actu from '../components/News'
 import {ImageBackground, Button, Text, View,Image, TouchableOpacity, AsyncStorage} from 'react-native'
 import ContentContainer from '../components/ContentContainer/index'
 import styled from 'styled-components'
@@ -89,6 +89,7 @@ class NewsScreen extends React.Component {
 
     render(){
         const {actualite} = this.props
+        var tab = actualite.list.sort((itemA, itemB) => itemA.date < itemB.date)
         console.log(actualite)
         return(<StyledView>
                     <ImageBackground source={require('../assets/images/homeBack.jpg')} style={{width: '100%', height: '100%'}}>
@@ -108,7 +109,7 @@ class NewsScreen extends React.Component {
                         </HeaderRightView>
                     </HeaderView>
                     <StyledFlatList
-                      data={actualite.list}
+                      data={tab}
                       refreshing={false}
                       onRefresh={() => this.refreshContentAsync()}
                       onEndReached={() => this.loadMoreContentAsync()}
@@ -116,8 +117,8 @@ class NewsScreen extends React.Component {
                       initialNumToRender={7}
                       keyExtractor={this.keyExtractor}
                       renderItem={({ item }) => (
-                        <News idWho={item.user.idUser} who={item.user.prenomUser} idWhat={item.idWhat} what={'Les cousins'} action={item.typeActualite} date={new Date(item.date)}></News>
-                      )} />
+                        <Actu navigation={this.props.navigation} idWho={item.user.idUser} who={item.user.prenomUser} idWhat={item.whoDto.id} what={item.whoDto.name} action={item.typeActuailite} date={new Date(item.date)}></Actu>
+                      )} /> 
          
             </ContentContainer>
            </ImageBackground>

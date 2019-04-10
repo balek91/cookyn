@@ -24,7 +24,7 @@ export const getActualite = (idUser,offset = 0, refresh = false) => dispatch => 
       if (!refresh) {
         dispatch(
           allActualite({
-            list: res.data.listActulalites,
+            list: res.data.listActu,
             offset: res.data.offset,
             limite: res.data.limite,
           })
@@ -33,7 +33,7 @@ export const getActualite = (idUser,offset = 0, refresh = false) => dispatch => 
       else {
         dispatch(
             refreshActualite({
-            list: res.data.listActulalites,
+            list: res.data.listActu,
             offset: res.data.offset,
             limite: res.data.limite,
           })

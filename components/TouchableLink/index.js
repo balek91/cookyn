@@ -32,7 +32,7 @@ export default class TouchableLink extends React.Component {
         const {text, onPressFunction, widthTouchable, backgroundColorTouchable,colorText } = this.props;
         return (
                 <StyledText onPress={onPressFunction}>
-                    {" "+text+ " "}
+                    {text}
                 </StyledText>
         );
     }
