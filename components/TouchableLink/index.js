@@ -4,18 +4,19 @@ import styled from 'styled-components'
 
 const StyledTouchable = styled.TouchableOpacity
 `
-background-color:rgba(52, 52, 52, 0.1);
-margin-vertical: 10;
-padding-vertical: 13;
+background-color:${props => props.backgroundColorTouchable ? props.backgroundColorTouchable :'rgba(52, 52, 52, 0.1)'};
 padding-left:5;
+padding-right:5;
+bottom:100;
 `
 const StyledText = styled.Text
 `
 font-size:16;
-font-weight:500;
+font-weight:bold;
 color:${props => props.colorText ? props.colorText : '#000'};
-textDecorationLine:underline;
-text-align:left;
+text-align:center;
+padding-left:5;
+padding-right:5;
 `
 export default class TouchableLink extends React.Component {
 
@@ -30,11 +31,9 @@ export default class TouchableLink extends React.Component {
     render(){
         const {text, onPressFunction, widthTouchable, backgroundColorTouchable,colorText } = this.props;
         return (
-            <StyledTouchable widthTouchable={widthTouchable} colorText={colorText} backgroundColorTouchable={backgroundColorTouchable} onPress={onPressFunction}>
-                <StyledText>
-                    {text}
+                <StyledText onPress={onPressFunction}>
+                    {" "+text+ " "}
                 </StyledText>
-            </StyledTouchable>   
         );
     }
 }

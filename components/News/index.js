@@ -2,6 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components/native'
 import compare from '../../utils/CompareDate'
+import TouchableLink from '../TouchableLink'
+import { AsyncStorage } from 'react-native';
+import {withNavigation} from 'react-navigation'
 
 const StyledView = styled.View
 	`
@@ -27,7 +30,10 @@ border-width:0.5;
 margin: 0px 20px 10px 20px
 width:90%;
 `
+const StyledTouchableLink = styled(TouchableLink)
+`
 
+`
 
 class New extends React.Component {
 
@@ -35,18 +41,42 @@ class New extends React.Component {
         who: PropTypes.string,
         what:PropTypes.string,
         action : PropTypes.string,
-        date: PropTypes.instanceOf(Date)
+        date: PropTypes.instanceOf(Date),
         }
 
+        goProfilPage =(navigation, idWho) =>{
+		    navigation.push('ProfilUser',{contact : idWho} )
+        }
+
+        goRecettePage=(navigation, idWhat) =>{
+            var recette = {
+                idRecette : idWhat
+            }
+            navigation.push('DetailRecette',{recette : recette} )
+        }
 
     render(){
-        const {who, what, action, date} = this.props;
+        const {who, what, action, date, navigation, idWho, idWhat} = this.props;
 
         if (action == 'Create'){
             return(
                 <StyledView >
                     <StyledViewArray>
-                        <StyledTextArray>{`${who} a ajouté la recette "${what}"`}</StyledTextArray>
+                        <StyledTextArray>
+                        <TouchableLink
+								text={who}
+								onPressFunction={()=> this.goProfilPage(navigation,idWho)}
+								widthTouchable={200}
+								backgroundColorTouchable='rgba(245, 252, 255, 0.1)'
+								colorText='#000'
+							/>
+                        {"a ajouté la recette "}<TouchableLink
+								text={what}
+								onPressFunction={()=> this.goRecettePage(navigation,idWhat)}
+								widthTouchable={200}
+								backgroundColorTouchable='rgba(245, 252, 255, 0.1)'
+								colorText='#000'
+							/></StyledTextArray>
                         <StyledTextArray>{compare.getDifference(date)}</StyledTextArray>
                     </StyledViewArray>
                 </StyledView>
@@ -55,7 +85,20 @@ class New extends React.Component {
             return(
                 <StyledView>
                     <StyledViewArray>
-                        <StyledTextArray>{`${who} a ajouté "${what}" à ses favoris`}</StyledTextArray>
+                        <StyledTextArray><TouchableLink
+								text={who}
+								onPressFunction={()=> this.goProfilPage(navigation, idWho)}
+								widthTouchable={200}
+								backgroundColorTouchable='rgba(245, 252, 255, 0.1)'
+								colorText='#000'
+							/>{"a ajouté "} <TouchableLink
+                            text={what}
+                            onPressFunction={()=> this.goRecettePage(navigation,idWhat)}
+                            widthTouchable={200}
+                            backgroundColorTouchable='rgba(245, 252, 255, 0.1)'
+                            colorText='#000'
+                        />{ " à ses favoris"}
+                           </StyledTextArray>
                         <StyledTextArray>{compare.getDifference(date)} </StyledTextArray>
                     </StyledViewArray>
                 </StyledView>
@@ -64,7 +107,19 @@ class New extends React.Component {
         return(
             <StyledView>
                 <StyledViewArray>
-                    <StyledTextArray>{`${who} a commencé à suivre ${what}`}</StyledTextArray>
+                    <StyledTextArray><TouchableLink
+								text={who}
+								onPressFunction={()=> this.goProfilPage(navigation, idWho)}
+								widthTouchable={200}
+								backgroundColorTouchable='rgba(245, 252, 255, 0.1)'
+								colorText='#000'
+							/>{"commencé à suivre"}<TouchableLink
+                            text={what}
+                            onPressFunction={()=> this.goProfilPage(navigation,idWhat)}
+                            widthTouchable={200}
+                            backgroundColorTouchable='rgba(245, 252, 255, 0.1)'
+                            colorText='#000'
+                        /></StyledTextArray>
                     <StyledTextArray>{compare.getDifference(date)} </StyledTextArray>
                 </StyledViewArray>
             </StyledView>
@@ -72,4 +127,4 @@ class New extends React.Component {
     }
 }
 
-export default New
+export default withNavigation(New)
