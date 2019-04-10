@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import Axios from 'axios'
 import ListItemElement from '../components/FlatListElement'
+import SegmentedControlTab from 'react-native-segmented-control-tab'
 
 
 import { connect } from 'react-redux'
@@ -26,101 +27,180 @@ flex: 1;
 width: 100%;
 `
 
+const GlobalView = styled.View`
+flex : 1;`
+
+const GlobalCenterView = styled.View`
+alignItems : center;
+`
+
 const StyledView = styled(ViewContainer)`
 padding : 50px 0px 0px 0px;
 backgroundColor: rgba(52, 52, 52, 0.1)`
 
+const Search = styled.TextInput`
+height: 40;
+width:100%; 
+border-color: gray;
+border-width: 1;
+border-radius : 5;
+padding-left : 10px;
+ `
+
 class SearchScreen extends React.Component {
   static navigationOptions = {
-   title: "Recherche"
+   title: 'Recherche'
   };
   state ={
     libelle:'', 
-    libelleTest:'casca',
-    recettes: [],
     offset : 0,
-    limite : 20
+    limite : 20,
+    selectedIndex: 0,
+    placeholderSearch : 'Tapez le nom d\'une recette'
+  }
+
+  handleIndexChange = (index) => {
+    const {libelle,offset} = this.state
+    if(index == 0 )
+    this.setState({
+      selectedIndex: index,
+      placeholderSearch : 'Tapez le nom d\'une recette'
+    })
+    else{
+      this.setState({
+        selectedIndex: index,
+        placeholderSearch : 'Tapez le nom d\'un user'
+      })
+    }
   }
 
   componentDidMount() {
     const {libelle,offset} = this.state
-
-
    this.props.actions.recetteRecherche.getRecettes(libelle,offset,true)
+   this.props.actions.userRecherche.getUsers(libelle,offset,true)
+
 }
 
-keyExtractor = item => item.idRecette.toString()
+keyExtractorRecette = item => item.idRecette.toString()
+
+keyExtractorUser = item => item.idUser.toString()
 
 
-  getRecetteByName =(input) =>{
-    const {libelleTest,offset} = this.state
+  searchByName =(input) =>{
+    const {offset, selectedIndex} = this.state
     console.log(input)
     this.setState({libelle : input})
     clearTimeout(this.timer)
     this.timer = setTimeout(()=>{
-      this.props.actions.recetteRecherche.getRecettes(input,offset,true)
+        this.props.actions.recetteRecherche.getRecettes(input,offset,true)
+        this.props.actions.userRecherche.getUsers(input,offset,true)
     }, 300)
   }
 
   refreshContentAsync = async () => {
-    console.log('ok')
-}
-
-  loadMoreContentAsyncRecette = async () => {
-    const {libelle} = this.state
-    const {offset, limite} = this.props
-
-const value = offset+limite
-console.log('tessst', value)
-
-
-    this.props.actions.recetteRecherche.getRecettes(libelle,value,false)
+    const {selectedIndex, offset, libelle} = this.state
+    if(selectedIndex == 0){
+      this.props.actions.recetteRecherche.getRecettes(libelle,offset,true)
+    }else {
+      this.props.actions.userRecherche.getUsers(libelle,offset,true)
+    }
 
 }
 
+  loadMoreContentAsync = async () => {
+    const {libelle, selectedIndex} = this.state
+    const {offsetRecette, limiteRecette, offsetUser, limiteUser } = this.props
+    if(selectedIndex == 0){
+      const value = offsetRecette+limiteRecette
+      this.props.actions.recetteRecherche.getRecettes(libelle,value,false)
+    }else {
+      const value = offsetUser+limiteUser
+      this.props.actions.userRecherche.getUsers(libelle,value,false)
+    }
+}
 
-onPress = (recette) => {
+
+onPressRecette = (recette) => {
   this.props.navigation.navigate('DetailRecette', { recette: recette })
+}
+
+onPressUser = (user) => {
+  this.props.navigation.navigate('ProfilUser', { user: user })
 }
 
   render() {
    
-  const {list} = this.props
+  const {listRecette, listUser} = this.props
+  const {selectedIndex, placeholderSearch} = this.state
     return (
-      <View style={{flex:1,paddingTop:20, alignItems:"center"}}>
+      <GlobalView>
+      <GlobalCenterView>
 
-       <TextInput
-        style={{height: 40, width:200, borderColor: 'gray', borderWidth: 1}}
-        onChangeText={this.getRecetteByName}
-        value={this.state.text}
-        placeholder = {"Tapez le nom d'une recette"}
+       <Search
+        
+        onChangeText={this.searchByName}
+        placeholder = {placeholderSearch}
       />
-                    {list ? (
+      </GlobalCenterView>
+      <SegmentedControlTab
+                    values={['Recette', 'User']}
+                    selectedIndex={this.state.selectedIndex}
+                    onTabPress={this.handleIndexChange}
+                    />
+                    {selectedIndex == 0 ? 
+                    (                    
+                      <GlobalView>
+                        {listRecette ? (
                         <StyledFlatList
-                        data={list}
-                        keyExtractor={this.keyExtractor}
-                        onEndReached={(input) => this.loadMoreContentAsyncRecette()}
+                        data={listRecette}
+                        keyExtractor={this.keyExtractorRecette}
+                        onEndReached={(input) => this.loadMoreContentAsync()}
                         onEndReachedThreshold={0}
+                        refreshing={false}
+                        onRefresh={() => this.refreshContentAsync()}
                         renderItem={({ item }) => (
-                            <ListItemElement textPrincipal={item.libelleRecette} textDetail={`Catégorie : ${item.catRecette}`} onPressFunction={() => { this.onPress(item) }} />
+                            <ListItemElement textPrincipal={item.libelleRecette} textDetail={`Catégorie : ${item.catRecette}`} onPressFunction={() => { this.onPressRecette(item) }} />
                         )} />) : (null)}
-       </View>
+                    </GlobalView>
+                    ): (<GlobalView>
+                        {listUser ? (
+                        <StyledFlatList
+                        data={listUser}
+                        keyExtractor={this.keyExtractorUser}
+                        onEndReached={(input) => this.loadMoreContentAsync()}
+                        onEndReachedThreshold={0}
+                        refreshing={false}
+                        onRefresh={() => this.refreshContentAsync()}
+                        renderItem={({ item }) => (
+                            <ListItemElement textPrincipal={item.usernameUser} textDetail={`${item.nomUser} ${item.prenomUser}`} onPressFunction={() => { this.onPressUser(item) }} />
+                        )} />) : (null)}
+                    </GlobalView>)
+
+
+
+                    }
+
+      </GlobalView>
     )
   }
 }
 
 const mapStateToProps = state => {
   return {
-      list: state.recette.list,
-      offset : state.recette.offset,
-      limite : state.recette.limite,
+      listRecette: state.recetteRecherche.list,
+      offsetRecette : state.recetteRecherche.offset,
+      limiteRecette : state.recetteRecherche.limite,
+      listUser: state.userRecherche.list,
+      offsetUser : state.userRecherche.offset,
+      limiteUser : state.userRecherche.limite,
       allState: state
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   actions: {
-      recetteRecherche: bindActionCreators(allTheActions.recetteRecherche, dispatch)
+      recetteRecherche: bindActionCreators(allTheActions.recetteRecherche, dispatch),
+      userRecherche: bindActionCreators(allTheActions.userRecherche, dispatch)
   }
 })
 
