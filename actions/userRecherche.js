@@ -1,29 +1,29 @@
 import axios from 'axios'
 
-export const GET_ALL = 'GET_ALL'
-export const REFRESH = 'REFRESH'
+export const GET_ALL_USER = 'GET_ALL_USER'
+export const REFRESH_USER = 'REFRESH_USER'
 
-export const allUser = (user) => ({
+export const allUser = (userRecherche) => ({
 
-  type: GET_ALL,
-  user
+  type: GET_ALL_USER,
+  userRecherche
 })
 
-export const refreshUser = (user) => ({
+export const refreshUser = (userRecherche) => ({
 
-  type: REFRESH,
-  user
+  type: REFRESH_USER,
+  userRecherche
 })
 
 export const getUsers = (libelle ='',offset = 0, refresh = false) => dispatch => {
 
   if(libelle==''){
-    axios.get(`http://51.75.22.154:8080/Cookyn/recette/GetListRecetteByOffSet/${offset}`)
+    axios.get(`http://51.75.22.154:8080/Cookyn/user/GetlistUsersByOffSet/${offset}`)
     .then(res => {
       if (!refresh) {
         dispatch(
-          allRecette({
-            list: res.data.listRecette,
+          allUser({
+            list: res.data.listUser,
             offset: res.data.offset,
             limite: res.data.limite,
           })
@@ -31,8 +31,8 @@ export const getUsers = (libelle ='',offset = 0, refresh = false) => dispatch =>
       }
       else {
         dispatch(
-          refreshRecette({
-            list: res.data.listRecette,
+          refreshUser({
+            list: res.data.listUser,
             offset: res.data.offset,
             limite: res.data.limite,
           })
@@ -41,12 +41,12 @@ export const getUsers = (libelle ='',offset = 0, refresh = false) => dispatch =>
     }
     )
   } else {
-  axios.get(`http://51.75.22.154:8080/Cookyn/recette/GetListRecetteByFiltre/${libelle}/${offset}`)
+  axios.get(`http://51.75.22.154:8080/Cookyn2/user/GetListUserByFiltre/${libelle}/${offset}`)
     .then(res => {
       if (!refresh) {
         dispatch(
-          allRecette({
-            list: res.data.listRecette,
+          allUser({
+            list: res.data.listUser,
             offset: res.data.offset,
             limite: res.data.limite,
           })
@@ -54,8 +54,8 @@ export const getUsers = (libelle ='',offset = 0, refresh = false) => dispatch =>
       }
       else {
         dispatch(
-          refreshRecette({
-            list: res.data.listRecette,
+          refreshUser({
+            list: res.data.listUser,
             offset: res.data.offset,
             limite: res.data.limite,
           })

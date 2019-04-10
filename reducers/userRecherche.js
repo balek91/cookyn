@@ -1,4 +1,4 @@
-import { GET_ALL, REFRESH } from '../actions/userRecherche'
+import { GET_ALL_USER, REFRESH_USER } from '../actions/userRecherche'
 
 
 const initialState = {
@@ -9,19 +9,19 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_ALL:
+    case GET_ALL_USER:
       return {
         ...state,
-        list : [...state.list, ...action.recette.list],
-        offset : action.recette.offset,
-        limite : action.recette.limite
+        list : [...state.list, ...action.userRecherche.list],
+        offset : action.userRecherche.offset,
+        limite : action.userRecherche.limite
       }
-      case REFRESH:
+      case REFRESH_USER:
       return {
         ...state,
-        list : [...action.recette.list],
-        offset : action.recette.offset,
-        limite : action.recette.limite
+        list : [...action.userRecherche.list],
+        offset : action.userRecherche.offset,
+        limite : action.userRecherche.limite
       }
     default:
       return state
