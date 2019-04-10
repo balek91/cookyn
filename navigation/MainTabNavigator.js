@@ -39,7 +39,10 @@ HomeStack.navigationOptions = {
     <Image style={{ height: 26, width: 26 }}
       source={require('../assets/icons/home.jpg')}
     />
-  )};
+  ),
+  tabBarOptions: {
+    activeTintColor: '#E88110',
+  }};
 
 const AddStack = createStackNavigator({
   Add: AddScreen,
@@ -55,7 +58,10 @@ AddStack.navigationOptions = {
     /> :  <Image style={{ height: 26, width: 26 }}
     source={require('../assets/icons/add.png')}
   />
-    )};
+    ),
+  tabBarOptions: {
+    activeTintColor: '#E88110',
+  }};
 
 const ProfilStack = createStackNavigator({
   Profil: ProfilScreen,
@@ -75,7 +81,10 @@ ProfilStack.navigationOptions = {
       source={require('../assets/icons/profilFocus.jpg')}
     /> :  <Image style={{ height: 26, width: 26 }}
     source={require('../assets/icons/profil.jpg')}
-  />  )
+  />  ),
+  tabBarOptions: {
+    activeTintColor: '#E88110',
+  }
 };
 
 const CalendarStack = createStackNavigator({
@@ -98,7 +107,10 @@ CalendarStack.navigationOptions = {
       source={require('../assets/icons/calendarFocus.png')}
     /> : <Image style={{ height: 26, width: 26 }}
     source={require('../assets/icons/calendar.png')}
-  /> )
+  /> ),
+  tabBarOptions: {
+    activeTintColor: '#E88110',
+  }
 };
 
 
@@ -114,7 +126,10 @@ ShoppingListStack.navigationOptions = {
       source={require('../assets/icons/panierorange.png')}
     /> :  <Image style={{ height: 26, width: 26 }}
     source={require('../assets/icons/panier.png')}
-  />)
+  />),
+  tabBarOptions: {
+    activeTintColor: '#E88110',
+  }
 };
 
 export default createBottomTabNavigator({
