@@ -5,8 +5,8 @@ import recette from './recette'
 import etape from './etape'
 import recetteRecherche from './recetteRecherche'
 import actualite from './actualité'
-
+import userRecherche from './userRecherche'
 
 export default combineReducers({
-    user, recette, etape, recetteRecherche,actualite
+    user, recette, etape, recetteRecherche, userRecherche, actualite
   })

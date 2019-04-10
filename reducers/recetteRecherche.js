@@ -1,4 +1,4 @@
-import { GET_ALL, REFRESH } from '../actions/recetteRecherche'
+import { GET_ALL_RECETTE, REFRESH_RECETTE } from '../actions/recetteRecherche'
 
 
 const initialState = {
@@ -9,19 +9,19 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_ALL:
+    case GET_ALL_RECETTE:
       return {
         ...state,
-        list : [...state.list, ...action.recette.list],
-        offset : action.recette.offset,
-        limite : action.recette.limite
+        list : [...state.list, ...action.recetteRecherche.list],
+        offset : action.recetteRecherche.offset,
+        limite : action.recetteRecherche.limite
       }
-      case REFRESH:
+      case REFRESH_RECETTE:
       return {
         ...state,
-        list : [...action.recette.list],
-        offset : action.recette.offset,
-        limite : action.recette.limite
+        list : [...action.recetteRecherche.list],
+        offset : action.recetteRecherche.offset,
+        limite : action.recetteRecherche.limite
       }
     default:
       return state

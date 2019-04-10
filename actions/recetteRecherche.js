@@ -1,18 +1,18 @@
 import axios from 'axios'
 
-export const GET_ALL = 'GET_ALL'
-export const REFRESH = 'REFRESH'
+export const GET_ALL_RECETTE = 'GET_ALL_RECETTE'
+export const REFRESH_RECETTE = 'REFRESH_RECETTE'
 
-export const allRecette = (recette) => ({
+export const allRecette = (recetteRecherche) => ({
 
-  type: GET_ALL,
-  recette
+  type: GET_ALL_RECETTE,
+  recetteRecherche
 })
 
-export const refreshRecette = (recette) => ({
+export const refreshRecette = (recetteRecherche) => ({
 
-  type: REFRESH,
-  recette
+  type: REFRESH_RECETTE,
+  recetteRecherche
 })
 
 export const getRecettes = (libelle ='',offset = 0, refresh = false) => dispatch => {
