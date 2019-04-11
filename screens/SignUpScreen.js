@@ -14,7 +14,15 @@ const StyledView = styled(ViewContainer)`
 padding : 20px 0px 0px 0px;
 backgroundColor: rgba(52, 52, 52, 0.1)`
 
+const ForgotPasswordText =  styled(TextCustom)`
+font-style : italic;
+`
 
+const ForgotPasswordView = styled.View
+`
+backgroundColor: rgba(52, 52, 52, 0.1)
+align-items: center;
+`
 
 export default class SignUp extends React.Component {
   static navigationOptions = {
@@ -81,6 +89,13 @@ export default class SignUp extends React.Component {
           placeholderText='Ville'
           onSubmitEditingFunction={()=> this.password.focus()}
           /> 
+
+<ForgotPasswordView  >
+              <ForgotPasswordText color={'white'} text={`il faut au moins une majuscule`} 
+              fontStyle={'italic'} fontsize={17}   />
+               <ForgotPasswordText color={'white'} text={`et 8 caractères`} 
+              fontStyle={'italic'} fontsize={17}  />
+            </ForgotPasswordView>
           <InputText
           reference= {(input) => this.password = input}
           onChangeTextFunction={(password) => this.regexPassword(password)}
@@ -89,6 +104,8 @@ export default class SignUp extends React.Component {
           bordercolor = {this.state.borderColorPassword}
           onSubmitEditingFunction={()=> this.confirm.focus()}
           /> 
+
+           
           <InputText
           reference= {(input) => this.confirm = input}
           onChangeTextFunction={(confirmPassword) => this.verifPassword(confirmPassword)}

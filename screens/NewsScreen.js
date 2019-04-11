@@ -141,7 +141,7 @@ class NewsScreen extends React.Component {
                       initialNumToRender={1000}
                       keyExtractor={this.keyExtractor}
                       renderItem={({ item }) => (
-                        <Actu navigation={this.props.navigation} currentUser={user} idWho={item.who.idUser} who={item.who.prenomUser} idWhat={item.whatDto.id} what={item.whatDto.name} action={item.typeActualite} date={new Date(item.date)}></Actu>
+                        <Actu navigation={this.props.navigation} currentUser={user} idWho={item.what.idUser} who={item.what.prenomUser} idWhat={item.whoDto.id} what={item.whoDto.name} action={item.typeActualite} date={new Date(item.date)}></Actu>
                       )} /> 
          
             </ContentContainer>

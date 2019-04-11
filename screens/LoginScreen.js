@@ -153,7 +153,7 @@ class Login extends React.Component {
   }
 
   SignedIn = () => {
-    this.storeData('1')
+    this.storeData('2')
     this.props.navigation.navigate('SignedIn')
   }
   Login = () => {

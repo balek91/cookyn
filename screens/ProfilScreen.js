@@ -285,7 +285,7 @@ class ProfilScreen extends React.Component {
 			})
 		}
 		else {
-			Axios.get(`http://51.75.22.154:8080/Cookyn/relation/CreateRelation/${userProfil.user.idUser}/${user}`).then(() => {
+			Axios.get(`http://51.75.22.154:8080/Cookyn/relation/CreateRelation/${user}/${userProfil.user.idUser}`).then(() => {
 				Axios.get(`http://51.75.22.154:8080/Cookyn/user/GetUserById/${userProfil.user.idUser}`).then(res =>{
 					this.setState({
 						user : res.data,
