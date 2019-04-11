@@ -260,9 +260,9 @@ export default class CalendarScreen extends React.Component {
                         horizontal={true}
                         style={styles.gridView}
                         renderItem={({ item, section, index }) => (
-                            <TouchableOpacity  onPress={ () => {this.navigateDetail(item)}}>
+                            <TouchableOpacity   style={{flex:2}} onPress={ () => {this.navigateDetail(item)}}>
                             <View style={[styles.itemContainer, { backgroundColor: '#E88110' }]}>
-                            <Image source={item.urlRecette === null ? PhotoRecette: {uri:item.urlRecette}} resizeMode="cover" style={{height:100, width:100}}/>
+                            <Image source={item.urlRecette === null ? PhotoRecette: {uri:item.urlRecette}} resizeMode="cover" style={{height:100, flex:1}}/>
                             <Text style={styles.itemName}>{item.libelleRecette}</Text>
                             <Text style={styles.itemCode}>{item.prix + " €"}</Text>
                             </View>

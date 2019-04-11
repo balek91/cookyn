@@ -65,7 +65,7 @@ class Login extends React.Component {
             <TextCustom text={'\n'} />
             <InputText
               reference={(input) => this.login = input}
-              placeholderText='Email/Username'
+              placeholderText='Email'
               width={300}
               autoCapitalize={"none"}
               onChangeTextFunction={(username) => this.setState({ username })}
@@ -130,21 +130,15 @@ class Login extends React.Component {
     }
     Axios.post('http://51.75.22.154:8080/Cookyn/user/ForgotPassword', body).then(response => {
       console.log(response.data)
-      if (response.data == 1) {
-        console.log('Votre nouveau mot de passe a été envoyé par mail')
-        Alert.alert('Votre nouveau mot de passe a été envoyé par mail')
-      }else if (response.data == 2){
-        console.log('Impossible de changer de mot de passe car vous n\'avez pas confirmé votre adresse mail')
-        Alert.alert('Impossible de changer de mot de passe car vous n\'avez pas confirmé votre adresse mail')
-      }
-      else if (response.data == 3){
-        console.log('Aucun compte n\'est lié à l\'adresse ',email )
-        Alert.alert('Aucun compte n\'est lié à l\'adresse ',email )
-      }
-      else{
+      
+     
         console.log('Erreur inconnu, contactez le support')
-        Alert.alert('Erreur inconnu, contactez le support')
-      }
+        setTimeout(()=>{
+          Alert.alert(response.data)
+
+      }, 1000)
+       
+      
     }).catch(() => {
       Alert.alert('Erreur inconnu, contactez le support')
     })

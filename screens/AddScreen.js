@@ -203,7 +203,8 @@ class AddScreen extends React.Component {
 
     this.state.UniteRecu = UnitésPicker
     this.state.IngredientsRecu = IngredientsPicker
-    this.state.dataPicker = [QuatityPicker, this.state.UnitésPicker, this.state.IngredientsPicker]
+
+    this.state.dataPicker = [QuatityPicker, this.state.UnitésPicker, this.state.IngredientsPicker.sort()]
     this.state.labelPicker = ['Quantité', 'Unités', 'Ingrédients']
     
   
@@ -386,6 +387,7 @@ class AddScreen extends React.Component {
           prixRecette:'',
           selectedDiff:'',
           tempPrepRecette:'',
+          hide:false
         })
       }
       

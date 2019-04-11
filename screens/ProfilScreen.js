@@ -142,14 +142,14 @@ class ProfilScreen extends React.Component {
 									<ViewFlex>
 										<TouchableProfil
 											number={`${user.nbAbonnement}`}
-											text={`Abonné(s)`}
+											text={`Abonnement(s)`}
 											onPressFunction={this.onPressButtonAbonnements}
 										/>
 									</ViewFlex>
 									<ViewFlex>
 										<TouchableProfil
 											number={`${user.nbAbonnee}`}
-											text={`Abonnement(s)`}
+											text={`Abonné(s)`}
 											onPressFunction={this.onPressButtonAbonnes}
 										/>
 									</ViewFlex>
@@ -275,7 +275,7 @@ class ProfilScreen extends React.Component {
 		const { following } = this.state
 		const { user, userProfil } = this.props
 		if (following == true) {
-			Axios.get(`http://51.75.22.154:8080/Cookyn/relation/DeleteRelation/${userProfil.user.idUser}/${user}`).then(() => {
+			Axios.get(`http://51.75.22.154:8080/Cookyn/relation/DeleteRelation/${user}/${userProfil.user.idUser}`).then(() => {
 				Axios.get(`http://51.75.22.154:8080/Cookyn/user/GetUserById/${userProfil.user.idUser}`).then(res =>{
 					this.setState({
 						user : res.data,
@@ -300,7 +300,7 @@ class ProfilScreen extends React.Component {
 	getRelation = (idContact) => {
 		
 		const { user } = this.props
-		Axios.get(`http://51.75.22.154:8080/Cookyn/relation/GetRelation/${idContact}/${user}`).then(response =>(
+		Axios.get(`http://51.75.22.154:8080/Cookyn/relation/GetRelation/${user}/${idContact}`).then(response =>(
 
 			this.setState({
 				following: response.data

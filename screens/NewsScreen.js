@@ -54,7 +54,8 @@ class NewsScreen extends React.Component {
     }
 
     state ={
-        actualite :[]
+        actualite :[],
+        user:null
     }
      navigateSearch =() => {
         this.props.navigation.push('Search')
@@ -71,16 +72,38 @@ class NewsScreen extends React.Component {
         try {
             const { actions } = this.props
             actions.user.deconnexion()
-          await AsyncStorage.removeItem('idUser')
         } catch (error) {
           console.log(error)
         }
       }
 
+      formateDate =(date) =>{
+        var today = new Date(date)
+        var monthSend = null
+        var yearSend = today.getFullYear()
+        var daySend=null
+        if(today.getDate() <=9){
+          daySend=`0${today.getDate()}`
+        }else{
+          daySend=today.getDate()
+        }
+        if(today.getMonth() +1 <=9){
+          monthSend = `0${today.getMonth() +1}`
+        } else {
+          monthSend = today.getMonth()
+        }
+
+        var dateSend = `${yearSend}-${monthSend}-${daySend}`
+        console.log(dateSend)
+        return dateSend
+      }
+
     componentDidMount =async ()=>{
       const { actions } = this.props
         var user = await AsyncStorage.getItem('idUser')
-
+        this.setState({
+            user:user
+        })
         console.log('Useeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ',user)
         actions.actualite.getActualite(user,0,false)
     }
@@ -89,6 +112,7 @@ class NewsScreen extends React.Component {
 
     render(){
         const {actualite} = this.props
+        const {user} = this.state
         var tab = actualite.list.sort((itemA, itemB) => itemA.date < itemB.date)
         console.log(actualite)
         return(<StyledView>
@@ -109,15 +133,15 @@ class NewsScreen extends React.Component {
                         </HeaderRightView>
                     </HeaderView>
                     <StyledFlatList
-                      data={tab}
+                      data={actualite.list.sort((itemA, itemB) => itemA.date < itemB.date)}
                       refreshing={false}
                       onRefresh={() => this.refreshContentAsync()}
                       onEndReached={() => this.loadMoreContentAsync()}
                       onEndReachedThreshold={0}
-                      initialNumToRender={7}
+                      initialNumToRender={1000}
                       keyExtractor={this.keyExtractor}
                       renderItem={({ item }) => (
-                        <Actu navigation={this.props.navigation} idWho={item.user.idUser} who={item.user.prenomUser} idWhat={item.whoDto.id} what={item.whoDto.name} action={item.typeActuailite} date={new Date(item.date)}></Actu>
+                        <Actu navigation={this.props.navigation} currentUser={user} idWho={item.who.idUser} who={item.who.prenomUser} idWhat={item.whatDto.id} what={item.whatDto.name} action={item.typeActualite} date={new Date(item.date)}></Actu>
                       )} /> 
          
             </ContentContainer>

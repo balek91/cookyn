@@ -51,7 +51,7 @@ export default class Actu extends React.Component {
         }
 
     render(){
-        const {who, what, action, date, navigation, idWho, idWhat} = this.props;
+        const {who, what, action, date, navigation, idWho, idWhat, currentUser} = this.props;
 
         if (action == 'Create'){
             return(
@@ -99,6 +99,26 @@ export default class Actu extends React.Component {
                 </StyledView>
             )
         } else if (action == 'Follow')
+
+        if(currentUser == idWhat) {
+            return(
+                <StyledView>
+                    <StyledViewArray>
+                        <StyledTextArray><TouchableLink
+                                    text={who}
+                                    onPressFunction={()=> this.goProfilPage(navigation, idWho)}
+                                    widthTouchable={200}
+                                    backgroundColorTouchable='rgba(245, 252, 255, 0.1)'
+                                    colorText='#000'
+                                />{" à commencé à vous suivre "}</StyledTextArray>
+                        <StyledTextArray>{compare.getDifference(date)} </StyledTextArray>
+                    </StyledViewArray>
+                </StyledView>
+            )
+
+        } else{
+
+        
         return(
             <StyledView>
                 <StyledViewArray>
@@ -119,6 +139,7 @@ export default class Actu extends React.Component {
                 </StyledViewArray>
             </StyledView>
         )
+    }
     }
 }
 

@@ -201,9 +201,6 @@ class DetailScreen extends React.Component {
 							<StyledImage source={(data.recette.urlRecette) ? {uri:data.recette.urlRecette} : PhotoRecette} />
 							<AlignContentCenter>
 							<StyledTextBold>{data.recette.libelleRecette}</StyledTextBold>
-							<TouchableOpacity onPress={()=> console.log("OKKKKKKKKKKKKKKKKKKKK")}>
-							<StyledIconShare source={IconeShare} />
-							</TouchableOpacity>
 							</AlignContentCenter>
 						</Header>
 						<AlignContentLeft>
@@ -216,7 +213,7 @@ class DetailScreen extends React.Component {
 						</AlignContentLeft>
 						<AlignContentLeft>
 							<LabelLeft>{'Prix estimé :'}</LabelLeft>
-							<LabelRight>{data.recette.prix}</LabelRight>
+							<LabelRight>{`${data.recette.prix} €`}</LabelRight>
 						</AlignContentLeft>
 						<AlignContentLeft>
 							<LabelLeft>{'Temps de préparation :'}</LabelLeft>

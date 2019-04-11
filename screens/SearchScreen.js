@@ -125,6 +125,7 @@ onPressRecette = (recette) => {
 }
 
 onPressUser = (user) => {
+  this.props.actions.user.getUserConnect(user.idUser)
   this.props.navigation.navigate('ProfilUser', { contact: user.idUser })
 }
 
@@ -200,7 +201,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   actions: {
       recetteRecherche: bindActionCreators(allTheActions.recetteRecherche, dispatch),
-      userRecherche: bindActionCreators(allTheActions.userRecherche, dispatch)
+      userRecherche: bindActionCreators(allTheActions.userRecherche, dispatch),
+      user : bindActionCreators(allTheActions.user, dispatch)
   }
 })
 

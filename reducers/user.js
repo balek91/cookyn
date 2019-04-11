@@ -16,8 +16,7 @@ export default (state = initialState, action) => {
           }
       case DECONNEXION:
           return {
-            ...state,
-            user: null
+            state : undefined
           }
       case ABONNEMENT: {
         return{

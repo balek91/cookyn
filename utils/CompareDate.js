@@ -1,21 +1,16 @@
 import { TabBarIOS } from "react-native";
 
 getDifference = (date) => {
-    console.log("dkaqbfkqfek " + date)
     let firstMs = new Date().getTime()
     let secondMs = date.getTime()
 
-    console.log("fristttt" + firstMs)
-    console.log("secccccpoond " + secondMs)
-
     let result = firstMs - secondMs
-    console.log("résssssullt " +result)
     if (result < 1000){
         return('0 sec')
-    }else if( result > 1000 && result < 6000 ){
+    }else if( result > 1000 && result < 60000 ){
         return(`${Math.trunc(result/1000)} sec`)
-    } else if(result > 6000 && result < 3600000){
-        return(`${Math.trunc(result/6000)} min`)
+    } else if(result > 60000 && result < 3600000){
+        return(`${Math.trunc(result/60000)} min`)
     } else if(result > 3600000 && result < 86400000){
         if( (Math.trunc(result/3600000)) ==1 ){
             return(`${Math.trunc(result/3600000)} heure`)
