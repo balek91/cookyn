@@ -23,6 +23,10 @@ export default (state = initialState, action) => {
         offset : action.actualite.offset,
         limite : action.actualite.limite
       }
+      case DECONNEXION_ACTUALITE:
+          return {
+            state : initialState
+          }
     default:
       return state
   }

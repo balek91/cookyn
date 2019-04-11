@@ -23,6 +23,10 @@ export default (state = initialState, action) => {
         offset : action.userRecherche.offset,
         limite : action.userRecherche.limite
       }
+      case DECONNEXION_USER_RECHERCHE:
+          return {
+            state : initialState
+          }
     default:
       return state
   }

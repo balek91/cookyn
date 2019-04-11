@@ -23,6 +23,10 @@ export default (state = initialState, action) => {
         offset : action.recette.offset,
         limite : action.recette.limite
       }
+      case DECONNEXION_RECETTE:
+          return {
+            state : initialState
+          }
     default:
       return state
   }

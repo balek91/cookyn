@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export const GET_ALL_ACTUALITE = 'GET_ALL_ACTUALITE'
 export const REFRESH_ACTUALITE = 'REFRESH_ACTUALITE'
+export const DECONNEXION_ACTUALITE ='DECONNEXION_ACTUALITE'
 
 export const allActualite = (actualite) => ({
 
@@ -14,6 +15,11 @@ export const allActualite = (actualite) => ({
 export const refreshActualite = (actualite) => ({
 
   type: REFRESH_ACTUALITE,
+  actualite
+})
+
+export const clearAcutaliteRedux = (actualite) =>({
+  type:DECONNEXION_ACTUALITE,
   actualite
 })
 

@@ -12,6 +12,7 @@ import { onSignOut } from '../components/Auth.js'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import allTheActions from '../actions'
+import userRecherche from '../reducers/userRecherche';
 
 
 
@@ -72,6 +73,9 @@ class NewsScreen extends React.Component {
         try {
             const { actions } = this.props
             actions.user.deconnexion()
+            actions.userRecherche.clearUserRechercheRedux()
+            actions.recette.clearRecetteRedux()
+            a
         } catch (error) {
           console.log(error)
         }
@@ -178,7 +182,11 @@ const mapStateToProps = state => {
   const mapDispatchToProps = dispatch => ({
     actions: {
       user: bindActionCreators(allTheActions.user, dispatch),
-      actualite : bindActionCreators(allTheActions.actualite,dispatch)
+      actualite : bindActionCreators(allTheActions.actualite,dispatch),
+      userRecherche :bindActionCreators(allTheActions.userRecherche,dispatch),
+      recetteRechee : bindActionCreators(allTheActions.recetteRecherche,dispatch),
+      etape : bindActionCreators(allTheActions.etape,dispatch),
+      recette : bindActionCreators(allTheActions.recette,dispatch)
     }
   })
   

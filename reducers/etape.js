@@ -20,6 +20,10 @@ export default (state = initialState, action) => {
           ...state,
             data : action.etape
         }
+        case DECONNEXION_ETAPE:
+          return {
+            state : initialState
+          }
       default:
         return state
     }

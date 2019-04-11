@@ -365,6 +365,24 @@ class DetailScreen extends React.Component {
 		  )
 	}
 
+	sendInput = async (pass) => {
+		var user = await AsyncStorage.getItem('idUser')
+		var json = {
+			idRecette : this.state.idRecette,
+			idUser : user,
+			password : pass
+		}
+		axios.get("http://51.75.22.154:8080/Cookyn/recette/DeleteRecetteById", json)
+		.then((response) => {
+			if (response.data.stats == ''){
+
+			} else if (response.data.stats == ''){
+				
+			}
+		})
+
+	}
+
 
 
 	userIsCreator = async (data) =>{

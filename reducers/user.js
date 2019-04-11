@@ -14,9 +14,9 @@ export default (state = initialState, action) => {
             ...state,
             user: action.id  
           }
-      case DECONNEXION:
+      case DECONNEXION_USER:
           return {
-            state : undefined
+            state : initialState
           }
       case ABONNEMENT: {
         return{

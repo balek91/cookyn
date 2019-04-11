@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export const GET_ALL_USER = 'GET_ALL_USER'
 export const REFRESH_USER = 'REFRESH_USER'
+export const DECONNEXION_USER_RECHERCHE = 'DECONNEXION_USER_RECHERCHE'
 
 export const allUser = (userRecherche) => ({
 
@@ -15,6 +16,11 @@ export const refreshUser = (userRecherche) => ({
   userRecherche
 })
 
+export const clearUserRechercheRedux = (userRecherche) => ({
+
+  type: DECONNEXION_USER_RECHERCHE,
+  userRecherche
+})
 export const getUsers = (libelle ='',offset = 0, refresh = false) => dispatch => {
 
   if(libelle==''){
