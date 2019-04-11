@@ -41,7 +41,7 @@ export const getUsers = (libelle ='',offset = 0, refresh = false) => dispatch =>
     }
     )
   } else {
-  axios.get(`http://51.75.22.154:8080/Cookyn2/user/GetListUserByFiltre/${libelle}/${offset}`)
+  axios.get(`http://51.75.22.154:8080/Cookyn/user/GetListUserByFiltre/${libelle}/${offset}`)
     .then(res => {
       if (!refresh) {
         dispatch(

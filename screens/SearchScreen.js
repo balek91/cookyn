@@ -125,7 +125,7 @@ onPressRecette = (recette) => {
 }
 
 onPressUser = (user) => {
-  this.props.navigation.navigate('ProfilUser', { user: user })
+  this.props.navigation.navigate('ProfilUser', { contact: user.idUser })
 }
 
   render() {

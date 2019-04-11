@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import React from 'react'
-import { AsyncStorage, Image, ImageBackground, Linking } from 'react-native'
+import { AsyncStorage, Image, ImageBackground, Linking, Alert } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { onSignIn } from '../components/Auth.js'
 import ContentContainer from '../components/ContentContainer/index'
@@ -125,6 +125,29 @@ class Login extends React.Component {
   forgotPassword = (email) => {
     this.setState({isDialogVisible : false})
     console.log('email', email)
+    let body = {
+      mailUser: email
+    }
+    Axios.post('http://51.75.22.154:8080/Cookyn/user/ForgotPassword', body).then(response => {
+      console.log(response.data)
+      if (response.data == 1) {
+        console.log('Votre nouveau mot de passe a été envoyé par mail')
+        Alert.alert('Votre nouveau mot de passe a été envoyé par mail')
+      }else if (response.data == 2){
+        console.log('Impossible de changer de mot de passe car vous n\'avez pas confirmé votre adresse mail')
+        Alert.alert('Impossible de changer de mot de passe car vous n\'avez pas confirmé votre adresse mail')
+      }
+      else if (response.data == 3){
+        console.log('Aucun compte n\'est lié à l\'adresse ',email )
+        Alert.alert('Aucun compte n\'est lié à l\'adresse ',email )
+      }
+      else{
+        console.log('Erreur inconnu, contactez le support')
+        Alert.alert('Erreur inconnu, contactez le support')
+      }
+    }).catch(() => {
+      Alert.alert('Erreur inconnu, contactez le support')
+    })
   }
 
   SignUp = () => {
