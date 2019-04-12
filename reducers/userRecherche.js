@@ -1,4 +1,4 @@
-import { GET_ALL_USER, REFRESH_USER } from '../actions/userRecherche'
+import { GET_ALL_USER, REFRESH_USER ,DECONNEXION_USER_RECHERCHE} from '../actions/userRecherche'
 
 
 const initialState = {
@@ -23,6 +23,10 @@ export default (state = initialState, action) => {
         offset : action.userRecherche.offset,
         limite : action.userRecherche.limite
       }
+      case DECONNEXION_USER_RECHERCHE:
+          return {
+            state : initialState
+          }
     default:
       return state
   }

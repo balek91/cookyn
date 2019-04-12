@@ -1,4 +1,4 @@
-import { GET_ALL_RECETTE, REFRESH_RECETTE } from '../actions/recetteRecherche'
+import { GET_ALL_RECETTE, REFRESH_RECETTE , DECONNEXION_RECHERCHE_RECETTE} from '../actions/recetteRecherche'
 
 
 const initialState = {
@@ -23,6 +23,10 @@ export default (state = initialState, action) => {
         offset : action.recetteRecherche.offset,
         limite : action.recetteRecherche.limite
       }
+      case DECONNEXION_RECHERCHE_RECETTE:
+          return {
+            state : initialState
+          }
     default:
       return state
   }

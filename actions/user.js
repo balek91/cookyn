@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const CONNEXION = 'CONNEXION'
-export const DECONNEXION = 'DECONNEXION'
+export const DECONNEXION_USER = 'DECONNEXION_USER'
 export const ABONNEMENT = 'ABONNEMENT'
 export const ABONNE = 'ABONNE'
 export const CONNECT = 'CONNECT'
@@ -13,8 +13,9 @@ export const connexion = (id) => ({
     id
   })
   
-  export const deconnexion =() => ({
-    type: DECONNEXION
+  export const deconnexion =(user) => ({
+    type: DECONNEXION_USER,
+    user
   })
 
   export const allAbonnement = (user) => ({

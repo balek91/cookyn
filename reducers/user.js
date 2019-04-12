@@ -1,4 +1,4 @@
-import { CONNEXION, DECONNEXION, ABONNEMENT , ABONNE, CONNECT} from '../actions/user'
+import { CONNEXION, DECONNEXION_USER, ABONNEMENT , ABONNE, CONNECT} from '../actions/user'
 
 const initialState = {
   user:null,
@@ -14,9 +14,9 @@ export default (state = initialState, action) => {
             ...state,
             user: action.id  
           }
-      case DECONNEXION:
+      case DECONNEXION_USER:
           return {
-            state : undefined
+            state : initialState
           }
       case ABONNEMENT: {
         return{

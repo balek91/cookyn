@@ -1,4 +1,4 @@
-import { ADD, UPDATE } from '../actions/etape'
+import { ADD, UPDATE , DECONNEXION_ETAPE} from '../actions/etape'
 
 
 const initialState = {
@@ -20,6 +20,10 @@ export default (state = initialState, action) => {
           ...state,
             data : action.etape
         }
+        case DECONNEXION_ETAPE:
+          return {
+            state : initialState
+          }
       default:
         return state
     }

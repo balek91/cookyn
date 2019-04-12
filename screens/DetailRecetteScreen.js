@@ -306,7 +306,7 @@ class DetailScreen extends React.Component {
 								colorText='#FFF'
 							/>
 
-							{this.state.isCreator ?
+							{/*this.state.isCreator ?
 							<TouchableLink
 							text={'Supprimer ma recette'}
 							onPressFunction={()=> this.deleteHandle()}
@@ -316,7 +316,7 @@ class DetailScreen extends React.Component {
 						/>
 						
 						:
-						null
+						null*/
 						}
 						</ViewCenter>
 						<DialogInput isDialogVisible={this.state.isDialogVisible}
@@ -363,6 +363,25 @@ class DetailScreen extends React.Component {
 			  {text: 'Confirmer', onPress: () => this.setState({ isDialogVisible : true})},
 			]
 		  )
+	}
+
+	sendInput = async (pass) => {
+		var user = await AsyncStorage.getItem('idUser')
+		var json = {
+			idUser : user,
+			idRecette : this.state.idRecette,
+			password : pass
+		}
+		axios.get("http://51.75.22.154:8080/Cookyn/recette/DeleteRecetteById", json)
+		.then((response) => {
+			console.log()
+			if (response.data.stats == 'a'){
+
+			} else if (response.data.stats == ''){
+				
+			}
+		})
+
 	}
 
 
@@ -415,8 +434,14 @@ class DetailScreen extends React.Component {
 		let newDate =this.state.currentDate
 		if (this.state.changeDate){
 			newDate = compare.stringToDate(this.state.currentDate,"dd-mm-yyyy","-")
+		
+
+
+
+		
+		
 		} 
-			
+		
 
 		Alert.alert(
 			'Confirmation',
