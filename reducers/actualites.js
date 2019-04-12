@@ -24,7 +24,6 @@ export default (state = initialState, action) => {
         limite : action.actualite.limite
       }
       case DECONNEXION_ACTUALITE:
-      console.log('déco')
           return { state : initialState}
     default:
       return state

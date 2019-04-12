@@ -22,6 +22,16 @@ export const clearRecetteRedux = (recette) => ({
   recette
 })
 
+export const logout_recette = () => dispatch =>{
+  dispatch(
+    clearRecetteRedux({
+      list : [],
+      offset:0,
+      limite:0
+    })
+  )
+}
+
 export const getRecettes = (offset = 0, refresh = false) => dispatch => {
   console.log("koooooo")
   axios.get(`http://51.75.22.154:8080/Cookyn/recette/GetListRecetteByOffSet/${offset}`)
