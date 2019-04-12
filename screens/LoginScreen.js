@@ -152,8 +152,12 @@ class Login extends React.Component {
     this.props.navigation.navigate('SignUpOk')
   }
 
-  SignedIn = () => {
-    this.storeData('2')
+  SignedIn = async() => {
+    const {actions} = this.props
+    this.storeData('1')
+    var user = await AsyncStorage.getItem('idUser')
+
+    actions.actualite.getActualite(user,0,true)
     this.props.navigation.navigate('SignedIn')
   }
   Login = () => {
@@ -185,13 +189,15 @@ class Login extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
+    actualite : state.actualite,
     allState: state
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   actions: {
-    user: bindActionCreators(allTheActions.user, dispatch)
+    user: bindActionCreators(allTheActions.user, dispatch),
+    actualite : bindActionCreators(allTheActions.actualite,dispatch)
   }
 })
 

@@ -16,11 +16,22 @@ export const refreshRecette = (recetteRecherche) => ({
   recetteRecherche
 })
 
-export const refreshRecette = (recetteRecherche) => ({
+export const clearRecetteRechercheRedux = (recetteRecherche) => ({
 
   type: DECONNEXION_RECHERCHE_RECETTE,
   recetteRecherche
 })
+
+export const logout_recetteRecherche = () => dispatch =>{
+  dispatch(
+    clearRecetteRechercheRedux({
+      list : [],
+      offset:0,
+      limite:0
+    })
+  )
+}
+
 export const getRecettes = (libelle ='',offset = 0, refresh = false) => dispatch => {
 
   if(libelle==''){

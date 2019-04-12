@@ -21,6 +21,18 @@ export const clearUserRechercheRedux = (userRecherche) => ({
   type: DECONNEXION_USER_RECHERCHE,
   userRecherche
 })
+
+
+export const logout_userRecherche = () => dispatch =>{
+  dispatch(
+    clearUserRechercheRedux({
+      list : [],
+      offset:0,
+      limite:0
+    })
+  )
+}
+
 export const getUsers = (libelle ='',offset = 0, refresh = false) => dispatch => {
 
   if(libelle==''){

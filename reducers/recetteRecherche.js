@@ -1,4 +1,4 @@
-import { GET_ALL_RECETTE, REFRESH_RECETTE } from '../actions/recetteRecherche'
+import { GET_ALL_RECETTE, REFRESH_RECETTE , DECONNEXION_RECHERCHE_RECETTE} from '../actions/recetteRecherche'
 
 
 const initialState = {

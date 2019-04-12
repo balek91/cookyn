@@ -16,5 +16,16 @@ export const Add = (etape) => ({
 
   export const clearEtapeRedux = (etape) => ({
     type:DECONNEXION_ETAPE,
+    etape
 
   })
+
+  export const logout_etape = () => dispatch =>{
+    dispatch(
+      clearEtapeRedux({
+        list : [],
+        offset:0,
+        limite:0
+      })
+    )
+  }

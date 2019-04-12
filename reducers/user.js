@@ -1,4 +1,4 @@
-import { CONNEXION, DECONNEXION, ABONNEMENT , ABONNE, CONNECT} from '../actions/user'
+import { CONNEXION, DECONNEXION_USER, ABONNEMENT , ABONNE, CONNECT} from '../actions/user'
 
 const initialState = {
   user:null,

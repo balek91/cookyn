@@ -65,7 +65,7 @@ class NewsScreen extends React.Component {
      logout =() => {
         console.log('ici la deconnexion')
         this.removeData()
-        onSignOut().then(() => this.props.navigation.navigate('SignedOut'))
+        
 
      } 
     
@@ -73,9 +73,13 @@ class NewsScreen extends React.Component {
         try {
             const { actions } = this.props
             actions.user.deconnexion()
-            actions.userRecherche.clearUserRechercheRedux()
-            actions.recette.clearRecetteRedux()
-            a
+            //actions.userRecherche.clearUserRechercheRedux()
+            //actions.recette.clearRecetteRedux()
+           // actions.recetteRecherche.clearRecetteRechercheRedux()
+           // actions.etape.clearEtapeRedux()
+            actions.actualite.logout_actu()
+            onSignOut().then(() => this.props.navigation.navigate('SignedOut'))
+
         } catch (error) {
           console.log(error)
         }
@@ -109,15 +113,16 @@ class NewsScreen extends React.Component {
             user:user
         })
         console.log('Useeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ',user)
-        actions.actualite.getActualite(user,0,false)
+        actions.actualite.getActualite(user,0,true)
     }
+    
 
     keyExtractor = item => item.idActualite.toString()
 
     render(){
-        const {actualite} = this.props
+        const {actualite, actions} = this.props
         const {user} = this.state
-        var tab = actualite.list.sort((itemA, itemB) => itemA.date < itemB.date)
+        var tab = actualite.list
         console.log(actualite)
         return(<StyledView>
                     <ImageBackground source={require('../assets/images/homeBack.jpg')} style={{width: '100%', height: '100%'}}>
@@ -137,7 +142,7 @@ class NewsScreen extends React.Component {
                         </HeaderRightView>
                     </HeaderView>
                     <StyledFlatList
-                      data={actualite.list.sort((itemA, itemB) => itemA.date < itemB.date)}
+                      data={tab}
                       refreshing={false}
                       onRefresh={() => this.refreshContentAsync()}
                       onEndReached={() => this.loadMoreContentAsync()}
@@ -145,7 +150,7 @@ class NewsScreen extends React.Component {
                       initialNumToRender={1000}
                       keyExtractor={this.keyExtractor}
                       renderItem={({ item }) => (
-                        <Actu navigation={this.props.navigation} currentUser={user} idWho={item.what.idUser} who={item.what.prenomUser} idWhat={item.whoDto.id} what={item.whoDto.name} action={item.typeActualite} date={new Date(item.date)}></Actu>
+                        <Actu navigation={this.props.navigation} currentUser={user} idWho={item.what.idUser} who={item.what.usernameUser} idWhat={item.whoDto.id} what={item.whoDto.name} action={item.typeActualite} date={new Date(item.date)}></Actu>
                       )} /> 
          
             </ContentContainer>
@@ -175,6 +180,10 @@ const mapStateToProps = state => {
     return {
       user: state.user,
       actualite : state.actualite,
+      userRecherche : state.userRecherche,
+      recette : state.recette,
+      recetteRecherche : state.recetteRecherche,
+      etape : state.etape,
       allState: state,
     }
   }

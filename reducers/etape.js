@@ -1,4 +1,4 @@
-import { ADD, UPDATE } from '../actions/etape'
+import { ADD, UPDATE , DECONNEXION_ETAPE} from '../actions/etape'
 
 
 const initialState = {

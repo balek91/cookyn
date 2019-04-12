@@ -13,8 +13,9 @@ export const connexion = (id) => ({
     id
   })
   
-  export const deconnexion =() => ({
-    type: DECONNEXION_USER
+  export const deconnexion =(user) => ({
+    type: DECONNEXION_USER,
+    user
   })
 
   export const allAbonnement = (user) => ({
